@@ -1,0 +1,901 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AreaComunal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoraApertura" Type="time" Precision="7" />
+          <Property Name="HoraCierre" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="EstadoIncidencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EstadoPropiedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaFacturacion" Type="smalldatetime" />
+          <Property Name="FK_PlanCobro" Type="int" />
+          <Property Name="FK_Propiedad" Type="int" />
+          <Property Name="Tarjeta" Type="nvarchar" MaxLength="50" />
+          <Property Name="FK_Tarjeta" Type="int" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="Total" Type="money" />
+        </EntityType>
+        <EntityType Name="Incidencias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Usuario" Type="int" />
+          <Property Name="FK_Estado" Type="int" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Fecha" Type="smalldatetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Informacion">
+          <Property Name="Id" Type="int" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Archivo" Type="varbinary(max)" />
+        </EntityType>-->
+        <EntityType Name="PlanCobro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="FK_RubroCobro" Type="int" />
+          <Property Name="Total" Type="money" />
+        </EntityType>
+        <EntityType Name="PlanxRubro">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FK_Rubro" />
+            <PropertyRef Name="FK_Plan" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FK_Rubro" Type="int" Nullable="false" />
+          <Property Name="FK_Plan" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Propiedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumPropiedad" Type="nvarchar" MaxLength="50" />
+          <Property Name="FK_Usuario" Type="int" />
+          <Property Name="CantPersonas" Type="int" />
+          <Property Name="CantCarros" Type="nchar" MaxLength="10" />
+          <Property Name="FK_EstadoPropiedad" Type="int" />
+          <Property Name="FK_PlanCobro" Type="int" />
+        </EntityType>
+        <EntityType Name="Reservacion">
+          <Key>
+            <PropertyRef Name="FK_Usuario" />
+            <PropertyRef Name="FK_AreaComunal" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FK_Usuario" Type="int" Nullable="false" />
+          <Property Name="FK_AreaComunal" Type="int" Nullable="false" />
+          <Property Name="Aprobada" Type="bit" />
+          <Property Name="Fecha" Type="smalldatetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RubroCobro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Costo" Type="money" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tarjeta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="500" />
+          <Property Name="FK_Rol" Type="int" />
+        </EntityType>
+        <Association Name="FK_Factura_PlanCobro">
+          <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanCobro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="FK_PlanCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Propiedad">
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propiedad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="FK_Propiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Tarjeta">
+          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarjeta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="FK_Tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidencias_EstadoIncidencia">
+          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="0..1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoIncidencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidencias">
+              <PropertyRef Name="FK_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidencias_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidencias">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanxRubro_PlanCobro">
+          <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="1" />
+          <End Role="PlanxRubro" Type="Self.PlanxRubro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanCobro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanxRubro">
+              <PropertyRef Name="FK_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanxRubro_RubroCobro">
+          <End Role="RubroCobro" Type="Self.RubroCobro" Multiplicity="1" />
+          <End Role="PlanxRubro" Type="Self.PlanxRubro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RubroCobro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanxRubro">
+              <PropertyRef Name="FK_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedad_EstadoPropiedad">
+          <End Role="EstadoPropiedad" Type="Self.EstadoPropiedad" Multiplicity="0..1" />
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoPropiedad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Propiedad">
+              <PropertyRef Name="FK_EstadoPropiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedad_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Propiedad">
+              <PropertyRef Name="FK_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservacion_AreaComunal">
+          <End Role="AreaComunal" Type="Self.AreaComunal" Multiplicity="1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreaComunal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="FK_AreaComunal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservacion_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="FK_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="FK_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MiCondominioDBModelStoreContainer">
+          <EntitySet Name="AreaComunal" EntityType="Self.AreaComunal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoIncidencia" EntityType="Self.EstadoIncidencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incidencias" EntityType="Self.Incidencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanxRubro" EntityType="Self.PlanxRubro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propiedad" EntityType="Self.Propiedad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservacion" EntityType="Self.Reservacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RubroCobro" EntityType="Self.RubroCobro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Factura_PlanCobro" Association="Self.FK_Factura_PlanCobro">
+            <End Role="PlanCobro" EntitySet="PlanCobro" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Propiedad" Association="Self.FK_Factura_Propiedad">
+            <End Role="Propiedad" EntitySet="Propiedad" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Tarjeta" Association="Self.FK_Factura_Tarjeta">
+            <End Role="Tarjeta" EntitySet="Tarjeta" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidencias_EstadoIncidencia" Association="Self.FK_Incidencias_EstadoIncidencia">
+            <End Role="EstadoIncidencia" EntitySet="EstadoIncidencia" />
+            <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidencias_Usuario" Association="Self.FK_Incidencias_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanxRubro_PlanCobro" Association="Self.FK_PlanxRubro_PlanCobro">
+            <End Role="PlanCobro" EntitySet="PlanCobro" />
+            <End Role="PlanxRubro" EntitySet="PlanxRubro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanxRubro_RubroCobro" Association="Self.FK_PlanxRubro_RubroCobro">
+            <End Role="RubroCobro" EntitySet="RubroCobro" />
+            <End Role="PlanxRubro" EntitySet="PlanxRubro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedad_EstadoPropiedad" Association="Self.FK_Propiedad_EstadoPropiedad">
+            <End Role="EstadoPropiedad" EntitySet="EstadoPropiedad" />
+            <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedad_Usuario" Association="Self.FK_Propiedad_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservacion_AreaComunal" Association="Self.FK_Reservacion_AreaComunal">
+            <End Role="AreaComunal" EntitySet="AreaComunal" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservacion_Usuario1" Association="Self.FK_Reservacion_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AreaComunal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HoraApertura" Type="Time" Precision="7" />
+          <Property Name="HoraCierre" Type="Time" Precision="7" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.FK_Reservacion_AreaComunal" FromRole="AreaComunal" ToRole="Reservacion" />
+        </EntityType>
+        <EntityType Name="EstadoIncidencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Incidencias" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="EstadoIncidencia" ToRole="Incidencias" />
+        </EntityType>
+        <EntityType Name="EstadoPropiedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_EstadoPropiedad" FromRole="EstadoPropiedad" ToRole="Propiedad" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaFacturacion" Type="DateTime" Precision="0" />
+          <Property Name="FK_PlanCobro" Type="Int32" />
+          <Property Name="FK_Propiedad" Type="Int32" />
+          <Property Name="Tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FK_Tarjeta" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="PlanCobro" Relationship="Self.FK_Factura_PlanCobro" FromRole="Factura" ToRole="PlanCobro" />
+          <NavigationProperty Name="Propiedad" Relationship="Self.FK_Factura_Propiedad" FromRole="Factura" ToRole="Propiedad" />
+          <NavigationProperty Name="Tarjeta1" Relationship="Self.FK_Factura_Tarjeta" FromRole="Factura" ToRole="Tarjeta" />
+        </EntityType>
+        <EntityType Name="Incidencias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Usuario" Type="Int32" />
+          <Property Name="FK_Estado" Type="Int32" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="EstadoIncidencia" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="Incidencias" ToRole="EstadoIncidencia" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Incidencias_Usuario" FromRole="Incidencias" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="PlanCobro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FK_RubroCobro" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_PlanCobro" FromRole="PlanCobro" ToRole="Factura" />
+          <NavigationProperty Name="PlanxRubro" Relationship="Self.FK_PlanxRubro_PlanCobro" FromRole="PlanCobro" ToRole="PlanxRubro" />
+        </EntityType>
+        <EntityType Name="PlanxRubro">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FK_Rubro" />
+            <PropertyRef Name="FK_Plan" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FK_Rubro" Type="Int32" Nullable="false" />
+          <Property Name="FK_Plan" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PlanCobro" Relationship="Self.FK_PlanxRubro_PlanCobro" FromRole="PlanxRubro" ToRole="PlanCobro" />
+          <NavigationProperty Name="RubroCobro" Relationship="Self.FK_PlanxRubro_RubroCobro" FromRole="PlanxRubro" ToRole="RubroCobro" />
+        </EntityType>
+        <EntityType Name="Propiedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumPropiedad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FK_Usuario" Type="Int32" />
+          <Property Name="CantPersonas" Type="Int32" />
+          <Property Name="CantCarros" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="FK_EstadoPropiedad" Type="Int32" />
+          <Property Name="FK_PlanCobro" Type="Int32" />
+          <NavigationProperty Name="EstadoPropiedad" Relationship="Self.FK_Propiedad_EstadoPropiedad" FromRole="Propiedad" ToRole="EstadoPropiedad" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Propiedad" FromRole="Propiedad" ToRole="Factura" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Propiedad_Usuario" FromRole="Propiedad" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Reservacion">
+          <Key>
+            <PropertyRef Name="FK_Usuario" />
+            <PropertyRef Name="FK_AreaComunal" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="FK_Usuario" Type="Int32" Nullable="false" />
+          <Property Name="FK_AreaComunal" Type="Int32" Nullable="false" />
+          <Property Name="Aprobada" Type="Boolean" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AreaComunal" Relationship="Self.FK_Reservacion_AreaComunal" FromRole="Reservacion" ToRole="AreaComunal" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Reservacion" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="RubroCobro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Costo" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="PlanxRubro" Relationship="Self.FK_PlanxRubro_RubroCobro" FromRole="RubroCobro" ToRole="PlanxRubro" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tarjeta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Tarjeta" FromRole="Tarjeta" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Clave" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FK_Rol" Type="Int32" />
+          <NavigationProperty Name="Incidencias" Relationship="Self.FK_Incidencias_Usuario" FromRole="Usuario" ToRole="Incidencias" />
+          <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Usuario" FromRole="Usuario" ToRole="Propiedad" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Usuario" ToRole="Reservacion" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+        </EntityType>
+        <Association Name="FK_Reservacion_AreaComunal">
+          <End Role="AreaComunal" Type="Self.AreaComunal" Multiplicity="1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreaComunal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="FK_AreaComunal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidencias_EstadoIncidencia">
+          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="0..1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoIncidencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidencias">
+              <PropertyRef Name="FK_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedad_EstadoPropiedad">
+          <End Role="EstadoPropiedad" Type="Self.EstadoPropiedad" Multiplicity="0..1" />
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoPropiedad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Propiedad">
+              <PropertyRef Name="FK_EstadoPropiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_PlanCobro">
+          <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanCobro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="FK_PlanCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Propiedad">
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propiedad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="FK_Propiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Tarjeta">
+          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarjeta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="FK_Tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidencias_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidencias">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanxRubro_PlanCobro">
+          <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="1" />
+          <End Role="PlanxRubro" Type="Self.PlanxRubro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanCobro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanxRubro">
+              <PropertyRef Name="FK_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanxRubro_RubroCobro">
+          <End Role="RubroCobro" Type="Self.RubroCobro" Multiplicity="1" />
+          <End Role="PlanxRubro" Type="Self.PlanxRubro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RubroCobro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanxRubro">
+              <PropertyRef Name="FK_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedad_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Propiedad">
+              <PropertyRef Name="FK_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservacion_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="FK_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="FK_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MiCondominioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AreaComunal" EntityType="Self.AreaComunal" />
+          <EntitySet Name="EstadoIncidencia" EntityType="Self.EstadoIncidencia" />
+          <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="Incidencias" EntityType="Self.Incidencias" />
+          <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" />
+          <EntitySet Name="PlanxRubro" EntityType="Self.PlanxRubro" />
+          <EntitySet Name="Propiedad" EntityType="Self.Propiedad" />
+          <EntitySet Name="Reservacion" EntityType="Self.Reservacion" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="RubroCobro" EntityType="Self.RubroCobro" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Reservacion_AreaComunal" Association="Self.FK_Reservacion_AreaComunal">
+            <End Role="AreaComunal" EntitySet="AreaComunal" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidencias_EstadoIncidencia" Association="Self.FK_Incidencias_EstadoIncidencia">
+            <End Role="EstadoIncidencia" EntitySet="EstadoIncidencia" />
+            <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedad_EstadoPropiedad" Association="Self.FK_Propiedad_EstadoPropiedad">
+            <End Role="EstadoPropiedad" EntitySet="EstadoPropiedad" />
+            <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_PlanCobro" Association="Self.FK_Factura_PlanCobro">
+            <End Role="PlanCobro" EntitySet="PlanCobro" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Propiedad" Association="Self.FK_Factura_Propiedad">
+            <End Role="Propiedad" EntitySet="Propiedad" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Tarjeta" Association="Self.FK_Factura_Tarjeta">
+            <End Role="Tarjeta" EntitySet="Tarjeta" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidencias_Usuario" Association="Self.FK_Incidencias_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanxRubro_PlanCobro" Association="Self.FK_PlanxRubro_PlanCobro">
+            <End Role="PlanCobro" EntitySet="PlanCobro" />
+            <End Role="PlanxRubro" EntitySet="PlanxRubro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanxRubro_RubroCobro" Association="Self.FK_PlanxRubro_RubroCobro">
+            <End Role="RubroCobro" EntitySet="RubroCobro" />
+            <End Role="PlanxRubro" EntitySet="PlanxRubro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedad_Usuario" Association="Self.FK_Propiedad_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservacion_Usuario1" Association="Self.FK_Reservacion_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MiCondominioDBModelStoreContainer" CdmEntityContainer="MiCondominioEntities">
+          <EntitySetMapping Name="AreaComunal">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.AreaComunal">
+              <MappingFragment StoreEntitySet="AreaComunal">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="HoraApertura" ColumnName="HoraApertura" />
+                <ScalarProperty Name="HoraCierre" ColumnName="HoraCierre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoIncidencia">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.EstadoIncidencia">
+              <MappingFragment StoreEntitySet="EstadoIncidencia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoPropiedad">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.EstadoPropiedad">
+              <MappingFragment StoreEntitySet="EstadoPropiedad">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FechaFacturacion" ColumnName="FechaFacturacion" />
+                <ScalarProperty Name="FK_PlanCobro" ColumnName="FK_PlanCobro" />
+                <ScalarProperty Name="FK_Propiedad" ColumnName="FK_Propiedad" />
+                <ScalarProperty Name="Tarjeta" ColumnName="Tarjeta" />
+                <ScalarProperty Name="FK_Tarjeta" ColumnName="FK_Tarjeta" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incidencias">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Incidencias">
+              <MappingFragment StoreEntitySet="Incidencias">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FK_Usuario" ColumnName="FK_Usuario" />
+                <ScalarProperty Name="FK_Estado" ColumnName="FK_Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanCobro">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.PlanCobro">
+              <MappingFragment StoreEntitySet="PlanCobro">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FK_RubroCobro" ColumnName="FK_RubroCobro" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanxRubro">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.PlanxRubro">
+              <MappingFragment StoreEntitySet="PlanxRubro">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FK_Rubro" ColumnName="FK_Rubro" />
+                <ScalarProperty Name="FK_Plan" ColumnName="FK_Plan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propiedad">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Propiedad">
+              <MappingFragment StoreEntitySet="Propiedad">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NumPropiedad" ColumnName="NumPropiedad" />
+                <ScalarProperty Name="FK_Usuario" ColumnName="FK_Usuario" />
+                <ScalarProperty Name="CantPersonas" ColumnName="CantPersonas" />
+                <ScalarProperty Name="CantCarros" ColumnName="CantCarros" />
+                <ScalarProperty Name="FK_EstadoPropiedad" ColumnName="FK_EstadoPropiedad" />
+                <ScalarProperty Name="FK_PlanCobro" ColumnName="FK_PlanCobro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservacion">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Reservacion">
+              <MappingFragment StoreEntitySet="Reservacion">
+                <ScalarProperty Name="FK_Usuario" ColumnName="FK_Usuario" />
+                <ScalarProperty Name="FK_AreaComunal" ColumnName="FK_AreaComunal" />
+                <ScalarProperty Name="Aprobada" ColumnName="Aprobada" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RubroCobro">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.RubroCobro">
+              <MappingFragment StoreEntitySet="RubroCobro">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarjeta">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Tarjeta">
+              <MappingFragment StoreEntitySet="Tarjeta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="FK_Rol" ColumnName="FK_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
