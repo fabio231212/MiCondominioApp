@@ -22,10 +22,10 @@ namespace ApplicationCore.Services
             return repositoryUsuario.GetUsuario(email, password);
         }
 
-        public Usuario GetUsuarioById(int id)
+        public Usuario GetUsuarioById(int cedula)
         {
             IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            return repositoryUsuario.GetUsuarioById(id);
+            return repositoryUsuario.GetUsuarioById(cedula);
         }
 
         public Usuario Save(Usuario usuario)

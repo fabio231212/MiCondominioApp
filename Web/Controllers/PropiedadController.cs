@@ -1,24 +1,29 @@
 ﻿using ApplicationCore.Services;
 using Infraestructure.Models;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Web.Controllers
 {
-    public class UsuarioController : Controller
+    public class PropiedadController : Controller
     {
-        // GET: Usuario
+        // GET: Propiedad
         public ActionResult Index()
         {
-            IEnumerable<Usuario> lista = null;
+            IEnumerable<Propiedad> lista = null;
             try
             {
-                IServiceUsuario _ServiceUsuario = new ServiceUsuario();
-                lista = _ServiceUsuario.GetAll();
-                ViewBag.Title = "Lista Usuarios";
+                IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+                lista = _ServicePropiedad.GetAll();
+                ViewBag.Title = "Lista Propiedad";
                 return View(lista);
             }
             catch (Exception ex)
@@ -28,19 +33,31 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Usuario/Details/5
-        public ActionResult Details(int id)
+        // GET: Propiedad/Details/5
+
+        public ActionResult Details(string id)
         {
-            return View();
+            Propiedad oPropiedad = null;
+            try
+            {
+                IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+                oPropiedad = _ServicePropiedad.GetPropiedadByNumProp(id.Trim());
+                 return Json(new { data = oPropiedad }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = ex.ToString() }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        // GET: Usuario/Create
+        // GET: Propiedad/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuario/Create
+        // POST: Propiedad/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -56,13 +73,13 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Usuario/Edit/5
+        // GET: Propiedad/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Usuario/Edit/5
+        // POST: Propiedad/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -78,13 +95,13 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Usuario/Delete/5
+        // GET: Propiedad/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Usuario/Delete/5
+        // POST: Propiedad/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
