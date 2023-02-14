@@ -36,6 +36,7 @@ namespace Infraestructure.Models
         public virtual DbSet<Reservacion> Reservacion { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<RubroCobro> RubroCobro { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tarjeta> Tarjeta { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -51,13 +51,6 @@
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Informacion">
-          <Property Name="Id" Type="int" />
-          <Property Name="Descripcion" Type="text" />
-          <Property Name="Archivo" Type="varbinary(max)" />
-        </EntityType>-->
         <EntityType Name="PlanCobro">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,7 +80,6 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="CantPersonas" Type="int" />
           <Property Name="CantCarros" Type="nchar" MaxLength="10" />
           <Property Name="FK_EstadoPropiedad" Type="int" />
-          <Property Name="FK_PlanCobro" Type="int" />
         </EntityType>
         <EntityType Name="Reservacion">
           <Key>
@@ -354,8 +346,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -446,7 +437,6 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="CantPersonas" Type="Int32" />
           <Property Name="CantCarros" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="FK_EstadoPropiedad" Type="Int32" />
-          <Property Name="FK_PlanCobro" Type="Int32" />
           <NavigationProperty Name="EstadoPropiedad" Relationship="Self.FK_Propiedad_EstadoPropiedad" FromRole="Propiedad" ToRole="EstadoPropiedad" />
           <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Propiedad" FromRole="Propiedad" ToRole="Factura" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Propiedad_Usuario" FromRole="Propiedad" ToRole="Usuario" />
@@ -810,7 +800,6 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
                 <ScalarProperty Name="CantPersonas" ColumnName="CantPersonas" />
                 <ScalarProperty Name="CantCarros" ColumnName="CantCarros" />
                 <ScalarProperty Name="FK_EstadoPropiedad" ColumnName="FK_EstadoPropiedad" />
-                <ScalarProperty Name="FK_PlanCobro" ColumnName="FK_PlanCobro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

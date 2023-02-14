@@ -9,6 +9,7 @@ namespace Infraestructure.Repository.Models
 {
     internal class MyContext : MiCondominioEntities
     {
-        public MyContext() { }
+        public MyContext() { 
+        }
     }
 }
