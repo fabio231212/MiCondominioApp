@@ -121,8 +121,10 @@
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\IRepositoryEstadoCuenta.cs" />
     <Compile Include="Repository\IRepositoryPropiedad.cs" />
     <Compile Include="Repository\IRepositoryUsuario.cs" />
+    <Compile Include="Repository\RepositoryEstadoCuenta.cs" />
     <Compile Include="Repository\RepositoryPropiedad.cs" />
     <Compile Include="Repository\RepositoryUsuario.cs" />
     <Compile Include="Utils\Log.cs" />
