@@ -39,5 +39,33 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
+        public IEnumerable<Factura> GetByIdUsuario(int id)
+        {
+            try
+            {
+                IEnumerable<Factura> lista = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    lista = ctx.Factura.Include("Propiedad").Where(f=>f.Id == id).ToList();
+                }
+
+                return lista;
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
     }
 }

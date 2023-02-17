@@ -164,6 +164,7 @@
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\NewFile1.txt" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
@@ -261,10 +262,11 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Propiedad\Index.cshtml" />
-    <Content Include="Views\EstadoCuenta\Index.cshtml" />
+    <Content Include="Views\EstadoCuenta\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Image\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

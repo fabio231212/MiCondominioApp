@@ -8482,7 +8482,7 @@ textarea.form-control-lg {
 
 .bg-siteColor {
     --bs-bg-opacity: 1;
-    background-color: #0bda73 !important;
+    background-color: #59a87d !important;
 }
 
 .bg-black {
@@ -8493,6 +8493,10 @@ textarea.form-control-lg {
 .bg-white {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+}
+.bg-edit {
+    --bs-bg-opacity: 1;
+    background-color: #EE672C !important;
 }
 
 .bg-body {
@@ -12143,7 +12147,7 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 .sb-sidenav-siteColor {
-    background-color: #0bda73;
+    background-color: #59a87d;
     color: white
 }
 
