@@ -33,7 +33,19 @@ namespace Web.Controllers
         // GET: EstadoCuenta/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            IEnumerable<Factura> lista = null;
+            try
+            {
+                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+                lista = _Service.GetbyIdUsuario(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+            return View(lista);
         }
 
         // GET: EstadoCuenta/Create

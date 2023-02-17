@@ -10,5 +10,6 @@ namespace ApplicationCore.Services
     public interface IServiceEstadoCuenta
     {
         IEnumerable<Factura> GetAll();
+        IEnumerable<Factura> GetbyIdUsuario(int id);
     }
 }

@@ -10,5 +10,6 @@ namespace Infraestructure.Repository
     public interface IRepositoryEstadoCuenta
     {
         IEnumerable<Factura> GetAll();
+        IEnumerable<Factura> GetByIdUsuario(int id);
     }
 }
