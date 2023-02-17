@@ -80,6 +80,7 @@
           <Property Name="CantPersonas" Type="int" />
           <Property Name="CantCarros" Type="nchar" MaxLength="10" />
           <Property Name="FK_EstadoPropiedad" Type="int" />
+          <Property Name="FechaInicio" Type="date" />
         </EntityType>
         <EntityType Name="Reservacion">
           <Key>
@@ -440,6 +441,7 @@
           <NavigationProperty Name="EstadoPropiedad" Relationship="Self.FK_Propiedad_EstadoPropiedad" FromRole="Propiedad" ToRole="EstadoPropiedad" />
           <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Propiedad" FromRole="Propiedad" ToRole="Factura" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Propiedad_Usuario" FromRole="Propiedad" ToRole="Usuario" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Reservacion">
           <Key>
@@ -794,6 +796,7 @@
           <EntitySetMapping Name="Propiedad">
             <EntityTypeMapping TypeName="MiCondominioDBModel.Propiedad">
               <MappingFragment StoreEntitySet="Propiedad">
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NumPropiedad" ColumnName="NumPropiedad" />
                 <ScalarProperty Name="FK_Usuario" ColumnName="FK_Usuario" />

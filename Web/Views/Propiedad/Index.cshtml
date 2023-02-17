@@ -38,15 +38,15 @@
                                                   @*  <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>*@
                                                     <td> @Html.DisplayFor(modelItem => item.CantPersonas)</td>
                                                     <td>
-                                                        <button  type="button" id="btnObtenerUsuario" class="btn bg-primary btn-sm px-3">
+                                                        <a  title="Detalles" href="@Url.Action("Details", "Propiedad", new { id = item.NumPropiedad })" class="btn bg-primary btn-sm px-3">
                                                             <i class="fas fa-eye text-white"></i>
-                                                        </button>
-                                                        <button type="button" class="btn bg-danger btn-sm px-3">
+                                                        </a>
+                                                        <a title="Eliminar" class="btn bg-danger btn-sm px-3">
                                                             <i class="fas fa-trash text-white"></i>
-                                                        </button>
-                                                        <button  type="button" class="btn bg-info btn-sm px-3">
+                                                        </a>
+                                                        <a title="Editar"  class="btn bg-info btn-sm px-3">
                                                             <i class="fas fa-edit text-white"></i>
-                                                        </button>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             }
@@ -123,51 +123,7 @@
 
 
 
-    @section scripts{
-        <script>
 
-
-            $("#btnObtenerUsuario").click(function () {
-                var id = $('.selected-row').find('td:first').text();
-
-                jQuery.ajax({
-                    url: '@Url.Action("Details", "Propiedad")',
-                    type: 'POST',
-                    data: JSON.stringify({ id: id }),
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        console.log(data);
-                        mostrarModal(data);
-                    
-                    },
-                    error: function (error) {
-                        console.log("falló");
-                        return;
-                    
-                    },
-                });
-
-              
-
-            });
-
-            function mostrarModal(data){
-
-                //$("#txtId").val(0);
-                //$("#txtDescripcion").val("");
-                //$("#cmbActivo").val(1);
-                $("#mensajeError").hide();
-
-                if (data != null) {
-
-                    $("#txtCantPersonas").val(data.data);
-                    $("#FormModal").modal("show");
-                }
-
-            }
-        </script>
-    }
 
 
 

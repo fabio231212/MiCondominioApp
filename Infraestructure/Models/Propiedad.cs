@@ -11,9 +11,7 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
-    using System.Security.Cryptography.Xml;
-
+    
     public partial class Propiedad
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,6 +26,7 @@ namespace Infraestructure.Models
         public Nullable<int> CantPersonas { get; set; }
         public string CantCarros { get; set; }
         public Nullable<int> FK_EstadoPropiedad { get; set; }
+        public Nullable<System.DateTime> FechaInicio { get; set; }
     
         public virtual EstadoPropiedad EstadoPropiedad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
