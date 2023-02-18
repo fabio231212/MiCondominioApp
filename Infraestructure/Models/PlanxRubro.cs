@@ -14,7 +14,6 @@ namespace Infraestructure.Models
     
     public partial class PlanxRubro
     {
-        public int Id { get; set; }
         public int FK_Rubro { get; set; }
         public int FK_Plan { get; set; }
     
