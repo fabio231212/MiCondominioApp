@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Services;
 using Infraestructure.Models;
+using Infraestructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,31 @@ namespace Web.Controllers
     public class EstadoCuentaController : Controller
     {
         // GET: EstadoCuenta
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    IEnumerable<Factura> lista = null;
+        //    try
+        //    {
+        //        IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+        //        lista = _Service.GetAll();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error(ex, MethodBase.GetCurrentMethod());
+        //        TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+        //        return RedirectToAction("Default", "Error");
+        //    }
+        //    return View(lista);
+        //}
+
+        // GET: EstadoCuenta/Details/5
+        public ActionResult Index(int id)
         {
             IEnumerable<Factura> lista = null;
             try
             {
                 IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
-                lista = _Service.GetAll();
+                lista = _Service.GetByIdProp(id);
             }
             catch (Exception ex)
             {
@@ -30,14 +49,13 @@ namespace Web.Controllers
             return View(lista);
         }
 
-        // GET: EstadoCuenta/Details/5
-        public ActionResult Details(int id)
+        public ActionResult DetalleEstadoCuenta(int idEstadoCuenta)
         {
-            IEnumerable<Factura> lista = null;
+            Factura oFactura = null;
             try
             {
                 IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
-                lista = _Service.GetbyIdUsuario(id);
+                oFactura = _Service.GetDetalleEstadoCuenta(idEstadoCuenta);
             }
             catch (Exception ex)
             {
@@ -45,7 +63,7 @@ namespace Web.Controllers
                 TempData["Message"] = "Error al procesar los datos!" + ex.Message;
                 return RedirectToAction("Default", "Error");
             }
-            return View(lista);
+            return View(oFactura);
         }
 
         // GET: EstadoCuenta/Create
