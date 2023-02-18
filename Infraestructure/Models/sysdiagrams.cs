@@ -12,12 +12,12 @@ namespace Infraestructure.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PlanxRubro
+    public partial class sysdiagrams
     {
-        public int FK_Rubro { get; set; }
-        public int FK_Plan { get; set; }
-    
-        public virtual PlanCobro PlanCobro { get; set; }
-        public virtual RubroCobro RubroCobro { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

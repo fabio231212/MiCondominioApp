@@ -50,7 +50,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    oPropiedad = ctx.Propiedad.Include("Usuario").
+                    oPropiedad = ctx.Propiedad.Include("EstadoPropiedad").Include("Usuario").
                     Where(p => p.NumPropiedad == id).
                     FirstOrDefault<Propiedad>();
                   

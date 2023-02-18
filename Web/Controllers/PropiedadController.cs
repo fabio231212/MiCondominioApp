@@ -42,12 +42,12 @@ namespace Web.Controllers
             {
                 IServicePropiedad _ServicePropiedad = new ServicePropiedad();
                 oPropiedad = _ServicePropiedad.GetPropiedadByNumProp(id.Trim());
-                 return Json(new { data = oPropiedad }, JsonRequestBehavior.AllowGet);
+                return View(oPropiedad);
 
             }
             catch (Exception ex)
             {
-                return Json(new { data = ex.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
             }
         }
 
