@@ -3,115 +3,96 @@
 @{
     ViewBag.Title = "DetalleEstadoCuenta";
 }
-@Styles.Render("~/Cards/css")
+
 <h2>DetalleEstadoCuenta</h2>
 
-<div>
+<div class="container">
     <h4>Factura</h4>
     <hr />
-    <dl class="dl-horizontal">
-
-        @* DATOS USUARIO *@
-        <dt>
-            @Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Propiedad.Usuario.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Propiedad.Usuario.Cedula)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Propiedad.Usuario.Cedula)
-        </dd>
-
-        @* DATOS PROPIEDAD *@
-        <dt>
-            @Html.DisplayNameFor(model => model.Propiedad.NumPropiedad)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Propiedad.NumPropiedad)
-        </dd>
-
-        @* DATOS FACTURA *@
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tarjeta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tarjeta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-
-        <dd>
-            @if ((bool)Model.Activo)
-            {
-                <span>Pagada</span>
-            }
-            else
-            {
-                <span>Pendiente</span>
-            }
-            @*@Html.DisplayFor(model => model.Activo)*@
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaFacturacion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaFacturacion)
-        </dd>
 
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-
-    </dl>
-</div>
-
-
-<div class="cards">
-
-    <div class="card">
-        <div class="card__image-holder">
-            <img class="card__image" src="https://source.unsplash.com/300x225/?wave" alt="wave" />
-        </div>
-        <div class="card-title">
-            <a href="#" class="toggle-info btn">
-                <span class="left"></span>
-                <span class="right"></span>
-            </a>
-            <h2>
-                Card title
-                <small>Image from unsplash.com</small>
-            </h2>
-        </div>
-        <div class="card-flap flap1">
-            <div class="card-description">
-                This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc.
-            </div>
-            <div class="card-flap flap2">
-                <div class="card-actions">
-                    <a href="#" class="btn">Read more</a>
+    <div class="row justify-content-between">
+        <!-- diplay cards as flexbox, direction column and space between -->
+        <div class="col-5 col-sm-4 p-3 justify-content-between bg-siteColor rounded align-items-center text-center text-white">
+            <!-- wrap text in a div -->
+            <div>
+                <h5>@Html.DisplayNameFor(model => model.PlanCobro.Descripcion)</h5>
+                <p>@Html.DisplayFor(model => model.PlanCobro.Descripcion)</p>
+                <p></p>
+                <div class="collapse collapse-example mb-3">
+                    <div class="row justify-content-around">
+                        <div class="col-5 fw-bold">Detalle</div>
+                        <div class="col-5 fw-bold">Costo</div>
+                        @foreach (var item in Model.PlanCobro.PlanxRubro)
+                        {
+                            <div class="row justify-content-around text-center">
+                                <div class="col-4">@Html.DisplayFor(modelItem => item.RubroCobro.Descripcion)</div>
+                                <div class="col-4">@Html.DisplayFor(modelItem => item.RubroCobro.Costo)</div>
+                            </div>
+                            <hr>
+                        }
+                    </div>
                 </div>
             </div>
+
+        </div>
+
+        <div class="col-sm-1">
+            <button class="btn" id="btnVerDetalles" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-example" aria-expanded="false" aria-controls="collapseExample">
+                <i id="icon" class="fa-solid fa-arrow-down"></i><br />Ver detalle
+            </button>
+        </div>
+
+        <div class="col-5 col-sm-4 p-3 justify-content-between bg-siteColor rounded align-items-center text-center text-white">
+            <!-- wrap text in a div -->
+            <div>
+                <h5>@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</h5>
+                <p>@Html.DisplayFor(model => model.Propiedad.Usuario.Nombre)</p>
+                <p></p>
+                <div class="collapse collapse-example mb-3">
+                    <div class="row justify-content-around">
+
+                        <div class="row justify-content-around text-center">
+                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Cedula)</div>
+                            <div class="col-4">@Html.DisplayFor(model => model.Propiedad.Usuario.Cedula)</div>
+                        </div>
+                        <hr>
+                        <div class="row justify-content-around text-center">
+                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</div>
+                            <div class="col-4">@Model.Propiedad.Usuario.Nombre @Model.Propiedad.Usuario.Apellido1 </div>
+                        </div>
+                        <hr>
+                        <div class="row justify-content-around text-center">
+                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Email)</div>
+                            <div class="col-4">@Html.DisplayFor(model => model.Propiedad.Usuario.Email)</div>
+                        </div>
+                        <hr />
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+
 </div>
+
 
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index", new { id = Model.Propiedad.Id })
 </p>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btnVerDetalles").click(function () {
+                if ($("#icon").hasClass("fa-arrow-down")) {
+                    $("#icon").removeClass("fa-arrow-down").addClass("fa-arrow-up");
+                } else if ($("#icon").hasClass("fa-arrow-up")) {
+                    $("#icon").removeClass("fa-arrow-up").addClass("fa-arrow-down");
+                }
+            });
+        });
+    </script>
+}
