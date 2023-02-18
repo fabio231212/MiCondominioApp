@@ -45,8 +45,8 @@
     <div class="row justify-content-around mt-5">
         <div class="card col-3">
             <div class="card-img-top card-img-top text-center p-3">
-                <i style="font-size:3em;"  class="@(Model.FK_EstadoPropiedad == 1 ? "fa-solid fa-house-circle-check" : "fa-solid fa-person-digging")"></i>
-            
+                <i style="font-size:3em;" class="@(Model.FK_EstadoPropiedad == 1 ? "fa-solid fa-house-circle-check" : "fa-solid fa-person-digging")"></i>
+
             </div>
             <div class="card-body text-center">
                 <h5 class="card-title">@Html.DisplayNameFor(model => model.EstadoPropiedad.Nombre)</h5>
@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-   
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

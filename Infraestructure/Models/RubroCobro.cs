@@ -19,7 +19,7 @@ namespace Infraestructure.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RubroCobro()
         {
-            this.PlanxRubro = new HashSet<PlanxRubro>();
+            this.PlanCobro = new HashSet<PlanCobro>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace Infraestructure.Models
         public Nullable<decimal> Costo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanxRubro> PlanxRubro { get; set; }
+        public virtual ICollection<PlanCobro> PlanCobro { get; set; }
     }
 }

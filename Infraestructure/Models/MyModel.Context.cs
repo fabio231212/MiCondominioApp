@@ -31,12 +31,12 @@ namespace Infraestructure.Models
         public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Incidencias> Incidencias { get; set; }
         public virtual DbSet<PlanCobro> PlanCobro { get; set; }
-        public virtual DbSet<PlanxRubro> PlanxRubro { get; set; }
         public virtual DbSet<Propiedad> Propiedad { get; set; }
         public virtual DbSet<Reservacion> Reservacion { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<RubroCobro> RubroCobro { get; set; }
         public virtual DbSet<Tarjeta> Tarjeta { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

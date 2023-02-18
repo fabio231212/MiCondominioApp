@@ -23,11 +23,11 @@
                     <div class="row justify-content-around">
                         <div class="col-5 fw-bold">Detalle</div>
                         <div class="col-5 fw-bold">Costo</div>
-                        @foreach (var item in Model.PlanCobro.PlanxRubro)
+                        @foreach (var item in Model.PlanCobro.RubroCobro)
                         {
                             <div class="row justify-content-around text-center">
-                                <div class="col-4">@Html.DisplayFor(modelItem => item.RubroCobro.Descripcion)</div>
-                                <div class="col-4">@Html.DisplayFor(modelItem => item.RubroCobro.Costo)</div>
+                                <div class="col-4">@Html.DisplayFor(modelItem => item.Descripcion)</div>
+                                <div class="col-4">@Html.DisplayFor(modelItem => item.Costo)</div>
                             </div>
                             <hr>
                         }

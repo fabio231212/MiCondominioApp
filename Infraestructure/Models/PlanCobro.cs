@@ -20,7 +20,7 @@ namespace Infraestructure.Models
         public PlanCobro()
         {
             this.Factura = new HashSet<Factura>();
-            this.PlanxRubro = new HashSet<PlanxRubro>();
+            this.RubroCobro = new HashSet<RubroCobro>();
         }
     
         public int Id { get; set; }
@@ -30,6 +30,6 @@ namespace Infraestructure.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factura> Factura { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanxRubro> PlanxRubro { get; set; }
+        public virtual ICollection<RubroCobro> RubroCobro { get; set; }
     }
 }

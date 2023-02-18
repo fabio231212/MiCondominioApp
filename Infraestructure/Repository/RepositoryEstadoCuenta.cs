@@ -76,7 +76,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    oFactura = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Include("PlanCobro").Include("PlanCobro.PlanxRubro").Include("PlanCobro.PlanxRubro.RubroCobro").Where(f => f.Id == idEstadoCuenta).FirstOrDefault();
+                    oFactura = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Include("PlanCobro").Include("PlanCobro.RubroCobro").Where(f => f.Id == idEstadoCuenta).FirstOrDefault();
 
 
                     return oFactura;
