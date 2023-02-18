@@ -1,0 +1,80 @@
+﻿@model Infraestructure.Models.Propiedad
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+
+    <h4>Propiedad</h4>
+    <hr />
+    <div class="row justify-content-around">
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa fa-user" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Usuario.Nombre)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Usuario.Nombre)</p>
+            </div>
+        </div>
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fas fa-home" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.NumPropiedad)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.NumPropiedad)</p>
+            </div>
+        </div>
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fas fa-users" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.CantPersonas)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.CantPersonas)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-around mt-5">
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i style="font-size:3em;"  class="@(Model.FK_EstadoPropiedad == 1 ? "fa-solid fa-house-circle-check" : "fa-solid fa-person-digging")"></i>
+            
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.EstadoPropiedad.Nombre)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.EstadoPropiedad.Nombre)</p>
+            </div>
+        </div>
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa fa-car" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.CantCarros)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.CantCarros)</p>
+            </div>
+        </div>
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-calendar-days" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.FechaInicio)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.FechaInicio)</p>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
