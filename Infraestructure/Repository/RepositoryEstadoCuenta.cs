@@ -48,7 +48,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    lista = ctx.Factura.Include("Propiedad").Where(f=>f.Propiedad.Id == id).ToList();
+                    lista = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Where(f=>f.Propiedad.Id == id).ToList();
                 }
 
                 return lista;

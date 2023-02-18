@@ -8,10 +8,17 @@ using System.Xml.Linq;
 
 namespace Infraestructure.Models
 {
+
     internal partial class EstadoCuentaMetadata
     {
         [Display(Name = "Fecha de Facturación")]
         public Nullable<System.DateTime> FechaFacturacion { get; set; }
+
+        [Display(Name = "Número de Tarjeta")]
+        public string Tarjeta { get; set; }
+
+        [Display(Name = "Pagado")]
+        public Nullable<bool> Activo { get; set; }
     }
 
     internal partial class PropiedadMetadata
@@ -24,6 +31,9 @@ namespace Infraestructure.Models
     {
         [Display(Name = "Propietario")]
         public string Nombre { get; set; }
+
+        [Display(Name = "Cédula")]
+        public string Cedula { get; set; }
     }
 
 

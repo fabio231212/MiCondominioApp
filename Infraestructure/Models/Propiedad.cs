@@ -12,6 +12,10 @@ namespace Infraestructure.Models
     using System;
     using System.Collections.Generic;
     
+    
+using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(PropiedadMetadata))]
     public partial class Propiedad
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
