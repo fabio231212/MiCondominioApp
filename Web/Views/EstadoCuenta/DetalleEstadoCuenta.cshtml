@@ -1,0 +1,98 @@
+﻿@model Infraestructure.Models.Factura
+
+@{
+    ViewBag.Title = "DetalleEstadoCuenta";
+}
+
+<h2>DetalleEstadoCuenta</h2>
+
+<div class="container">
+    <h4>Factura</h4>
+    <hr />
+
+
+    <div class="row justify-content-between">
+        <!-- diplay cards as flexbox, direction column and space between -->
+        <div class="col-5 col-sm-4 p-3 justify-content-between bg-siteColor rounded align-items-center text-center text-white">
+            <!-- wrap text in a div -->
+            <div>
+                <h5>@Html.DisplayNameFor(model => model.PlanCobro.Descripcion)</h5>
+                <p>@Html.DisplayFor(model => model.PlanCobro.Descripcion)</p>
+                <p></p>
+                <div class="collapse collapse-example mb-3">
+                    <div class="row justify-content-around">
+                        <div class="col-5 fw-bold">Detalle</div>
+                        <div class="col-5 fw-bold">Costo</div>
+                        @foreach (var item in Model.PlanCobro.RubroCobro)
+                        {
+                            <div class="row justify-content-around text-center">
+                                <div class="col-4">@Html.DisplayFor(modelItem => item.Descripcion)</div>
+                                <div class="col-4">@Html.DisplayFor(modelItem => item.Costo)</div>
+                            </div>
+                            <hr>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-1">
+            <button class="btn" id="btnVerDetalles" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-example" aria-expanded="false" aria-controls="collapseExample">
+                <i id="icon" class="fa-solid fa-arrow-down"></i><br />Ver detalle
+            </button>
+        </div>
+
+        <div class="col-5 col-sm-4 p-3 justify-content-between bg-siteColor rounded align-items-center text-center text-white">
+            <!-- wrap text in a div -->
+            <div>
+                <h5>@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</h5>
+                <p>@Html.DisplayFor(model => model.Propiedad.Usuario.Nombre)</p>
+                <p></p>
+                <div class="collapse collapse-example mb-3">
+                    <div class="row justify-content-around">
+
+                        <div class="row justify-content-around text-center">
+                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Cedula)</div>
+                            <div class="col-4">@Html.DisplayFor(model => model.Propiedad.Usuario.Cedula)</div>
+                        </div>
+                        <hr>
+                        <div class="row justify-content-around text-center">
+                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</div>
+                            <div class="col-4">@Model.Propiedad.Usuario.Nombre @Model.Propiedad.Usuario.Apellido1 </div>
+                        </div>
+                        <hr>
+                        <div class="row justify-content-around text-center">
+                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Email)</div>
+                            <div class="col-4">@Html.DisplayFor(model => model.Propiedad.Usuario.Email)</div>
+                        </div>
+                        <hr />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index", new { id = Model.Propiedad.Id })
+</p>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btnVerDetalles").click(function () {
+                if ($("#icon").hasClass("fa-arrow-down")) {
+                    $("#icon").removeClass("fa-arrow-down").addClass("fa-arrow-up");
+                } else if ($("#icon").hasClass("fa-arrow-up")) {
+                    $("#icon").removeClass("fa-arrow-up").addClass("fa-arrow-down");
+                }
+            });
+        });
+    </script>
+}

@@ -11,24 +11,25 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(PlanCobroMetadata))]
     public partial class PlanCobro
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlanCobro()
         {
             this.Factura = new HashSet<Factura>();
-            this.PlanxRubro = new HashSet<PlanxRubro>();
+            this.RubroCobro = new HashSet<RubroCobro>();
         }
     
         public int Id { get; set; }
         public string Descripcion { get; set; }
-        public Nullable<int> FK_RubroCobro { get; set; }
         public Nullable<decimal> Total { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factura> Factura { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanxRubro> PlanxRubro { get; set; }
+        public virtual ICollection<RubroCobro> RubroCobro { get; set; }
     }
 }

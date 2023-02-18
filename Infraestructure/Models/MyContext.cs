@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository.Models
 {
-    internal class MyContext : MiCondominioEntities
+    internal class MyContext : MiCondominioDBEntities
     {
         public MyContext() { 
         }

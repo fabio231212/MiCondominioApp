@@ -10,21 +10,19 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public class RepositoryPropiedad : IRepositoryPropiedad
+    public class RepositoryEstadoCuenta : IRepositoryEstadoCuenta
     {
-        public IEnumerable<Propiedad> GetAll()
+        public IEnumerable<Factura> GetAll()
         {
-            IEnumerable<Propiedad> lista = null;
             try
             {
-
-
+                IEnumerable<Factura> lista = null;
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    lista = ctx.Propiedad.Include("Usuario").ToList();
-
+                    lista = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").ToList();
                 }
+
                 return lista;
             }
 
@@ -42,21 +40,20 @@ namespace Infraestructure.Repository
             }
         }
 
-        public Propiedad GetPropiedadByNumProp(string id)
+        public IEnumerable<Factura> GetByIdProp(int id)
         {
             try
             {
-                Propiedad oPropiedad = null;
+                IEnumerable<Factura> lista = null;
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    oPropiedad = ctx.Propiedad.Include("EstadoPropiedad").Include("Usuario").
-                    Where(p => p.NumPropiedad == id).
-                    FirstOrDefault<Propiedad>();
-                  
+                    lista = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Where(f=>f.Propiedad.Id == id).ToList();
                 }
-                return oPropiedad;
+
+                return lista;
             }
+
             catch (DbUpdateException dbEx)
             {
                 string mensaje = "";
@@ -71,9 +68,33 @@ namespace Infraestructure.Repository
             }
         }
 
-        public Propiedad Save(Propiedad propiedad)
+        public Factura GetDetalleEstadoCuenta(int idEstadoCuenta)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Factura oFactura = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    oFactura = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Include("PlanCobro").Include("PlanCobro.RubroCobro").Where(f => f.Id == idEstadoCuenta).FirstOrDefault();
+
+
+                    return oFactura;
+                }
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
         }
     }
 }
