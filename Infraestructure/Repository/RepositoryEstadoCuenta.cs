@@ -40,7 +40,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Factura> GetByIdUsuario(int id)
+        public IEnumerable<Factura> GetByIdProp(int id)
         {
             try
             {
@@ -48,10 +48,39 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    lista = ctx.Factura.Include("Propiedad").Where(f=>f.Id == id).ToList();
+                    lista = ctx.Factura.Include("Propiedad").Where(f=>f.Propiedad.Id == id).ToList();
                 }
 
                 return lista;
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public Factura GetDetalleEstadoCuenta(int idEstadoCuenta)
+        {
+            try
+            {
+                Factura oFactura = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    oFactura = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Include("PlanCobro").Include("PlanCobro.PlanxRubro").Include("PlanCobro.PlanxRubro.RubroCobro").Where(f => f.Id == idEstadoCuenta).FirstOrDefault();
+
+
+                    return oFactura;
+                }
             }
 
             catch (DbUpdateException dbEx)

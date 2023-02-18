@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Infraestructure.Models.Factura>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaFacturacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tarjeta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Propiedad.NumPropiedad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaFacturacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tarjeta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Activo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Propiedad.NumPropiedad)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("EstadoCuentaDetalle", "DetalleEstadoCuenta", new { idEstadoCuenta=item.Id }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

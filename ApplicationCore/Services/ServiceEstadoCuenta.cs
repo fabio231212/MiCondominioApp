@@ -16,10 +16,16 @@ namespace ApplicationCore.Services
             return repository.GetAll();
         }
 
-        public IEnumerable<Factura> GetbyIdUsuario(int id)
+        public IEnumerable<Factura> GetByIdProp(int id)
         {
             IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetByIdUsuario(id);
+            return repository.GetByIdProp(id);
+        }
+
+        public Factura GetDetalleEstadoCuenta(int idEstadoCuenta)
+        {
+            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
+            return repository.GetDetalleEstadoCuenta(idEstadoCuenta);
         }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -51,22 +51,26 @@
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Informacion">
+          <Property Name="Id" Type="int" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Archivo" Type="varbinary(max)" />
+        </EntityType>-->
         <EntityType Name="PlanCobro">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
-          <Property Name="FK_RubroCobro" Type="int" />
           <Property Name="Total" Type="money" />
         </EntityType>
         <EntityType Name="PlanxRubro">
           <Key>
-            <PropertyRef Name="Id" />
             <PropertyRef Name="FK_Rubro" />
             <PropertyRef Name="FK_Plan" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="FK_Rubro" Type="int" Nullable="false" />
           <Property Name="FK_Plan" Type="int" Nullable="false" />
         </EntityType>
@@ -80,6 +84,7 @@
           <Property Name="CantPersonas" Type="int" />
           <Property Name="CantCarros" Type="nchar" MaxLength="10" />
           <Property Name="FK_EstadoPropiedad" Type="int" />
+          <Property Name="FK_PlanCobro" Type="int" />
         </EntityType>
         <EntityType Name="Reservacion">
           <Key>
@@ -107,16 +112,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
           <Property Name="Costo" Type="money" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Tarjeta">
           <Key>
@@ -294,7 +289,6 @@
           <EntitySet Name="Reservacion" EntityType="Self.Reservacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RubroCobro" EntityType="Self.RubroCobro" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Factura_PlanCobro" Association="Self.FK_Factura_PlanCobro">
@@ -346,7 +340,8 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -410,18 +405,15 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FK_RubroCobro" Type="Int32" />
           <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_PlanCobro" FromRole="PlanCobro" ToRole="Factura" />
           <NavigationProperty Name="PlanxRubro" Relationship="Self.FK_PlanxRubro_PlanCobro" FromRole="PlanCobro" ToRole="PlanxRubro" />
         </EntityType>
         <EntityType Name="PlanxRubro">
           <Key>
-            <PropertyRef Name="Id" />
             <PropertyRef Name="FK_Rubro" />
             <PropertyRef Name="FK_Plan" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="FK_Rubro" Type="Int32" Nullable="false" />
           <Property Name="FK_Plan" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PlanCobro" Relationship="Self.FK_PlanxRubro_PlanCobro" FromRole="PlanxRubro" ToRole="PlanCobro" />
@@ -437,6 +429,7 @@
           <Property Name="CantPersonas" Type="Int32" />
           <Property Name="CantCarros" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="FK_EstadoPropiedad" Type="Int32" />
+          <Property Name="FK_PlanCobro" Type="Int32" />
           <NavigationProperty Name="EstadoPropiedad" Relationship="Self.FK_Propiedad_EstadoPropiedad" FromRole="Propiedad" ToRole="EstadoPropiedad" />
           <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Propiedad" FromRole="Propiedad" ToRole="Factura" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Propiedad_Usuario" FromRole="Propiedad" ToRole="Usuario" />
@@ -471,16 +464,6 @@
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Costo" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="PlanxRubro" Relationship="Self.FK_PlanxRubro_RubroCobro" FromRole="RubroCobro" ToRole="PlanxRubro" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Tarjeta">
           <Key>
@@ -651,7 +634,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MiCondominioEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MiCondominioDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AreaComunal" EntityType="Self.AreaComunal" />
           <EntitySet Name="EstadoIncidencia" EntityType="Self.EstadoIncidencia" />
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" />
@@ -663,7 +646,6 @@
           <EntitySet Name="Reservacion" EntityType="Self.Reservacion" />
           <EntitySet Name="Rol" EntityType="Self.Rol" />
           <EntitySet Name="RubroCobro" EntityType="Self.RubroCobro" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <AssociationSet Name="FK_Reservacion_AreaComunal" Association="Self.FK_Reservacion_AreaComunal">
@@ -720,7 +702,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MiCondominioDBModelStoreContainer" CdmEntityContainer="MiCondominioEntities">
+        <EntityContainerMapping StorageEntityContainer="MiCondominioDBModelStoreContainer" CdmEntityContainer="MiCondominioDBEntities">
           <EntitySetMapping Name="AreaComunal">
             <EntityTypeMapping TypeName="MiCondominioDBModel.AreaComunal">
               <MappingFragment StoreEntitySet="AreaComunal">
@@ -777,7 +759,6 @@
               <MappingFragment StoreEntitySet="PlanCobro">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="FK_RubroCobro" ColumnName="FK_RubroCobro" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -785,7 +766,6 @@
           <EntitySetMapping Name="PlanxRubro">
             <EntityTypeMapping TypeName="MiCondominioDBModel.PlanxRubro">
               <MappingFragment StoreEntitySet="PlanxRubro">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FK_Rubro" ColumnName="FK_Rubro" />
                 <ScalarProperty Name="FK_Plan" ColumnName="FK_Plan" />
               </MappingFragment>
@@ -800,6 +780,7 @@
                 <ScalarProperty Name="CantPersonas" ColumnName="CantPersonas" />
                 <ScalarProperty Name="CantCarros" ColumnName="CantCarros" />
                 <ScalarProperty Name="FK_EstadoPropiedad" ColumnName="FK_EstadoPropiedad" />
+                <ScalarProperty Name="FK_PlanCobro" ColumnName="FK_PlanCobro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -828,17 +809,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Costo" ColumnName="Costo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="MiCondominioDBModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

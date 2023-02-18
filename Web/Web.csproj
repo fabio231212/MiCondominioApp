@@ -262,7 +262,8 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Propiedad\Index.cshtml" />
-    <Content Include="Views\EstadoCuenta\Details.cshtml" />
+    <Content Include="Views\EstadoCuenta\Index.cshtml" />
+    <Content Include="Views\EstadoCuenta\DetalleEstadoCuenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

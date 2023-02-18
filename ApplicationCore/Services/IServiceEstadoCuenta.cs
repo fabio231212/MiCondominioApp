@@ -1,4 +1,5 @@
 ﻿using Infraestructure.Models;
+using Infraestructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace ApplicationCore.Services
     public interface IServiceEstadoCuenta
     {
         IEnumerable<Factura> GetAll();
-        IEnumerable<Factura> GetbyIdUsuario(int id);
+        IEnumerable<Factura> GetByIdProp(int id);
+
+        Factura GetDetalleEstadoCuenta(int idEstadoCuenta);
     }
 }

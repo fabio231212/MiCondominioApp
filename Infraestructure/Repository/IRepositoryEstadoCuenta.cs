@@ -10,6 +10,7 @@ namespace Infraestructure.Repository
     public interface IRepositoryEstadoCuenta
     {
         IEnumerable<Factura> GetAll();
-        IEnumerable<Factura> GetByIdUsuario(int id);
+        IEnumerable<Factura> GetByIdProp(int id);
+       Factura GetDetalleEstadoCuenta(int idEstadoCuenta);
     }
 }

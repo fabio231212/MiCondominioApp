@@ -1,0 +1,74 @@
+﻿@model Infraestructure.Models.Factura
+
+@{
+    ViewBag.Title = "DetalleEstadoCuenta";
+}
+
+<h2>DetalleEstadoCuenta</h2>
+
+<div>
+    <h4>Factura</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFacturacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaFacturacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarjeta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarjeta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlanCobro.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlanCobro.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Propiedad.NumPropiedad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Propiedad.NumPropiedad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarjeta1.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarjeta1.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
