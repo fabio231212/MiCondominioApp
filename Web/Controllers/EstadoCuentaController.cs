@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Services;
+﻿using Antlr.Runtime.Misc;
+using ApplicationCore.Services;
 using Infraestructure.Models;
 using Infraestructure.Repository;
 using System;
@@ -32,22 +33,39 @@ namespace Web.Controllers
         //}
 
         // GET: EstadoCuenta/Details/5
-        public ActionResult Index(int id)
+        public ActionResult Index(int? id, bool? active)
         {
+            //IEnumerable<Factura> lista = null;
+            //try
+            //{
+            //    IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+            //    lista = _Service.GetByIdProp(id);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Log.Error(ex, MethodBase.GetCurrentMethod());
+            //    TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+            //    return RedirectToAction("Default", "Error");
+            //}
+            //return View(lista);
+
+            IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
             IEnumerable<Factura> lista = null;
-            try
+
+            if (active.HasValue)
             {
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
-                lista = _Service.GetByIdProp(id);
+                lista = _Service.GetEstadoCuentaByFilter((bool)active,(int) id);
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
-                return RedirectToAction("Default", "Error");
+                lista = _Service.GetByIdProp((int) id);
             }
+
+
+
             return View(lista);
-        }
+        
+    }
 
         public ActionResult DetalleEstadoCuenta(int idEstadoCuenta)
         {
@@ -131,5 +149,7 @@ namespace Web.Controllers
                 return View();
             }
         }
+
+       
     }
 }
