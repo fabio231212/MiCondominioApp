@@ -1,0 +1,44 @@
+﻿@model Infraestructure.Models.PlanCobro
+
+
+@{
+    ViewBag.Title = "Detalle planes de cobro";
+}
+
+
+<div class="container">
+
+    <div style="display:flex; justify-content:center">
+        <h2 style="">Detalle planes de cobro</h2>
+    </div>
+
+
+    <h4>@Html.DisplayFor(model => model.Descripcion)</h4>
+    <hr />
+
+
+
+    <div class="row justify-content-around">
+        @foreach (var item in Model.RubroCobro)
+        {
+            <div class="card col-3">
+                <div class="card-img-top card-img-top text-center p-3">
+                    <i class="@("fa-solid fa-sack-dollar")" style="font-size:3em;"></i>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Descripcion)</h5>
+                    <p class="card-header">@Html.DisplayFor(modelItem => item.Costo)</p>
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>
+
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
