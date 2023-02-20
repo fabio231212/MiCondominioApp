@@ -12,6 +12,7 @@ namespace ApplicationCore.Services
     {
         IEnumerable<Factura> GetAll();
         IEnumerable<Factura> GetByIdProp(int id);
+        IEnumerable<Factura> GetEstadoCuentaByFilter(bool active, int id);
 
         Factura GetDetalleEstadoCuenta(int idEstadoCuenta);
     }

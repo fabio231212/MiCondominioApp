@@ -21,6 +21,11 @@ namespace ApplicationCore.Services
             IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
             return repository.GetByIdProp(id);
         }
+        public IEnumerable<Factura> GetEstadoCuentaByFilter(bool active, int id)
+        {
+            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
+            return repository.GetEstadoCuentaByFilter(active, id);
+        }
 
         public Factura GetDetalleEstadoCuenta(int idEstadoCuenta)
         {
