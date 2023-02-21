@@ -22,11 +22,16 @@ namespace Web
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.js"));
 
-            bundles.Add(new Bundle("~/bundles/complementos").Include(
-                   "~/Scripts/scripts.js", "~/Scripts/fontawesome/all.min.js"));
+            bundles.Add(new Bundle("~/bundles/dataTableInit").Include(
+                      "~/Scripts/dataTableInit.js"));
+
+            bundles.Add(new Bundle("~/bundles/complementos").Include("~/Scripts/fontawesome/all.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css"));
+                      "~/Content/Site/default-css.css", "~/Content/Site/metisMenu.css", "~/Content/Site/owl.carousel.min.css", "~/Content/Site/responsive.css", "~/Content/Site/slicknav.min.css",
+                      "~/Content/Site/styles.css", "~/Content/Site/themify-icons.css", "~/Content/Site/typography.css"));
+
+
 
 
             bundles.Add(new StyleBundle("~/Content/tableData").Include(
