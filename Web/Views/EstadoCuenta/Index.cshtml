@@ -5,61 +5,61 @@
 
 
 
-                                    @using (Html.BeginForm("Index", "EstadoCuenta", FormMethod.Get))
-                                    {
+@using (Html.BeginForm("Index", "EstadoCuenta", FormMethod.Get))
+{
 
-                                        @Html.DropDownList("Active", new SelectList(new List<SelectListItem>
-                                            {
-                                                 new SelectListItem { Text = "All", Value = "" },
-                                                 new SelectListItem { Text = "Active", Value = "true" },
-                                                 new SelectListItem { Text = "Inactive", Value = "false" }
-                                             }, "Value", "Text"), new { @class = "form-control", @id = "active-filter" })
-
-
-                                    }
+    @Html.DropDownList("Active", new SelectList(new List<SelectListItem>
+        {
+             new SelectListItem { Text = "All", Value = "" },
+             new SelectListItem { Text = "Active", Value = "true" },
+             new SelectListItem { Text = "Inactive", Value = "false" }
+         }, "Value", "Text"), new { @class = "form-control", @id = "active-filter" })
 
 
-
-                                        <div class="col-12 mt-5">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h4 class="header-title">Data Table Dark</h4>
-                                                    <div class="data-tables datatable-dark">
-                                                        <table id="dataTable3" class="text-center">
-                                                            <thead class="text-capitalize">
-                                                                <tr>
-                                                                    <th scope="col">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</th>
-                                                                    @*    <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>*@
-                                                                    <th scope="col">@Html.DisplayNameFor(model => model.Propiedad.NumPropiedad)</th>
-                                                                    <th scope="col">@Html.DisplayNameFor(model => model.FechaFacturacion)</th>
-                                                                    <th scope="col">@Html.DisplayNameFor(model => model.Total)</th>
-                                                                    <th scope="col">Acciones</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var item in Model)
-                                                                {
-                                                                    <tr class="selected-row">
-                                                                        <td>@Html.DisplayFor(modelItem => item.Propiedad.Usuario.Nombre)</td>
-                                                                        <td>@Html.DisplayFor(modelItem => item.Propiedad.NumPropiedad)</td>
-                                                                        <td>@Html.DisplayFor(modelItem => item.FechaFacturacion)</td>
-                                                                        <td>@Html.DisplayFor(modelItem => item.Total)</td>
-                                                                        <td>
-                                                                            <a title="Estado de Cuentas" href="@Url.Action("DetalleEstadoCuenta", "EstadoCuenta", new { idEstadoCuenta = item.Id })" class="btn bg-primary btn-sm px-3">
-                                                                                <i class="fas fa-eye text-white"></i>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+}
 
 
-                                      
+
+@*<div class="col-12 mt-5">*@
+    @*<div class="card">
+        <div class="card-body">*@
+            <h4 class="header-title">Información Esatdos de Cuenta</h4>
+            <div class="data-tables datatable-dark ">
+                <table id="dataTableEstadoCuenta" class="text-center">
+                    <thead class="text-capitalize">
+                        <tr>
+                            <th scope="col">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</th>
+                            @*    <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>*@
+                            <th scope="col">@Html.DisplayNameFor(model => model.Propiedad.NumPropiedad)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.FechaFacturacion)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.Total)</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="selected-row">
+                                <td>@Html.DisplayFor(modelItem => item.Propiedad.Usuario.Nombre)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Propiedad.NumPropiedad)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FechaFacturacion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                                <td>
+                                    <a title="Estado de Cuentas" href="@Url.Action("DetalleEstadoCuenta", "EstadoCuenta", new { idEstadoCuenta = item.Id })" class="btn bg-primary btn-sm px-3">
+                                        <i class="fas fa-eye text-white"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        @*</div>
+    </div>
+</div>*@
+
+
+
 @section scripts {
     <script>
         $(function () {
@@ -68,4 +68,21 @@
             });
         });
     </script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#dataTableEstadoCuenta').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "lengthChange": false,
+                "paging": false,
+                responsive: true
+            });
+        });
+
+    </script>
+
 }

@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.css" />
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/css/default-css.css" rel="stylesheet" />
     <link href="~/Content/css/metisMenu.css" rel="stylesheet" />
@@ -60,7 +61,7 @@
                                                     <span>Just Now</span>
                                                 </div>
                                             </a>
-                                        
+
                                         </div>
                                     </div>
                                 </li>
@@ -79,7 +80,7 @@
                                                     <span>3:15 PM</span>
                                                 </div>
                                             </a>
-                                         
+
                                         </div>
                                     </div>
                                 </li>
@@ -132,7 +133,7 @@
                                             <li>
                                                 @Html.ActionLink("Planes de Cobro", "Index", "PlanesCobro")
                                             </li>
-                                         </ul>
+                                        </ul>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0)"><i class="ti-pie-chart"></i><span>Charts</span></a>
@@ -235,7 +236,7 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+                <p>© Copyright 2023. All right reserved.</p>
             </div>
         </footer>
         <!-- footer area end-->
@@ -259,80 +260,70 @@
                     </div>
                 </div>
             </div>
-                <div id="settings" class="tab-pane fade">
-                    <div class="offset-settings">
-                        <h4>General Settings</h4>
-                        <div class="settings-list">
-                            <div class="s-settings">
-                                <div class="s-sw-title">
-                                    <h5>Notifications</h5>
-                                    <div class="s-swtich">
-                                        <input type="checkbox" id="switch1" />
-                                        <label for="switch1">Toggle</label>
-                                    </div>
+            <div id="settings" class="tab-pane fade">
+                <div class="offset-settings">
+                    <h4>General Settings</h4>
+                    <div class="settings-list">
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Notifications</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch1" />
+                                    <label for="switch1">Toggle</label>
                                 </div>
-                                <p>Keep it 'On' When you want to get all the notification.</p>
                             </div>
-                            <div class="s-settings">
-                                <div class="s-sw-title">
-                                    <h5>Show recent activity</h5>
-                                    <div class="s-swtich">
-                                        <input type="checkbox" id="switch2" />
-                                        <label for="switch2">Toggle</label>
-                                    </div>
+                            <p>Keep it 'On' When you want to get all the notification.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show recent activity</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch2" />
+                                    <label for="switch2">Toggle</label>
                                 </div>
-                                <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
                             </div>
-                            <div class="s-settings">
-                                <div class="s-sw-title">
-                                    <h5>Show your emails</h5>
-                                    <div class="s-swtich">
-                                        <input type="checkbox" id="switch3" />
-                                        <label for="switch3">Toggle</label>
-                                    </div>
+                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show your emails</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch3" />
+                                    <label for="switch3">Toggle</label>
                                 </div>
-                                <p>Show email so that easily find you.</p>
                             </div>
-                            <div class="s-settings">
-                                <div class="s-sw-title">
-                                    <h5>Show Task statistics</h5>
-                                    <div class="s-swtich">
-                                        <input type="checkbox" id="switch4" />
-                                        <label for="switch4">Toggle</label>
-                                    </div>
+                            <p>Show email so that easily find you.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show Task statistics</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch4" />
+                                    <label for="switch4">Toggle</label>
                                 </div>
-                                <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
                             </div>
-                            <div class="s-settings">
-                                <div class="s-sw-title">
-                                    <h5>Notifications</h5>
-                                    <div class="s-swtich">
-                                        <input type="checkbox" id="switch5" />
-                                        <label for="switch5">Toggle</label>
-                                    </div>
+                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Notifications</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch5" />
+                                    <label for="switch5">Toggle</label>
                                 </div>
-                                <p>Use checkboxes when looking for yes or no answers.</p>
                             </div>
+                            <p>Use checkboxes when looking for yes or no answers.</p>
                         </div>
                     </div>
                 </div>
-                </div>
             </div>
+        </div>
+    </div>
     <!-- offset area end -->
-
-
-    <script>
-
-        $(document).ready(function () {
-
-            $('#tableData').DataTable();
-
-        });
-
-    </script>
 
     @RenderSection("scripts", required: false)
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
     <script src="~/Scripts/js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="~/Scripts/js/popper.min.js"></script>
     <script src="~/Scripts/js/bar-chart.js"></script>
@@ -346,6 +337,7 @@
     <script src="~/Scripts/js/pie-chart.js"></script>
     <script src="~/Scripts/js/plugins.js"></script>
     <script src="~/Scripts/js/scripts.js"></script>
+
 
 
 </body>

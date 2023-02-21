@@ -6,16 +6,16 @@
 }
 
 <!-- Dark table start -->
-<div class="col-12 mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="header-title">Data Table Dark</h4>
+@*<div class="col-12 mt-5">*@
+    @*<div class="card">
+        <div class="card-body">*@
+            <h4 class="header-title">Información Propiedades</h4>
             <div class="data-tables datatable-dark">
-                <table id="dataTable3" class="text-center">
+                <table id="dataTablePropiedad" class="text-center">
                     <thead class="text-capitalize">
                         <tr>
                             <th scope="col">@Html.DisplayNameFor(model => model.NumPropiedad)</th>
-                                <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
+                            <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
                             <th scope="col"> @Html.DisplayNameFor(model => model.CantPersonas)</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -51,10 +51,22 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-</div>
+        @*</div>
+    </div>*@
+@*</div>*@
 <!-- Dark table end -->
 
+<script>
 
+    $(document).ready(function () {
+        $('#dataTablePropiedad').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+            },
+            "lengthChange": false,
+            "paging": false,
+            responsive: true
+        });
+    });
 
+</script>

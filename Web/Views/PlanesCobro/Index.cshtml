@@ -3,12 +3,12 @@
 
 
 
-<div class="col-12 mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="header-title">Data Table Dark</h4>
-            <div class="data-tables datatable-dark">
-                <table id="dataTable3" class="text-center">
+@*<div class="col-12 mt-5">*@
+    @*<div class="card">
+        <div class="card-body">*@
+            <h4 class="header-title">Información Planes de Cobro</h4>
+            <div class="">
+                <table id="dataTablePlanes" class="text-center datatable-dark">
                     <thead class="text-capitalize">
                         <tr>
                             <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
@@ -40,7 +40,21 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-</div>
+        @*</div>
+    </div>*@
+@*</div>*@
 
+<script>
+
+    $(document).ready(function () {
+        $('#dataTablePlanes').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+            },
+            "lengthChange": false,
+            "paging": false,
+            responsive : true
+        });
+    });
+
+</script>

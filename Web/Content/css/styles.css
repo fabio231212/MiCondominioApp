@@ -345,7 +345,9 @@
 /* mobile menu */
 
 .slicknav_menu {
-    background: #8255f7;
+    /*    background: #8255f7;*/
+    /*   background: #68c93a;*/
+    background: #5eb548;
     padding: 0;
     margin-top: 20px;
 }
@@ -449,7 +451,8 @@
     padding-left: 20px;
     padding-right: 40px;
     letter-spacing: 0;
-    background: #f3eeff;
+    /*    background: #f3eeff;*/
+    background: #f1ffee;
 }
 
 .search-box input::-webkit-input-placeholder {
@@ -713,12 +716,14 @@ ul.breadcrumbs {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    background: -webkit-linear-gradient(left, #8914fe 0%, #8063f5 100%);
-    background: linear-gradient(to right, #8914fe 0%, #8063f5 100%);
+    flex-wrap: wrap;
+    /*    background: -webkit-linear-gradient(left, #8914fe 0%, #8063f5 100%);
+    background: linear-gradient(to right, #8914fe 0%, #8063f5 100%);*/
+    background: -webkit-linear-gradient(left, #5eb548 0%, #80f563 100%);
+    background: linear-gradient(to right, #5eb548 0%, #80f563 100%);
     padding: 17px 38px;
     position: relative;
 }
