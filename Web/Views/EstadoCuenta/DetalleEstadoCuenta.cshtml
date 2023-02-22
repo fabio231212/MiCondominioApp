@@ -4,95 +4,124 @@
     ViewBag.Title = "DetalleEstadoCuenta";
 }
 
-<h2>DetalleEstadoCuenta</h2>
 
-<div class="container">
-    <h4>Factura</h4>
-    <hr />
+<hr />
 
 
-    <div class="row justify-content-between">
-        <!-- diplay cards as flexbox, direction column and space between -->
-        <div class="col-5 col-sm-4 p-3 justify-content-between bg-siteColor rounded align-items-center text-center text-white">
-            <!-- wrap text in a div -->
-            <div>
-                <h5>@Html.DisplayNameFor(model => model.PlanCobro.Descripcion)</h5>
-                <p>@Html.DisplayFor(model => model.PlanCobro.Descripcion)</p>
-                <p></p>
-                <div class="collapse collapse-example mb-3">
-                    <div class="row justify-content-around">
-                        <div class="col-5 fw-bold">Detalle</div>
-                        <div class="col-5 fw-bold">Costo</div>
-                        @foreach (var item in Model.PlanCobro.RubroCobro)
-                        {
-                            <div class="row justify-content-around text-center">
-                                <div class="col-4">@Html.DisplayFor(modelItem => item.Descripcion)</div>
-                                <div class="col-4">@Html.DisplayFor(modelItem => item.Costo)</div>
+
+
+
+
+
+
+
+
+
+<div class="main-content-inner">
+
+
+    <div class="row">
+
+
+        <div class="col-lg-6 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">Plan: @Model.PlanCobro.Descripcion</h4>
+                    @foreach (var item in Model.PlanCobro.RubroCobro)
+                    {
+                        <div id="@item.Descripcion" class="according accordion-s2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#@item.Id" aria-expanded="false">
+                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                    </a>
+                                </div>
+                                <div id="@item.Id" class="collapse" data-parent="#@item.Descripcion" style="">
+                                    <div class="card-body">
+                                        Precio: @Html.DisplayFor(modelItem => item.Costo) <br />
+                                    </div>
+                                </div>
                             </div>
-                            <hr>
-                        }
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-sm-1">
-            <button class="btn" id="btnVerDetalles" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-example" aria-expanded="false" aria-controls="collapseExample">
-                <i id="icon" class="fa-solid fa-arrow-down"></i><br />Ver detalle
-            </button>
-        </div>
-
-        <div class="col-5 col-sm-4 p-3 justify-content-between bg-siteColor rounded align-items-center text-center text-white">
-            <!-- wrap text in a div -->
-            <div>
-                <h5>@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</h5>
-                <p>@Html.DisplayFor(model => model.Propiedad.Usuario.Nombre)</p>
-                <p></p>
-                <div class="collapse collapse-example mb-3">
-                    <div class="row justify-content-around">
-
-                        <div class="row justify-content-around text-center">
-                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Cedula)</div>
-                            <div class="col-4">@Html.DisplayFor(model => model.Propiedad.Usuario.Cedula)</div>
                         </div>
-                        <hr>
-                        <div class="row justify-content-around text-center">
-                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</div>
-                            <div class="col-4">@Model.Propiedad.Usuario.Nombre @Model.Propiedad.Usuario.Apellido1 </div>
+                    }
+                    <div id="costo" class="according accordion-s2">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link collapsed" data-toggle="collapse" href="#collapCosto" aria-expanded="false">
+                                    @Html.DisplayNameFor(model => model.PlanCobro.Total)
+                                </a>
+                            </div>
+                            <div id="collapCosto" class="collapse" data-parent="#costo" style="">
+                                <div class="card-body">
+                                    @Html.DisplayFor(model => model.PlanCobro.Total)
+                                </div>
+                            </div>
                         </div>
-                        <hr>
-                        <div class="row justify-content-around text-center">
-                            <div class="col-4">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Email)</div>
-                            <div class="col-4">@Html.DisplayFor(model => model.Propiedad.Usuario.Email)</div>
-                        </div>
-                        <hr />
 
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="col-lg-6 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">@Html.DisplayNameFor(model => model.Propiedad.Usuario)</h4>
+                    <div id="nombre" class="according accordion-s2">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link collapsed" data-toggle="collapse" href="#collapUsuario" aria-expanded="false">
+                                    Nombre
+                                </a>
+                            </div>
+                            <div id="collapUsuario" class="collapse" data-parent="#nombre" style="">
+                                <div class="card-body">
+                                    @Model.Propiedad.Usuario.Nombre @Model.Propiedad.Usuario.Apellido1 @Model.Propiedad.Usuario.Apellido2
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="email" class="according accordion-s2">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link collapsed" data-toggle="collapse" href="#collapEmail" aria-expanded="false">
+                                    @Html.DisplayNameFor(model => model.Propiedad.Usuario.Email)
+                                </a>
+                            </div>
+                            <div id="collapEmail" class="collapse" data-parent="#email" style="">
+                                <div class="card-body">
+                                    @Html.DisplayFor(model => model.Propiedad.Usuario.Email)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 
 
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index", new { id = Model.Propiedad.Id })
-</p>
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#btnVerDetalles").click(function () {
-                if ($("#icon").hasClass("fa-arrow-down")) {
-                    $("#icon").removeClass("fa-arrow-down").addClass("fa-arrow-up");
-                } else if ($("#icon").hasClass("fa-arrow-up")) {
-                    $("#icon").removeClass("fa-arrow-up").addClass("fa-arrow-down");
-                }
+
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index", new { id = Model.Propiedad.Id })
+    </p>
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $("#btnVerDetalles").click(function () {
+                    if ($("#icon").hasClass("fa-arrow-down")) {
+                        $("#icon").removeClass("fa-arrow-down").addClass("fa-arrow-up");
+                    } else if ($("#icon").hasClass("fa-arrow-up")) {
+                        $("#icon").removeClass("fa-arrow-up").addClass("fa-arrow-down");
+                    }
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }
