@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+
+    var oUsuario = Session["usuario"] as dynamic;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -48,16 +52,16 @@
                                 <li id="full-view-exit"><i class="fa-solid fa-minimize"></i></li>
                                 <li class="dropdown">
                                     <i class="fa-solid fa-bell dropdown-toggle" data-toggle="dropdown">
-                                        <span>2</span>
+                                        @*<span>2</span>*@
                                     </i>
                                     <div class="dropdown-menu bell-notify-box notify-box">
-                                        <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
+                                        <span class="notify-title">Sus notificaciones</span>
                                         <div class="nofity-list">
-                                            <a href="#" class="notify-item">
-                                                <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
+                                            <a id="facPendientes" href="#" class="notify-item">
+                                                <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
                                                 <div class="notify-text">
-                                                    <p>You have Changed Your Password</p>
-                                                    <span>Just Now</span>
+                                                    <p id="mensajeFac"></p>
+                                                  @*  <span>Just Now</span>*@
                                                 </div>
                                             </a>
 
@@ -71,7 +75,7 @@
                                         <div class="nofity-list">
                                             <a href="#" class="notify-item">
                                                 <div class="notify-thumb">
-                                                    <img src="assets/images/author/author-img1.jpg" alt="image">
+                                                    <img src="~/Content/Images/author/author-img1.jpg" />
                                                 </div>
                                                 <div class="notify-text">
                                                     <p>Aglae Mayer</p>
@@ -92,11 +96,11 @@
                             <div class="user-profile m-0">
                                 @* <img src="~/Content/Images/shevas.png" width="40" height="40" />*@
                                 <img src="~/Content/Images/avatar.png" />
-                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Shebio <i class="fa fa-angle-down"></i></h4>
+                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">@oUsuario.Nombre<i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Message</a>
                                     <a class="dropdown-item" href="#">Settings</a>
-                                    <a class="dropdown-item" href="#">Log Out</a>
+                                    @Html.ActionLink("Cerrar Sesión", "Logout", "Home", new { @class = "dropdown-item" })
                                 </div>
                             </div>
                         </div>
@@ -336,7 +340,19 @@
     <script src="~/Scripts/js/pie-chart.js"></script>
     <script src="~/Scripts/js/plugins.js"></script>
     <script src="~/Scripts/js/scripts.js"></script>
+    <script>
+        $(document).ready(function () {
 
+            let facturasPendientes = @Session["facturasPendientes"];
+            if (facturasPendientes == 0) {
+                $("#facPendientes").hide();
+            } else {
+                $("#facPendientes").show();
+                $("#mensajeFac").text(facturasPendientes > 1 ? "Tiene " + facturasPendientes + " facturas pendientes" : "Tiene " + facturasPendientes + " factura pendiente");
+            }
+
+        });
+    </script>
 
 
 </body>

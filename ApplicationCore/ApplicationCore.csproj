@@ -55,6 +55,7 @@
     <Compile Include="Services\ServicePlanCobro.cs" />
     <Compile Include="Services\ServicePropiedad.cs" />
     <Compile Include="Services\ServiceUsuario.cs" />
+    <Compile Include="Utils\Utilitarios.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infraestructure\Infraestructure.csproj">

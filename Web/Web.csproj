@@ -139,6 +139,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Permisos\ValidarSesionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Log.cs" />
   </ItemGroup>
@@ -170,9 +171,45 @@
     <Content Include="Content\css\typography.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\themify.svg" />
+    <Content Include="Content\Images\author\author-img1.jpg" />
+    <Content Include="Content\Images\author\author-img2.jpg" />
+    <Content Include="Content\Images\author\author-img3.jpg" />
+    <Content Include="Content\Images\author\author-img4.jpg" />
+    <Content Include="Content\Images\author\avatar.png" />
     <Content Include="Content\Images\avatar.png" />
+    <Content Include="Content\Images\bg\singin-bg.jpg" />
+    <Content Include="Content\Images\blog\post-thumb1.jpg" />
+    <Content Include="Content\Images\blog\post-thumb2.jpg" />
+    <Content Include="Content\Images\card\card-img1.jpg" />
+    <Content Include="Content\Images\card\card-img10.jpg" />
+    <Content Include="Content\Images\card\card-img2.jpg" />
+    <Content Include="Content\Images\card\card-img3.jpg" />
+    <Content Include="Content\Images\card\card-img4.jpg" />
+    <Content Include="Content\Images\card\card-img5.jpg" />
+    <Content Include="Content\Images\card\card-img6.jpg" />
+    <Content Include="Content\Images\card\card-img7.jpg" />
+    <Content Include="Content\Images\card\card-img8.jpg" />
+    <Content Include="Content\Images\card\card-img9.jpg" />
+    <Content Include="Content\Images\icon\loader.gif" />
+    <Content Include="Content\Images\icon\logo.png" />
+    <Content Include="Content\Images\icon\logo2.png" />
+    <Content Include="Content\Images\icon\market-value\icon1.png" />
+    <Content Include="Content\Images\icon\market-value\icon2.png" />
+    <Content Include="Content\Images\icon\market-value\icon3.png" />
+    <Content Include="Content\Images\icon\market-value\icon4.png" />
+    <Content Include="Content\Images\icon\market-value\trends-down-icon.png" />
+    <Content Include="Content\Images\icon\market-value\trends-up-icon.png" />
+    <Content Include="Content\Images\icon\market-value\triangle-down.png" />
+    <Content Include="Content\Images\icon\market-value\triangle-up.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\media\media1.jpg" />
+    <Content Include="Content\Images\media\media2.jpg" />
     <Content Include="Content\Images\shevas.png" />
+    <Content Include="Content\Images\team\team-author1.jpg" />
+    <Content Include="Content\Images\team\team-author2.jpg" />
+    <Content Include="Content\Images\team\team-author3.jpg" />
+    <Content Include="Content\Images\team\team-author4.jpg" />
+    <Content Include="Content\Images\team\team-author5.jpg" />
     <Content Include="Content\tableData.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -255,7 +292,10 @@
     <Content Include="Content\fonts\themify.eot" />
     <Content Include="Content\fonts\themify.ttf" />
     <Content Include="Content\fonts\themify.woff" />
+    <Content Include="Content\Images\icon\market-value\Thumbs.db" />
+    <Content Include="Content\Images\icon\Thumbs.db" />
     <None Include="packages.config" />
+    <Content Include="Views\Usuario\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">

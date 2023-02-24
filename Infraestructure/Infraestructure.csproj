@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDashboardInfo.cs" />
     <Compile Include="Models\AreaComunal.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>

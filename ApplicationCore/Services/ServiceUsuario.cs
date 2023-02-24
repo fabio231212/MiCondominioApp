@@ -1,10 +1,12 @@
-﻿using Infraestructure.Models;
+﻿using ApplicationCore.Utils;
+using Infraestructure.Models;
 using Infraestructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 
 namespace ApplicationCore.Services
 {
@@ -26,6 +28,16 @@ namespace ApplicationCore.Services
         {
             IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
             return repositoryUsuario.GetUsuarioById(cedula);
+        }
+
+        public Usuario Login(string email, string clave)
+        {
+            
+            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
+            clave = Utilitarios.ConvertirSha256(clave);
+            return  repositoryUsuario.Login(email, clave);
+
+            
         }
 
         public Usuario Save(Usuario usuario)

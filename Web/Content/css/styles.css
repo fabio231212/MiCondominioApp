@@ -2359,10 +2359,10 @@ table.dataTable thead td {
     transition: all 0.3s ease 0s;
 }
 
-.form-gp.focused label {
-    top: -15px;
-    color: #7e74ff;
-}
+    .form-gp.focused label {
+        top: -15px;
+        color: #5eb548;
+    }
 
 .form-gp input {
     width: 100%;
@@ -2387,12 +2387,12 @@ table.dataTable thead td {
     color: #dad7d7;
 }
 
-.form-gp i {
-    position: absolute;
-    right: 5px;
-    color: #7e74ff;
-    font-size: 16px;
-}
+    .form-gp i {
+        position: absolute;
+        right: 5px;
+        color: #5eb548;
+        font-size: 16px;
+    }
 
 .form-gp.has-error, .form-gp.has-error label, .form-gp.has-error input, .form-gp.has-error input::placeholder, .form-gp.has-error i {
     color: var(--red);
