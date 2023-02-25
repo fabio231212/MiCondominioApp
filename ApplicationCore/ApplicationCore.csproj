@@ -48,10 +48,12 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IServiceEstadoCuenta.cs" />
+    <Compile Include="Services\IServiceEstadoPropiedad.cs" />
     <Compile Include="Services\IServicePlanCobro.cs" />
     <Compile Include="Services\IServicePropiedad.cs" />
     <Compile Include="Services\IServiceUsuario.cs" />
     <Compile Include="Services\ServiceEstadoCuenta.cs" />
+    <Compile Include="Services\ServiceEstadoPropiedad.cs" />
     <Compile Include="Services\ServicePlanCobro.cs" />
     <Compile Include="Services\ServicePropiedad.cs" />
     <Compile Include="Services\ServiceUsuario.cs" />

@@ -3,6 +3,7 @@ using Infraestructure.Repository.Models;
 using Infraestructure.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
@@ -73,7 +74,28 @@ namespace Infraestructure.Repository
 
         public Propiedad Save(Propiedad propiedad)
         {
-            throw new NotImplementedException();
+            int retorno = 0;
+            Propiedad oPropiedad = null;
+
+            using (MyContext ctx = new MyContext())
+            {
+                ctx.Configuration.LazyLoadingEnabled = false;
+                //Registradas: 1,2,3
+                //Actualizar: 1,3,4
+
+                //Insertar Libro
+                ctx.Propiedad.Add(propiedad);
+                //SaveChanges
+                //guarda todos los cambios realizados en el contexto de la base de datos.
+                retorno = ctx.SaveChanges();
+
+            }
+            
+
+            if (retorno >= 0)
+                oPropiedad = GetPropiedadByNumProp(propiedad.NumPropiedad);
+
+            return oPropiedad;
         }
     }
 }

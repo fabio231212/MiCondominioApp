@@ -43,8 +43,7 @@ namespace ApplicationCore.Services
         public Usuario Save(Usuario usuario)
         {
             IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            IEnumerable<Usuario> lista = repositoryUsuario.GetAll();
-            return lista.First();
+            return repositoryUsuario.Save(usuario);
         }
     }
 }
