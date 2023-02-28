@@ -24,7 +24,8 @@ namespace ApplicationCore.Services
 
         public Propiedad Save(Propiedad propiedad)
         {
-            throw new NotImplementedException();
+            IRepositoryPropiedad repository = new RepositoryPropiedad();
+            return repository.Save(propiedad);
         }
     }
 }

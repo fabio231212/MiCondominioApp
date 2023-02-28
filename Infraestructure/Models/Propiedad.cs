@@ -26,7 +26,7 @@ namespace Infraestructure.Models
         public string NumPropiedad { get; set; }
         public Nullable<int> FK_Usuario { get; set; }
         public Nullable<int> CantPersonas { get; set; }
-        public string CantCarros { get; set; }
+        public Nullable<int> CantCarros { get; set; }
         public Nullable<int> FK_EstadoPropiedad { get; set; }
         public Nullable<int> FK_PlanCobro { get; set; }
         public Nullable<System.DateTime> FechaInicio { get; set; }

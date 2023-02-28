@@ -296,6 +296,7 @@
     <Content Include="Content\Images\icon\Thumbs.db" />
     <None Include="packages.config" />
     <Content Include="Views\Usuario\Login.cshtml" />
+    <Content Include="Views\Propiedad\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">
