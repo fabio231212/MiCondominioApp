@@ -1,4 +1,5 @@
-﻿
+﻿@model Infraestructure.Models.Usuario
+
 @{
     Layout = null;
 }
@@ -46,30 +47,33 @@
             <div class="login-box ptb--100">
                 @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
+                    @Html.AntiForgeryToken()
                     <div class="login-form-head">
                         <h4>Inicio de Sesión</h4>
                         <p>Descubre todas las comodidades y servicios que ofrecemos en nuestro condomio</p>
                     </div>
                     <div class="login-form-body">
                         <div class="form-gp">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input name="email" type="email" id="exampleInputEmail1">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @for = "exampleInputEmail1" })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @name = "email", @id = "exampleInputEmail1" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             <i class="ti-email"></i>
                             <div class="text-danger"></div>
                         </div>
                         <div class="form-gp">
-                            <label for="exampleInputPassword1">Contraseña</label>
-                            <input name="clave" type="password" id="exampleInputPassword1">
+                            @Html.LabelFor(model => model.Clave, htmlAttributes: new { @for = "exampleInputPassword1" })
+                            @Html.EditorFor(model => model.Clave, new { htmlAttributes = new { @name = "clave", type = "password", @id = "exampleInputPassword1" } })
+                            @Html.ValidationMessageFor(model => model.Clave, "", new { @class = "text-danger" })
                             <i class="ti-lock"></i>
                             <div class="text-danger"></div>
                         </div>
                         <div class="row mb-4 rmber-area">
                             @*<div class="col-6">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                    <label class="custom-control-label" for="customControlAutosizing">Remember Me</label>
-                                </div>
-                            </div>*@
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                        <label class="custom-control-label" for="customControlAutosizing">Remember Me</label>
+                                    </div>
+                                </div>*@
                             <div class="col-12 text-right">
                                 <a href="#">Olvidó la contraseña?</a>
                             </div>
@@ -81,9 +85,9 @@
                             <p class="text-danger">@ViewData["Mensaje"]</p>
                         </div>
                     </div>
-                   
+
                 }
-                </div>
+            </div>
         </div>
     </div>
     <!-- login area end -->

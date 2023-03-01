@@ -4,6 +4,7 @@ using Infraestructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.ModelBinding;
@@ -12,6 +13,12 @@ namespace ApplicationCore.Services
 {
     public class ServiceUsuario : IServiceUsuario
     {
+        public void Delete(int cedula)
+        {
+            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
+            repositoryUsuario.Delete(cedula);
+        }
+
         public IEnumerable<Usuario> GetAll()
         {
             IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
@@ -32,18 +39,28 @@ namespace ApplicationCore.Services
 
         public Usuario Login(string email, string clave)
         {
-            
+
             IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
             clave = Utilitarios.ConvertirSha256(clave);
-            return  repositoryUsuario.Login(email, clave);
+            return repositoryUsuario.Login(email, clave);
 
-            
+
         }
 
-        public Usuario Save(Usuario usuario)
+        public void SaveOrUpdate(Usuario usuario)
         {
+            usuario.Clave = Utilitarios.ConvertirSha256(usuario.Clave);
             IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            return repositoryUsuario.Save(usuario);
+            if (GetUsuarioById(usuario.Cedula) == null)
+            {
+                repositoryUsuario.Save(usuario);
+            }
+            else
+            {
+                repositoryUsuario.Update(usuario);
+            }
         }
+
+
     }
 }

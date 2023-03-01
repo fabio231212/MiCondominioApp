@@ -10,9 +10,11 @@ namespace ApplicationCore.Services
     public interface IServiceUsuario
     {
         Usuario GetUsuarioById(int Cedula);
-        Usuario Save(Usuario usuario);
+        void SaveOrUpdate(Usuario usuario);
+        void Delete(int cedula);
         Usuario GetUsuario(string email, string password);
         IEnumerable<Usuario> GetAll();
         Usuario Login(string email, string clave);
+
     }
 }

@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\MyContext.cs" />
+    <Compile Include="Repository\IRepositoryRol.cs" />
     <Compile Include="Repository\RepositoryEstadoPropiedad.cs" />
     <Compile Include="Repository\IRepositoryEstadoPropiedad.cs" />
     <Compile Include="Repository\IRepositoryEstadoCuenta.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Repository\RepositoryEstadoCuenta.cs" />
     <Compile Include="Repository\RepositoryPlanCobro.cs" />
     <Compile Include="Repository\RepositoryPropiedad.cs" />
+    <Compile Include="Repository\RepositoryRol.cs" />
     <Compile Include="Repository\RepositoryUsuario.cs" />
     <Compile Include="Utils\Log.cs" />
   </ItemGroup>
