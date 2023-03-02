@@ -12,6 +12,7 @@ using Web.Utils;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class EstadoCuentaController : Controller
     {
         // GET: EstadoCuenta

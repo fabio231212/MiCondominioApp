@@ -3,7 +3,24 @@
     Layout = null;
 }
 
-<!doctype html>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div>
+    </div>
+</body>
+</html>
+
+@{
+    Layout = null;
+}
+
+
 <html class="no-js" lang="en">
 
 <head>
@@ -44,7 +61,7 @@
     <div class="login-area login-s2">
         <div class="container">
             <div class="login-box ptb--100">
-                @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Login", "Autentificacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="login-form-head">
                         <h4>Inicio de Sesión</h4>
@@ -65,11 +82,11 @@
                         </div>
                         <div class="row mb-4 rmber-area">
                             @*<div class="col-6">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                    <label class="custom-control-label" for="customControlAutosizing">Remember Me</label>
-                                </div>
-                            </div>*@
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                        <label class="custom-control-label" for="customControlAutosizing">Remember Me</label>
+                                    </div>
+                                </div>*@
                             <div class="col-12 text-right">
                                 <a href="#">Olvidó la contraseña?</a>
                             </div>
@@ -81,9 +98,9 @@
                             <p class="text-danger">@ViewData["Mensaje"]</p>
                         </div>
                     </div>
-                   
+
                 }
-                </div>
+            </div>
         </div>
     </div>
     <!-- login area end -->
