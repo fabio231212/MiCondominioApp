@@ -8,6 +8,7 @@ namespace Web.Permisos
 {
     public class ValidarSesionAttribute : ActionFilterAttribute
     {
+<<<<<<< Updated upstream
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (HttpContext.Current.Session["usuario"] == null)
@@ -17,5 +18,15 @@ namespace Web.Permisos
             base.OnActionExecuting(filterContext);
         }
 
+=======
+        //public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //{
+        //    if (HttpContext.Current.Session["usuario"] == null)
+        //    {
+        //        filterContext.Result = new RedirectResult("~/Usuario/Login");
+        //    }
+        //    base.OnActionExecuting(filterContext);
+        //}
+>>>>>>> Stashed changes
     }
 }
