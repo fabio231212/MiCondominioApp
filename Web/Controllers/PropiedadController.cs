@@ -15,6 +15,7 @@ using System.Web.UI.WebControls;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class PropiedadController : Controller
     {
         // GET: Propiedad
