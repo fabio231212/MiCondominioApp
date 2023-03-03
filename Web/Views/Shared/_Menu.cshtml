@@ -1,6 +1,7 @@
 ﻿@{
 
     var oUsuario = Session["usuario"] as dynamic;
+    var notificaciones = Session["Notificaciones"] as List<Infraestructure.Models.NotificacionUsuario>;
 }
 <!-- main header area start -->
 <div class="mainheader-area">
@@ -19,24 +20,31 @@
                     <ul class="notification-area">
                         <li id="full-view"><i class="fa-solid fa-maximize"></i></li>
                         <li id="full-view-exit"><i class="fa-solid fa-minimize"></i></li>
+
                         <li class="dropdown">
                             <i class="fa-solid fa-bell dropdown-toggle" data-toggle="dropdown">
-                                @*<span>2</span>*@
+                                <span>@notificaciones.Count</span>
                             </i>
                             <div class="dropdown-menu bell-notify-box notify-box">
                                 <span class="notify-title">Sus notificaciones</span>
-                                <div class="nofity-list">
-                                    <a id="facPendientes" href="#" class="notify-item">
-                                        <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
-                                        <div class="notify-text">
-                                            <p id="mensajeFac"></p>
-                                            @*  <span>Just Now</span>*@
+                                <div id="listaNotificaciones" class="nofity-list">
+                                    @foreach (var item in (List<Infraestructure.Models.NotificacionUsuario>)notificaciones)
+                                    {
+                                        <div class="notify-item mb-3">
+                                            <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
+                                            <div class="notify-text">
+                                                <p>@item.Notificacion.Descripcion</p>
+                                                <button class="notification-btn" value="@item.Id">Marcar como leída</button>
+                                            </div>
+                                            <hr />
                                         </div>
-                                    </a>
+                                    }
+
 
                                 </div>
                             </div>
                         </li>
+
                         <li class="dropdown">
                             <i class="fa fa-envelope dropdown-toggle" data-toggle="dropdown"><span>3</span></i>
                             <div class="dropdown-menu notify-box nt-enveloper-box">
@@ -91,24 +99,24 @@
                             </li>
                             @if (oUsuario.FK_Rol == 1)
                             {
-                            <li class="">
-                                <a href="javascript:void(0)">
-                                    <i class="ti-settings"></i><span>
-                                        Mantenimientos
-                                    </span>
-                                </a>
-                                <ul class="submenu">
-                                    <li>
-                                        @Html.ActionLink("Usuarios", "Index", "Usuario")
-                                    </li>
-                                    <li>
-                                        @Html.ActionLink("Propiedades", "Index", "Propiedad")
-                                    </li>
-                                    <li>
-                                        @Html.ActionLink("Planes de Cobro", "Index", "PlanesCobro")
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="">
+                                    <a href="javascript:void(0)">
+                                        <i class="ti-settings"></i><span>
+                                            Mantenimientos
+                                        </span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li>
+                                            @Html.ActionLink("Usuarios", "Index", "Usuario")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Propiedades", "Index", "Propiedad")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Planes de Cobro", "Index", "PlanesCobro")
+                                        </li>
+                                    </ul>
+                                </li>
                             }
                             <li>
                                 <a href="javascript:void(0)"><i class="ti-pie-chart"></i><span>Charts</span></a>
@@ -200,3 +208,29 @@
 </div>
 <!-- header area end -->
 <!-- page title area end -->
+@section Scripts{
+    <script type="text/javascript">
+
+            // Agregar evento click a los botones de notificación
+            $('.notification-btn').click(function () {
+                // Obtener el valor del botón
+                var idNotificacion = $(this).val();
+                var idUsuario = @oUsuario.Id;
+                // Hacer una solicitud AJAX al servidor
+                $.ajax({
+                    url: '/NotificacionUsuario/MarcarLeido',
+                    type: 'POST', // o 'GET' según lo que necesites
+                    data: { idNotificacion: idNotificacion, idUsuario: idUsuario }, // pasar el valor del botón como parámetro
+                    success: function (response) {
+                        $('#listaNotificaciones').html('');
+                        $('#listaNotificaciones').html(response);
+                        // Manejar la respuesta del servidor aquí
+                    },
+                    error: function (error) {
+                        // Manejar el error aquí
+                    }
+                });
+            });
+
+    </script>
+}

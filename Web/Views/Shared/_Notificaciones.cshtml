@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Infraestructure.Models.NotificacionUsuario>
+            @foreach (var item in Model)
+            {
+                <div class="notify-item">
+                    <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
+                    <div class="notify-text">
+                        <p>@item.Notificacion.Descripcion</p>
+                        <button class="notification-btn" value="@item.Id">Marcar como leída</button>
+                    </div>
+                </div>
+            }

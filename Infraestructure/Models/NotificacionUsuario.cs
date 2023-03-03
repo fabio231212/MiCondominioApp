@@ -12,19 +12,14 @@ namespace Infraestructure.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RubroCobro
+    public partial class NotificacionUsuario
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RubroCobro()
-        {
-            this.PlanCobro = new HashSet<PlanCobro>();
-        }
-    
+        public int IdUsuario { get; set; }
+        public int IdNotificacion { get; set; }
+        public Nullable<bool> Leida { get; set; }
         public int Id { get; set; }
-        public string Descripcion { get; set; }
-        public Nullable<decimal> Costo { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanCobro> PlanCobro { get; set; }
+        public virtual Notificacion Notificacion { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }
