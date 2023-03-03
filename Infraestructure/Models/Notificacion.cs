@@ -12,32 +12,18 @@ namespace Infraestructure.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Notificacion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Notificacion()
         {
             this.NotificacionUsuario = new HashSet<NotificacionUsuario>();
-            this.Propiedad = new HashSet<Propiedad>();
-            this.Reservacion = new HashSet<Reservacion>();
         }
     
         public int Id { get; set; }
-        public int Cedula { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
-        public string Email { get; set; }
-        public string Clave { get; set; }
-        public Nullable<int> FK_Rol { get; set; }
+        public string Descripcion { get; set; }
     
-        public virtual Incidencias Incidencias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificacionUsuario> NotificacionUsuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Propiedad> Propiedad { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reservacion> Reservacion { get; set; }
-        public virtual Rol Rol { get; set; }
     }
 }

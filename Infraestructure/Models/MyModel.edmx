@@ -58,6 +58,22 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="Descripcion" Type="text" />
           <Property Name="Archivo" Type="varbinary(max)" />
         </EntityType>-->
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="NotificacionUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdNotificacion" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdNotificacion" Type="int" Nullable="false" />
+          <Property Name="Leida" Type="bit" />
+        </EntityType>
         <EntityType Name="PlanCobro">
           <Key>
             <PropertyRef Name="Id" />
@@ -194,6 +210,30 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificacionUsuario_Notificacion1">
+          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notificacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdNotificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificacionUsuario_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlanxRubro_PlanCobro1">
           <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="1" />
           <End Role="PlanxRubro" Type="Self.PlanxRubro" Multiplicity="*" />
@@ -284,6 +324,8 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificacionUsuario" EntityType="Self.NotificacionUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanxRubro" EntityType="Self.PlanxRubro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Propiedad" EntityType="Self.Propiedad" Schema="dbo" store:Type="Tables" />
@@ -311,6 +353,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <AssociationSet Name="FK_Incidencias_Usuario" Association="Self.FK_Incidencias_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Notificacion1" Association="Self.FK_NotificacionUsuario_Notificacion1">
+            <End Role="Notificacion" EntitySet="Notificacion" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Usuario1" Association="Self.FK_NotificacionUsuario_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_PlanxRubro_PlanCobro1" Association="Self.FK_PlanxRubro_PlanCobro1">
             <End Role="PlanCobro" EntitySet="PlanCobro" />
@@ -400,6 +450,25 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <NavigationProperty Name="EstadoIncidencia" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="Incidencias" ToRole="EstadoIncidencia" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Incidencias_Usuario" FromRole="Incidencias" ToRole="Usuario" />
         </EntityType>
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NotificacionUsuario" Relationship="Self.FK_NotificacionUsuario_Notificacion1" FromRole="Notificacion" ToRole="NotificacionUsuario" />
+        </EntityType>
+        <EntityType Name="NotificacionUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdNotificacion" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdNotificacion" Type="Int32" Nullable="false" />
+          <Property Name="Leida" Type="Boolean" />
+          <NavigationProperty Name="Notificacion" Relationship="Self.FK_NotificacionUsuario_Notificacion1" FromRole="NotificacionUsuario" ToRole="Notificacion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="NotificacionUsuario" ToRole="Usuario" />
+        </EntityType>
         <EntityType Name="PlanCobro">
           <Key>
             <PropertyRef Name="Id" />
@@ -478,6 +547,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="Clave" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FK_Rol" Type="Int32" />
           <NavigationProperty Name="Incidencias" Relationship="Self.FK_Incidencias_Usuario" FromRole="Usuario" ToRole="Incidencias" />
+          <NavigationProperty Name="NotificacionUsuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="Usuario" ToRole="NotificacionUsuario" />
           <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Usuario" FromRole="Usuario" ToRole="Propiedad" />
           <NavigationProperty Name="Reservacion" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Usuario" ToRole="Reservacion" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
@@ -566,6 +636,30 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificacionUsuario_Notificacion1">
+          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notificacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdNotificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificacionUsuario_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Propiedad_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
@@ -612,6 +706,8 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" />
           <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" />
+          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" />
+          <EntitySet Name="NotificacionUsuario" EntityType="Self.NotificacionUsuario" />
           <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" />
           <EntitySet Name="Propiedad" EntityType="Self.Propiedad" />
           <EntitySet Name="Reservacion" EntityType="Self.Reservacion" />
@@ -646,6 +742,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <AssociationSet Name="FK_Incidencias_Usuario" Association="Self.FK_Incidencias_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Notificacion1" Association="Self.FK_NotificacionUsuario_Notificacion1">
+            <End Role="Notificacion" EntitySet="Notificacion" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Usuario1" Association="Self.FK_NotificacionUsuario_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Propiedad_Usuario" Association="Self.FK_Propiedad_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -718,6 +822,23 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
                 <ScalarProperty Name="FK_Estado" ColumnName="FK_Estado" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notificacion">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Notificacion">
+              <MappingFragment StoreEntitySet="Notificacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificacionUsuario">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.NotificacionUsuario">
+              <MappingFragment StoreEntitySet="NotificacionUsuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdNotificacion" ColumnName="IdNotificacion" />
+                <ScalarProperty Name="Leida" ColumnName="Leida" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

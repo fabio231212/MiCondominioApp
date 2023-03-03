@@ -30,6 +30,8 @@ namespace Infraestructure.Models
         public virtual DbSet<EstadoPropiedad> EstadoPropiedad { get; set; }
         public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Incidencias> Incidencias { get; set; }
+        public virtual DbSet<Notificacion> Notificacion { get; set; }
+        public virtual DbSet<NotificacionUsuario> NotificacionUsuario { get; set; }
         public virtual DbSet<PlanCobro> PlanCobro { get; set; }
         public virtual DbSet<Propiedad> Propiedad { get; set; }
         public virtual DbSet<Reservacion> Reservacion { get; set; }
