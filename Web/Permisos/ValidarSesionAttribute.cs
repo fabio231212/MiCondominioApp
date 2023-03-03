@@ -12,7 +12,7 @@ namespace Web.Permisos
         {
             if (HttpContext.Current.Session["usuario"] == null)
             {
-                filterContext.Result = new RedirectResult("~/Usuario/Login");
+                filterContext.Result = new RedirectResult("~/Autentificacion/Login");
             }
             base.OnActionExecuting(filterContext);
         }

@@ -30,15 +30,6 @@ namespace ApplicationCore.Services
             return repositoryUsuario.GetUsuarioById(cedula);
         }
 
-        public Usuario Login(string email, string clave)
-        {
-            
-            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            clave = Utilitarios.ConvertirSha256(clave);
-            return  repositoryUsuario.Login(email, clave);
-
-            
-        }
 
         public Usuario Save(Usuario usuario)
         {

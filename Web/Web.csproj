@@ -131,6 +131,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AutentificacionController.cs" />
     <Compile Include="Controllers\EstadoCuentaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanesCobroController.cs" />
@@ -295,8 +296,9 @@
     <Content Include="Content\Images\icon\market-value\Thumbs.db" />
     <Content Include="Content\Images\icon\Thumbs.db" />
     <None Include="packages.config" />
-    <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Propiedad\Create.cshtml" />
+    <Content Include="Views\Autentificacion\Login.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">

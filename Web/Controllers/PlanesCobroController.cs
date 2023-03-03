@@ -10,6 +10,7 @@ using Web.Utils;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class PlanesCobroController : Controller
     {
         // GET: PlanesCobro

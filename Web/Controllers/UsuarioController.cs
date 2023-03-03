@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         // GET: Usuario
@@ -101,40 +102,7 @@ namespace Web.Controllers
         }
 
 
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(Usuario oUsuario)
-        {
-            int facturasPendientes = 0;
-            IServiceUsuario serviceUsuario = new ServiceUsuario();
-            oUsuario = serviceUsuario.Login(oUsuario.Email, oUsuario.Clave);
-            foreach (Propiedad itemProp in oUsuario.Propiedad)
-            {
-                foreach (Factura itemFac in itemProp.Factura)
-                {
-                    if ((bool)itemFac.Activo)
-                    {
-                        facturasPendientes++;
-                    }
-                }
-            }
-            if (oUsuario != null)
-            {
-                Session["facturasPendientes"] = facturasPendientes; 
-                Session["Usuario"] = oUsuario;
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ViewData["Mensaje"] = "Usuario no encontrado";
-                return View();
-            }
-
-        }
+      
 
 
     }
