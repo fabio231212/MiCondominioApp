@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -50,6 +50,31 @@
           <Property Name="FK_Estado" Type="int" />
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Informacion">
+          <Property Name="Id" Type="int" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Archivo" Type="varbinary(max)" />
+        </EntityType>-->
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="NotificacionUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdNotificacion" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdNotificacion" Type="int" Nullable="false" />
+          <Property Name="Leida" Type="bit" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="PlanCobro">
           <Key>
@@ -126,7 +151,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Clave" Type="nvarchar" MaxLength="500" />
           <Property Name="FK_Rol" Type="int" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
         </EntityType>
         <Association Name="FK_Factura_PlanCobro">
           <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="0..1" />
@@ -185,6 +210,30 @@
             </Principal>
             <Dependent Role="Incidencias">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificacionUsuario_Notificacion1">
+          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notificacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdNotificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificacionUsuario_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -278,6 +327,8 @@
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificacionUsuario" EntityType="Self.NotificacionUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanxRubro" EntityType="Self.PlanxRubro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Propiedad" EntityType="Self.Propiedad" Schema="dbo" store:Type="Tables" />
@@ -305,6 +356,14 @@
           <AssociationSet Name="FK_Incidencias_Usuario" Association="Self.FK_Incidencias_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Notificacion1" Association="Self.FK_NotificacionUsuario_Notificacion1">
+            <End Role="Notificacion" EntitySet="Notificacion" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Usuario1" Association="Self.FK_NotificacionUsuario_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_PlanxRubro_PlanCobro1" Association="Self.FK_PlanxRubro_PlanCobro1">
             <End Role="PlanCobro" EntitySet="PlanCobro" />
@@ -335,7 +394,8 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -392,6 +452,27 @@
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <NavigationProperty Name="EstadoIncidencia" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="Incidencias" ToRole="EstadoIncidencia" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Incidencias_Usuario" FromRole="Incidencias" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NotificacionUsuario" Relationship="Self.FK_NotificacionUsuario_Notificacion1" FromRole="Notificacion" ToRole="NotificacionUsuario" />
+        </EntityType>
+        <EntityType Name="NotificacionUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdNotificacion" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdNotificacion" Type="Int32" Nullable="false" />
+          <Property Name="Leida" Type="Boolean" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Notificacion" Relationship="Self.FK_NotificacionUsuario_Notificacion1" FromRole="NotificacionUsuario" ToRole="Notificacion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="NotificacionUsuario" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="PlanCobro">
           <Key>
@@ -470,11 +551,12 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Clave" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FK_Rol" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
           <NavigationProperty Name="Incidencias" Relationship="Self.FK_Incidencias_Usuario" FromRole="Usuario" ToRole="Incidencias" />
+          <NavigationProperty Name="NotificacionUsuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="Usuario" ToRole="NotificacionUsuario" />
           <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Usuario" FromRole="Usuario" ToRole="Propiedad" />
           <NavigationProperty Name="Reservacion" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Usuario" ToRole="Reservacion" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Reservacion_AreaComunal">
           <End Role="AreaComunal" Type="Self.AreaComunal" Multiplicity="1" />
@@ -560,6 +642,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificacionUsuario_Notificacion1">
+          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notificacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdNotificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificacionUsuario_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="NotificacionUsuario" Type="Self.NotificacionUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificacionUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Propiedad_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
@@ -606,6 +712,8 @@
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" />
           <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" />
+          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" />
+          <EntitySet Name="NotificacionUsuario" EntityType="Self.NotificacionUsuario" />
           <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" />
           <EntitySet Name="Propiedad" EntityType="Self.Propiedad" />
           <EntitySet Name="Reservacion" EntityType="Self.Reservacion" />
@@ -640,6 +748,14 @@
           <AssociationSet Name="FK_Incidencias_Usuario" Association="Self.FK_Incidencias_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Incidencias" EntitySet="Incidencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Notificacion1" Association="Self.FK_NotificacionUsuario_Notificacion1">
+            <End Role="Notificacion" EntitySet="Notificacion" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificacionUsuario_Usuario1" Association="Self.FK_NotificacionUsuario_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="NotificacionUsuario" EntitySet="NotificacionUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Propiedad_Usuario" Association="Self.FK_Propiedad_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -715,6 +831,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Notificacion">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Notificacion">
+              <MappingFragment StoreEntitySet="Notificacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificacionUsuario">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.NotificacionUsuario">
+              <MappingFragment StoreEntitySet="NotificacionUsuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdNotificacion" ColumnName="IdNotificacion" />
+                <ScalarProperty Name="Leida" ColumnName="Leida" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PlanCobro">
             <EntityTypeMapping TypeName="MiCondominioDBModel.PlanCobro">
               <MappingFragment StoreEntitySet="PlanCobro">
@@ -777,7 +911,6 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="MiCondominioDBModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -786,6 +919,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="FK_Rol" ColumnName="FK_Rol" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
