@@ -4,63 +4,66 @@
     ViewBag.Title = "Index";
 }
 
-<h4 class="header-title">Información Usuarios</h4>
-<div class="data-tables datatable-dark">
-    <table id="dataTableUsuario" class="text-center">
-        <thead class="text-capitalize">
-            <tr>
-                <th scope="col">@Html.DisplayNameFor(model => model.Cedula)</th>
-                <th scope="col"> @Html.DisplayNameFor(model => model.Nombre)</th>
-                <th scope="col"> @Html.DisplayNameFor(model => model.Apellido1)</th>
-                <th scope="col"> @Html.DisplayNameFor(model => model.Apellido2)</th>
-                <th scope="col"> @Html.DisplayNameFor(model => model.Email)</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="selected-row">
-                    <td> @Html.DisplayFor(modelItem => item.Cedula)</td>
-                    @*  <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>*@
-                    <td> @Html.DisplayFor(modelItem => item.Nombre)</td>
-                    <td> @Html.DisplayFor(modelItem => item.Apellido1)</td>
-                    <td> @Html.DisplayFor(modelItem => item.Apellido2)</td>
-                    <td> @Html.DisplayFor(modelItem => item.Email)</td>
+<h2>Index</h2>
 
-                    <td>
-                        <a title="Detalles" href="@Url.Action("Details", "Usuario", new { id = item.Id })" class="btn bg-primary btn-sm px-3">
-                            <i class="fas fa-eye text-white"></i>
-                        </a>
-                        <a title="Eliminar" href="#" class="btn bg-danger btn-sm px-3">
-                            <i class="fas fa-trash text-white"></i>
-                        </a>
-                        <a title="Editar" href="@Url.Action("Edit", "Usuario", new { cedula = item.Cedula })" class="btn bg-warning btn-sm px-3">
-                            <i class="fas fa-edit text-white"></i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <a title="Editar" href="@Url.Action("Create", "Usuario")" class="btn bg-dark"><i class= "fa-solid fa-user-plus text-white"></i></a>
-</div>
-@*</div>
-    </div>*@
-@*</div>*@
-<!-- Dark table end -->
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cedula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Clave)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FK_Rol)
+        </th>
+        <th></th>
+    </tr>
 
-<script>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cedula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Clave)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FK_Rol)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
 
-    $(document).ready(function () {
-        $('#dataTableUsuario').DataTable({
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-            },
-            "lengthChange": false,
-            "paging": false,
-            responsive: true
-        });
-    });
-
-</script>
+</table>
