@@ -83,6 +83,7 @@ namespace Infraestructure.Repository
         public Usuario GetUsuario(string email, string password)
         {
             Usuario oUsuario = null;
+            //user
             try
             {
                 using (MyContext ctx = new MyContext())
