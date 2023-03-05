@@ -22,6 +22,8 @@ namespace Web.Controllers
         {
             int facturasPendientes = 0;
             IServiceAutentificacion service = new ServiceAutentificacion();
+            IServiceNotificacionUsuario _ServiceNotificacionUsuario = new ServiceNotificacionUsuario();
+            
             oUsuario = service.Login(oUsuario.Email, oUsuario.Clave);
             foreach (Propiedad itemProp in oUsuario.Propiedad)
             {
@@ -35,9 +37,15 @@ namespace Web.Controllers
             }
             if (oUsuario != null)
             {
+                IEnumerable<NotificacionUsuario> listaNotificaciones = _ServiceNotificacionUsuario.GetNotificacionByIdUser(oUsuario.Id);
+                if(listaNotificaciones != null)
+                {
+                    Session["Notificaciones"] = listaNotificaciones;
+                }
                 FormsAuthentication.SetAuthCookie(oUsuario.Email, true);
 
                 Session["Usuario"] = oUsuario;
+                
                 return RedirectToAction("Index", "Home");
             }
             else

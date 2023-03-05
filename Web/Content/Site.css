@@ -12382,3 +12382,7 @@ body {
     font-size: 0.75rem;
     border-radius: 0.25rem !important;
 }
+.btnNotificacion:hover {
+    color: #5eb548;
+    cursor: pointer;
+}

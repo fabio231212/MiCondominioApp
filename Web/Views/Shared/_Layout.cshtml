@@ -1,4 +1,7 @@
-﻿
+﻿@{
+
+    var oUsuario = Session["usuario"] as dynamic;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -146,19 +149,43 @@
     <script src="~/Scripts/js/plugins.js"></script>
     <script src="~/Scripts/js/scripts.js"></script>
     @*<script>
-        $(document).ready(function () {
+            $(document).ready(function () {
 
-            let facturasPendientes = @Session["facturasPendientes"];
-            if (facturasPendientes == 0) {
-                $("#facPendientes").hide();
-            } else {
-                $("#facPendientes").show();
-                $("#mensajeFac").text(facturasPendientes > 1 ? "Tiene " + facturasPendientes + " facturas pendientes" : "Tiene " + facturasPendientes + " factura pendiente");
-            }
+                let facturasPendientes = @Session["facturasPendientes"];
+                if (facturasPendientes == 0) {
+                    $("#facPendientes").hide();
+                } else {
+                    $("#facPendientes").show();
+                    $("#mensajeFac").text(facturasPendientes > 1 ? "Tiene " + facturasPendientes + " facturas pendientes" : "Tiene " + facturasPendientes + " factura pendiente");
+                }
 
-        });
-    </script>*@
+            });
+        </script>*@
 
+    <script type="text/javascript">
+
+            // Agregar evento click a los botones de notificación
+        $(document).on('click', '.notification-btn', function () {
+                // Obtener el valor del botón
+                var idNotificacion = $(this).val();
+                var idUsuario = @oUsuario.Id;
+                // Hacer una solicitud AJAX al servidor
+                $.ajax({
+                    url: '/NotificacionUsuario/MarcarLeido',
+                    type: 'POST', // o 'GET' según lo que necesites
+                    data: { idNotificacion: idNotificacion, idUsuario: idUsuario }, // pasar el valor del botón como parámetro
+                    success: function (response) {
+                        $('#listaNotificaciones').html('');
+                        $('#listaNotificaciones').html(response);
+                        // Manejar la respuesta del servidor aquí
+                    },
+                    error: function (error) {
+                        // Manejar el error aquí
+                    }
+                });
+            });
+
+    </script>
 
 </body>
 </html>
