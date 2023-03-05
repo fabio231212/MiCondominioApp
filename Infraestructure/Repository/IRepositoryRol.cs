@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public interface IRepositoryUsuario
+    public interface IRepositoryRol
     {
-        Usuario GetUsuarioById(int cedula);
-
-        Usuario GetUsuario(string email, string password);
-        IEnumerable<Usuario> GetAll();
-
+        IEnumerable<Rol> GetAll();
     }
 }
