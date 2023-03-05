@@ -15,7 +15,6 @@ namespace Infraestructure.Repository
         void Update(Usuario usuario);
         Usuario GetUsuario(string email, string password);
         IEnumerable<Usuario> GetAll();
-        Usuario Login(string email, string clave);
 
     }
 }

@@ -137,6 +137,7 @@
     <Compile Include="Controllers\NotificacionUsuarioController.cs" />
     <Compile Include="Controllers\PlanesCobroController.cs" />
     <Compile Include="Controllers\PropiedadController.cs" />
+    <Compile Include="Controllers\RubroCobroController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -302,7 +303,9 @@
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\Create.cshtml" />
     <Content Include="Views\Autentificacion\Login.cshtml" />
-
+    <Content Include="Views\RubroCobro\Index.cshtml" />
+    <Content Include="Views\RubroCobro\Create.cshtml" />
+    <Content Include="Views\RubroCobro\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">
