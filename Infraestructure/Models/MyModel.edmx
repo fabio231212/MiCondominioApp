@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -51,13 +51,6 @@
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Informacion">
-          <Property Name="Id" Type="int" />
-          <Property Name="Descripcion" Type="text" />
-          <Property Name="Archivo" Type="varbinary(max)" />
-        </EntityType>-->
         <EntityType Name="PlanCobro">
           <Key>
             <PropertyRef Name="Id" />
@@ -133,6 +126,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Clave" Type="nvarchar" MaxLength="500" />
           <Property Name="FK_Rol" Type="int" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Factura_PlanCobro">
           <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="0..1" />
@@ -341,8 +335,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -481,6 +474,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Usuario" FromRole="Usuario" ToRole="Propiedad" />
           <NavigationProperty Name="Reservacion" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Usuario" ToRole="Reservacion" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Reservacion_AreaComunal">
           <End Role="AreaComunal" Type="Self.AreaComunal" Multiplicity="1" />
@@ -783,6 +777,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="MiCondominioDBModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public interface IServiceUsuario
+    public interface IServiceRol
     {
-        Usuario GetUsuarioById(int Cedula);
-        Usuario GetUsuario(string email, string password);
-        IEnumerable<Usuario> GetAll();
+        IEnumerable<Rol> GetAll();
     }
 }

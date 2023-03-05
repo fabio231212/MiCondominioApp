@@ -165,7 +165,7 @@ namespace Web.Controllers
         }
 
 
-       public ActionResult Login()
+        public ActionResult Login()
         {
             return View();
         }
@@ -174,71 +174,30 @@ namespace Web.Controllers
         public ActionResult Login(Usuario oUsuario)
         {
             int facturasPendientes = 0;
-
-            try
+            IServiceUsuario serviceUsuario = new ServiceUsuario();
+            oUsuario = serviceUsuario.Login(oUsuario.Email, oUsuario.Clave);
+            foreach (Propiedad itemProp in oUsuario.Propiedad)
             {
-                IServiceUsuario serviceUsuario = new ServiceUsuario();
-                if (ModelState.IsValid)
+                foreach (Factura itemFac in itemProp.Factura)
                 {
-                    oUsuario = serviceUsuario.Login(oUsuario.Email, oUsuario.Clave);
-                }
-                else
-                {
-                    return View("Login", oUsuario);
-                }
-
-                if (oUsuario != null)
-                {
-
-                    foreach (Propiedad itemProp in oUsuario.Propiedad)
+                    if ((bool)itemFac.Activo)
                     {
-                        foreach (Factura itemFac in itemProp.Factura)
-                        {
-                            if ((bool)itemFac.Activo)
-                            {
-                                facturasPendientes++;
-                            }
-                        }
+                        facturasPendientes++;
                     }
-
-                    Session["facturasPendientes"] = facturasPendientes;
-                    Session["Usuario"] = oUsuario;
-                    return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ViewData["Mensaje"] = "Usuario no encontrado";
-                    return View();
-                }
-
-
             }
-            catch (Exception ex)
+            if (oUsuario != null)
             {
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                ViewData["Mensaje"] = "Error al procesar los datos!" + ex.Message;
+                Session["facturasPendientes"] = facturasPendientes; 
+                Session["Usuario"] = oUsuario;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewData["Mensaje"] = "Usuario no encontrado";
                 return View();
             }
 
-
-
-        }
-
-        private SelectList listaRoles(int? idRol = 0)
-        {
-            IServiceRol _ServiceRol = new ServiceRol();
-            IEnumerable<Rol> lista = _ServiceRol.GetAll();
-            return new SelectList(lista, "Id", "Nombre", idRol);
-        }
-
-        private SelectList listaActivo(bool? activo = true)
-        {
-            var lista = new List<SelectListItem>
-                {
-                      new SelectListItem { Value = "true", Text = "Activo" },
-                      new SelectListItem { Value = "false", Text = "Inactivo" }
-                };
-            return new SelectList(lista, "Value", "Text", activo);
         }
 
 
