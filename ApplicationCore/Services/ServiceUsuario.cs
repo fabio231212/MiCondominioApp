@@ -30,5 +30,11 @@ namespace ApplicationCore.Services
             return repositoryUsuario.GetUsuarioById(cedula);
         }
 
+
+        public Usuario Save(Usuario usuario)
+        {
+            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
+            return repositoryUsuario.Save(usuario);
+        }
     }
 }

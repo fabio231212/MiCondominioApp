@@ -44,15 +44,7 @@ namespace Infraestructure.Models
 
         [Display(Name = "Cédula")]
         public string Cedula { get; set; }
-
-        [Required(ErrorMessage = "{0} es un dato requerido")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "{0} es un dato requerido")]
-        public string Clave { get; set; }
-
     }
-
 
     internal partial class PlanCobroMetadata
     {

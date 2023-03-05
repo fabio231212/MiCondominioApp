@@ -14,39 +14,6 @@ namespace Infraestructure.Repository
 {
     public class RepositoryUsuario : IRepositoryUsuario
     {
-        public void Delete(int cedula)
-        {
-            try
-            {
-
-                using (MyContext ctx = new MyContext())
-                {
-
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    Usuario oUsuario = ctx.Usuario.FirstOrDefault(p => p.Cedula == cedula);
-                    //Eliminar el usuario de manera logica segun su Cedula
-                    oUsuario.Activo = false;
-
-                    ctx.SaveChanges();
-
-
-                }
-            }
-
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-        }
-
         public IEnumerable<Usuario> GetAll()
         {
             IEnumerable<Usuario> lista = null;
@@ -58,7 +25,7 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     //Obtener todos los libros incluyendo el autor
-                    lista = ctx.Usuario.Include("Propiedad").ToList();
+                    lista = ctx.Usuario.Include("Rol").ToList();
 
                     //lista = ctx.Libro.Include(x=>x.Autor).ToList();
 
@@ -120,7 +87,7 @@ namespace Infraestructure.Repository
                     ctx.Configuration.LazyLoadingEnabled = false;
                     usuario = ctx.Usuario.
                      Include("Rol").
-                    Where(p => p.Cedula == cedula).
+                    Where(p => p.Id == cedula).
                     FirstOrDefault<Usuario>();
                 }
                 return usuario;
@@ -140,79 +107,9 @@ namespace Infraestructure.Repository
         }
 
 
-        public void Save(Usuario usuario)
+        public Usuario Save(Usuario usuario)
         {
-            try
-            {
-
-                using (MyContext ctx = new MyContext())
-                {
-
-                    ctx.Configuration.LazyLoadingEnabled = false;
-
-                    Usuario oUsuario = usuario;
-
-                    if (oUsuario != null)
-                    {
-                        ctx.Usuario.Add(oUsuario);
-                        ctx.SaveChanges();
-                    }
-
-                }
-            }
-
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
+            throw new NotImplementedException();
         }
-
-        public void Update(Usuario usuario)
-        {
-            try
-            {
-
-                using (MyContext ctx = new MyContext())
-                {
-
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    Usuario oUsuario = ctx.Usuario.FirstOrDefault(p => p.Cedula == usuario.Cedula);
-
-                    oUsuario.Nombre = usuario.Nombre;
-                    oUsuario.Apellido1 = usuario.Apellido1;
-                    oUsuario.Apellido2 = usuario.Apellido2;
-                    oUsuario.Email = usuario.Email;
-                    oUsuario.FK_Rol = usuario.FK_Rol;
-                    oUsuario.Activo = usuario.Activo;
-                    oUsuario.Clave= usuario.Clave;
-
-                    ctx.SaveChanges();
-
-
-                }
-            }
-
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-        }
-
     }
 }

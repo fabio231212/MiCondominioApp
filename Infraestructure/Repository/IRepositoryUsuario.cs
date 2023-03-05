@@ -10,9 +10,8 @@ namespace Infraestructure.Repository
     public interface IRepositoryUsuario
     {
         Usuario GetUsuarioById(int cedula);
-
+        Usuario Save(Usuario usuario);
         Usuario GetUsuario(string email, string password);
         IEnumerable<Usuario> GetAll();
-
     }
 }
