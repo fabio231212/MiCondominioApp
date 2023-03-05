@@ -30,6 +30,7 @@ namespace Infraestructure.Models
         public string Email { get; set; }
         public string Clave { get; set; }
         public Nullable<int> FK_Rol { get; set; }
+        public Nullable<bool> Activo { get; set; }
     
         public virtual Incidencias Incidencias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

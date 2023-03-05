@@ -37,6 +37,7 @@ namespace ApplicationCore.Services
             return repositoryUsuario.GetUsuarioById(cedula);
         }
 
+<<<<<<< HEAD
         public Usuario Login(string email, string clave)
         {
 
@@ -46,6 +47,8 @@ namespace ApplicationCore.Services
 
 
         }
+=======
+>>>>>>> master
 
         public void SaveOrUpdate(Usuario usuario)
         {

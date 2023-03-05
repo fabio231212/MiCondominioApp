@@ -54,12 +54,14 @@
     <Compile Include="Services\IServiceEstadoPropiedad.cs" />
     <Compile Include="Services\IServicePlanCobro.cs" />
     <Compile Include="Services\IServicePropiedad.cs" />
+    <Compile Include="Services\IServiceRol.cs" />
     <Compile Include="Services\IServiceUsuario.cs" />
     <Compile Include="Services\ServiceEstadoCuenta.cs" />
     <Compile Include="Services\ServiceEstadoPropiedad.cs" />
     <Compile Include="Services\ServiceNotificacionUsuario.cs" />
     <Compile Include="Services\ServicePlanCobro.cs" />
     <Compile Include="Services\ServicePropiedad.cs" />
+    <Compile Include="Services\ServiceRol.cs" />
     <Compile Include="Services\ServiceUsuario.cs" />
     <Compile Include="Utils\Utilitarios.cs" />
   </ItemGroup>

@@ -10,22 +10,27 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public class RepositoryAutentificacion : IRepositoryAutentificacion
+    public class RepositoryRol : IRepositoryRol
     {
-        public Usuario Login(string email, string clave)
+        public IEnumerable<Rol> GetAll()
         {
-            Usuario usuario = null;
+            IEnumerable<Rol> lista = null;
             try
             {
+
+
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    usuario = ctx.Usuario.FirstOrDefault(u => u.Email == email && u.Clave == clave);
-                    usuario = ctx.Usuario.Include("Propiedad.Factura").FirstOrDefault(u => u.Email == email && u.Clave == clave);
+                    //Obtener todos los libros incluyendo el autor
+                    lista = ctx.Rol.ToList();
+
+                    //lista = ctx.Libro.Include(x=>x.Autor).ToList();
 
                 }
-                return usuario;
+                return lista;
             }
+
             catch (DbUpdateException dbEx)
             {
                 string mensaje = "";

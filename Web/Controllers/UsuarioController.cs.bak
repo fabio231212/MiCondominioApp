@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
-using Infraestructure.Utils;
 
 namespace Web.Controllers
 {
@@ -166,28 +165,39 @@ namespace Web.Controllers
         }
 
 
-       public ActionResult Login()
+        public ActionResult Login()
         {
             return View();
         }
 
-     
-
-        private SelectList listaRoles(int? idRol = 0)
+        [HttpPost]
+        public ActionResult Login(Usuario oUsuario)
         {
-            IServiceRol _ServiceRol = new ServiceRol();
-            IEnumerable<Rol> lista = _ServiceRol.GetAll();
-            return new SelectList(lista, "Id", "Nombre", idRol);
-        }
-
-        private SelectList listaActivo(bool? activo = true)
-        {
-            var lista = new List<SelectListItem>
+            int facturasPendientes = 0;
+            IServiceUsuario serviceUsuario = new ServiceUsuario();
+            oUsuario = serviceUsuario.Login(oUsuario.Email, oUsuario.Clave);
+            foreach (Propiedad itemProp in oUsuario.Propiedad)
+            {
+                foreach (Factura itemFac in itemProp.Factura)
                 {
-                      new SelectListItem { Value = "true", Text = "Activo" },
-                      new SelectListItem { Value = "false", Text = "Inactivo" }
-                };
-            return new SelectList(lista, "Value", "Text", activo);
+                    if ((bool)itemFac.Activo)
+                    {
+                        facturasPendientes++;
+                    }
+                }
+            }
+            if (oUsuario != null)
+            {
+                Session["facturasPendientes"] = facturasPendientes; 
+                Session["Usuario"] = oUsuario;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewData["Mensaje"] = "Usuario no encontrado";
+                return View();
+            }
+
         }
 
 

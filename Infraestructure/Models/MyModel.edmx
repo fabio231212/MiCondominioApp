@@ -144,6 +144,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Clave" Type="nvarchar" MaxLength="500" />
           <Property Name="FK_Rol" Type="int" />
+          <Property Name="Activo" Type="bit" />
         </EntityType>
         <Association Name="FK_Factura_PlanCobro">
           <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="0..1" />
@@ -461,9 +462,6 @@
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
           <Property Name="IdNotificacion" Type="Int32" Nullable="false" />
           <Property Name="Leida" Type="Boolean" />
-          <NavigationProperty Name="Notificacion" Relationship="Self.FK_NotificacionUsuario_Notificacion1" FromRole="NotificacionUsuario" ToRole="Notificacion" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="NotificacionUsuario" ToRole="Usuario" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="PlanCobro">
           <Key>
@@ -542,6 +540,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Clave" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FK_Rol" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
           <NavigationProperty Name="Incidencias" Relationship="Self.FK_Incidencias_Usuario" FromRole="Usuario" ToRole="Incidencias" />
           <NavigationProperty Name="NotificacionUsuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="Usuario" ToRole="NotificacionUsuario" />
           <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Usuario" FromRole="Usuario" ToRole="Propiedad" />
@@ -832,10 +831,6 @@
           <EntitySetMapping Name="NotificacionUsuario">
             <EntityTypeMapping TypeName="MiCondominioDBModel.NotificacionUsuario">
               <MappingFragment StoreEntitySet="NotificacionUsuario">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdNotificacion" ColumnName="IdNotificacion" />
-                <ScalarProperty Name="Leida" ColumnName="Leida" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -909,6 +904,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="FK_Rol" ColumnName="FK_Rol" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

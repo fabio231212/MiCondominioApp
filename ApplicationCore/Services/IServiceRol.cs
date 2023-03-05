@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Repository
+namespace ApplicationCore.Services
 {
-    public interface IRepositoryAutentificacion
+    public interface IServiceRol
     {
-        Usuario Login(string email, string clave);
+        IEnumerable<Rol> GetAll();
     }
 }

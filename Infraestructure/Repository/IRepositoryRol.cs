@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public interface IRepositoryAutentificacion
+    public interface IRepositoryRol
     {
-        Usuario Login(string email, string clave);
+        IEnumerable<Rol> GetAll();
     }
 }
