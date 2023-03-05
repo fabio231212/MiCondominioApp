@@ -21,15 +21,22 @@
                         <li id="full-view"><i class="fa-solid fa-maximize"></i></li>
                         <li id="full-view-exit"><i class="fa-solid fa-minimize"></i></li>
 
-                        <li class="dropdown">
+                        <li class="dropdown" id="listaNotificaciones">
                             <i class="fa-solid fa-bell dropdown-toggle" data-toggle="dropdown">
                                 <span>@notificaciones.Count</span>
                             </i>
                             <div class="dropdown-menu bell-notify-box notify-box">
                                 <span class="notify-title">Sus notificaciones</span>
-                                <div id="listaNotificaciones" class="nofity-list">
+                                <div class="nofity-list">
+                                    @if (notificaciones.Count == 0)
+                                    {
+                                    <div class="notify-item mb-3">
+                                        <p class="text-center">Todo está tranquilo por acá...</p>
+                                    </div>
+                                    }
                                     @foreach (var item in (List<Infraestructure.Models.NotificacionUsuario>)notificaciones)
                                     {
+
                                         <div class="notify-item mb-3">
                                             <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
                                             <div class="notify-text">
@@ -38,11 +45,12 @@
                                             </div>
                                             <hr />
                                         </div>
+
                                     }
 
 
                                 </div>
-                            </div>
+                                        </div>
                         </li>
 
                         <li class="dropdown">
@@ -208,7 +216,7 @@
 </div>
 <!-- header area end -->
 <!-- page title area end -->
-@section Scripts{
+@*@section Scripts{
     <script type="text/javascript">
 
             // Agregar evento click a los botones de notificación
@@ -233,4 +241,4 @@
             });
 
     </script>
-}
+}*@

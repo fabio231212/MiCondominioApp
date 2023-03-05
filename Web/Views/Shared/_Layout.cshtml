@@ -165,7 +165,7 @@
     <script type="text/javascript">
 
             // Agregar evento click a los botones de notificación
-            $('.notification-btn').click(function () {
+        $(document).on('click', '.notification-btn', function () {
                 // Obtener el valor del botón
                 var idNotificacion = $(this).val();
                 var idUsuario = @oUsuario.Id;

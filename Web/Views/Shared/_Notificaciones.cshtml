@@ -1,11 +1,25 @@
 ﻿@model IEnumerable<Infraestructure.Models.NotificacionUsuario>
-            @foreach (var item in Model)
-            {
-                <div class="notify-item">
-                    <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
-                    <div class="notify-text">
-                        <p>@item.Notificacion.Descripcion</p>
-                        <button class="notification-btn" value="@item.Id">Marcar como leída</button>
-                    </div>
+@{
+    var notificaciones = Session["Notificaciones"] as List<Infraestructure.Models.NotificacionUsuario>;
+}
+<i class="fa-solid fa-bell dropdown-toggle" data-toggle="dropdown">
+    <span>@notificaciones.Count</span>
+</i>
+<div class="dropdown-menu bell-notify-box notify-box">
+    <span class="notify-title">Sus notificaciones</span>
+    <div class="nofity-list">
+        @foreach (var item in Model)
+        {
+            <div class="notify-item mb-3">
+                <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
+                <div class="notify-text">
+                    <p>@item.Notificacion.Descripcion</p>
+                    <button class="notification-btn" value="@item.Id">Marcar como leída</button>
                 </div>
-            }
+                <hr />
+            </div>
+        }
+
+
+    </div>
+</div>
