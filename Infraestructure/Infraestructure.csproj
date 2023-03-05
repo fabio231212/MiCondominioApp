@@ -124,6 +124,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\MyContext.cs" />
     <Compile Include="Repository\IRepositoryAutentificacion.cs" />
+    <Compile Include="Repository\IRepositoryNotificacionUsuario.cs" />
+    <Compile Include="Repository\IRepositoryRol.cs" />
     <Compile Include="Repository\RepositoryAutentificacion.cs" />
     <Compile Include="Repository\RepositoryEstadoPropiedad.cs" />
     <Compile Include="Repository\IRepositoryEstadoPropiedad.cs" />
