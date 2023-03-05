@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
+using Infraestructure.Utils;
 
 namespace Web.Controllers
 {
@@ -170,59 +171,7 @@ namespace Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Login(Usuario oUsuario)
-        {
-            int facturasPendientes = 0;
-
-            try
-            {
-                IServiceUsuario serviceUsuario = new ServiceUsuario();
-                if (ModelState.IsValid)
-                {
-                    oUsuario = serviceUsuario.Login(oUsuario.Email, oUsuario.Clave);
-                }
-                else
-                {
-                    return View("Login", oUsuario);
-                }
-
-                if (oUsuario != null)
-                {
-
-                    foreach (Propiedad itemProp in oUsuario.Propiedad)
-                    {
-                        foreach (Factura itemFac in itemProp.Factura)
-                        {
-                            if ((bool)itemFac.Activo)
-                            {
-                                facturasPendientes++;
-                            }
-                        }
-                    }
-
-                    Session["facturasPendientes"] = facturasPendientes;
-                    Session["Usuario"] = oUsuario;
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ViewData["Mensaje"] = "Usuario no encontrado";
-                    return View();
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                ViewData["Mensaje"] = "Error al procesar los datos!" + ex.Message;
-                return View();
-            }
-
-
-
-        }
+     
 
         private SelectList listaRoles(int? idRol = 0)
         {
