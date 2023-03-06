@@ -47,7 +47,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_Usuario" Type="int" />
-          <Property Name="FK_Estado" Type="int" />
+          <Property Name="FK_Estado" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
         </EntityType>
@@ -190,7 +190,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_EstadoIncidencia">
-          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="0..1" />
+          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="1" />
           <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EstadoIncidencia">
@@ -202,14 +202,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Incidencias">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="FK_Usuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -447,7 +447,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FK_Usuario" Type="Int32" />
-          <Property Name="FK_Estado" Type="Int32" />
+          <Property Name="FK_Estado" Type="Int32" Nullable="false" DefaultValue="1" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <NavigationProperty Name="EstadoIncidencia" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="Incidencias" ToRole="EstadoIncidencia" />
@@ -571,7 +571,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_EstadoIncidencia">
-          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="0..1" />
+          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="1" />
           <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EstadoIncidencia">
@@ -631,14 +631,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Incidencias">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="FK_Usuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

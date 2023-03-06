@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IServiceIncidencias.cs" />
     <Compile Include="Services\IServiceNotificacionUsuario.cs" />
     <Compile Include="Services\ServiceAutentificacion.cs" />
     <Compile Include="Services\IServiceAutentificacion.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Services\IServiceUsuario.cs" />
     <Compile Include="Services\ServiceEstadoCuenta.cs" />
     <Compile Include="Services\ServiceEstadoPropiedad.cs" />
+    <Compile Include="Services\ServiceIncidencias.cs" />
     <Compile Include="Services\ServiceNotificacionUsuario.cs" />
     <Compile Include="Services\ServicePlanCobro.cs" />
     <Compile Include="Services\ServicePropiedad.cs" />
