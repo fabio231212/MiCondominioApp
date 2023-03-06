@@ -2,6 +2,7 @@
 using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -52,44 +53,111 @@ namespace Web.Controllers
         // GET: PlanesCobro/Create
         public ActionResult Create()
         {
+            ViewBag.IdRubro = listaRubro();
             return View();
         }
 
-        // POST: PlanesCobro/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [HttpGet]
+        public ActionResult GetPrecioRubro(int rubroId)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
+            var rubro = _ServiceRubro.GetRubroById(rubroId);
+            return Json(new { precio = rubro.Costo }, JsonRequestBehavior.AllowGet);
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        private MultiSelectList listaRubro(ICollection<RubroCobro> rubros = null)
+        {
+            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
+            IEnumerable<RubroCobro> lista = _ServiceRubro.GetAll();
+            //Seleccionar categorias
+            int[] listaRubrosSeleccionados= null;
+            if (rubros != null)
             {
-                return View();
+                listaRubrosSeleccionados = rubros.Select(c => c.Id).ToArray();
             }
+
+            return new MultiSelectList(lista, "Id", "Descripcion", listaRubrosSeleccionados);
         }
 
         // GET: PlanesCobro/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            IServicePlanCobro _ServicePlan = new ServicePlanCobro();
+            PlanCobro plan = null;
+
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                plan = _ServicePlan.GetById(Convert.ToInt32(id));
+                if (plan == null)
+                {
+                    TempData["Message"] = "No existe el plan solicitado";
+                    TempData["Redirect"] = "PlanesCobro";
+                    TempData["Redirect-Action"] = "Index";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
+                //Listados
+                ViewBag.IdRubro = listaRubro(plan.RubroCobro);
+                return View(plan);
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "PlanesCobros";
+                TempData["Redirect-Action"] = "Index";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
         }
 
         // POST: PlanesCobro/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Save(PlanCobro plan, string[] rubrosSeleccionados)
         {
+
+            //Servicio Libro
+            IServicePlanCobro _ServicePlan = new ServicePlanCobro();
             try
             {
-                // TODO: Add update logic here
+
+                if (ModelState.IsValid)
+                {
+                 _ServicePlan.SaveOrUpdate(plan, rubrosSeleccionados);
+                }
+                else
+                {
+                    ViewBag.IdRubro = listaRubro(plan.RubroCobro);
+                    //Cargar la vista crear o actualizar
+                    //Lógica para cargar vista correspondiente
+                    if (plan.Id > 0)
+                    {
+                        return (ActionResult)View("Edit", plan);
+                    }
+                    else
+                    {
+                        return View("Create", plan);
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Libro";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 

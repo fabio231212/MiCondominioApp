@@ -27,17 +27,12 @@ namespace ApplicationCore.Services
             IRepositoryPlanCobro repository = new RepositoryPlanCobro();
             return repository.GetById(id);
         }
-        public void SaveOrUpdate(PlanCobro plan)
+        public void SaveOrUpdate(PlanCobro plan, String[] rubrosSeleccionados)
         {
             IRepositoryPlanCobro repository = new RepositoryPlanCobro();
-            if (GetById(plan.Id) == null)
-            {
-                repository.Save(plan);
-            }
-            else
-            {
-                repository.Update(plan);
-            }
+                repository.SaveOrUpdate(plan, rubrosSeleccionados);
+            
+
         }
     }
 }

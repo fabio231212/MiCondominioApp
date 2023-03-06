@@ -11,8 +11,7 @@ namespace Infraestructure.Repository
     {
         IEnumerable<PlanCobro> GetAll();
         PlanCobro GetById(int id);
-        void Save(Usuario usuario);
+        void SaveOrUpdate(PlanCobro plan, String[] rubrosSeleccionados);
         void Delete(int cedula);
-        void Update(Usuario usuario);
     }
 }

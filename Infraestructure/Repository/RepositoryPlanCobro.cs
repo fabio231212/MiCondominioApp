@@ -1,8 +1,10 @@
-﻿using Infraestructure.Models;
+﻿using ApplicationCore.Services;
+using Infraestructure.Models;
 using Infraestructure.Repository.Models;
 using Infraestructure.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
@@ -72,7 +74,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public void Save(PlanCobro plan, String[] rubrosSeleccionados)
+        public void SaveOrUpdate(PlanCobro plan, String[] rubrosSeleccionados)
         {
 
             PlanCobro oPlan= null;
@@ -82,12 +84,49 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
+                    oPlan = GetById((int)plan.Id);
+                    IRepositoryRubroCobro _RepositoryRubro = new RepositoryRubroCobro();
 
 
+                    if (oPlan == null)
+                    {
 
-                        ctx.PlanCobro.Add(oPlan);
+                        if (rubrosSeleccionados != null)
+                        {
+
+                            plan.RubroCobro = new List<RubroCobro>();
+                            foreach (var rubro in rubrosSeleccionados)
+                            {
+                                var rubroToAdd = _RepositoryRubro.GetRubroById(int.Parse(rubro));
+                                ctx.RubroCobro.Attach(rubroToAdd);
+                                plan.RubroCobro.Add(rubroToAdd);
+
+
+                            }
+                        }
+
+
+                        ctx.PlanCobro.Add(plan);
+                        ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        ctx.PlanCobro.Add(plan);
+                        ctx.Entry(plan).State = EntityState.Modified;
                         ctx.SaveChanges();
 
+                        var rubrosSeleccionadosID = new HashSet<string>(rubrosSeleccionados);
+                        if (rubrosSeleccionados != null)
+                        {
+                            ctx.Entry(plan).Collection(p => p.RubroCobro).Load();
+                            var nuevoRubro = ctx.RubroCobro
+                             .Where(x => rubrosSeleccionadosID.Contains(x.Id.ToString())).ToList();
+                            plan.RubroCobro = nuevoRubro;
+
+                            ctx.Entry(plan).State = EntityState.Modified;
+                            ctx.SaveChanges();
+                        }
+                    }
 
                 }
             }
@@ -106,9 +145,5 @@ namespace Infraestructure.Repository
             }
         }
 
-        public void Update(Usuario usuario)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
