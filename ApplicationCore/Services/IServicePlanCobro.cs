@@ -11,5 +11,7 @@ namespace ApplicationCore.Services
     {
         IEnumerable<PlanCobro> GetAll();
         PlanCobro GetById(int id);
+        void SaveOrUpdate(PlanCobro plan);
+        void Delete(int id);
     }
 }

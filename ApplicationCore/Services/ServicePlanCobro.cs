@@ -10,6 +10,12 @@ namespace ApplicationCore.Services
 {
     public class ServicePlanCobro : IServicePlanCobro
     {
+        public void Delete(int id)
+        {
+            IRepositoryPlanCobro repository = new RepositoryPlanCobro();
+            repository.Delete(id);
+        }
+
         public IEnumerable<PlanCobro> GetAll()
         {
             IRepositoryPlanCobro repository = new RepositoryPlanCobro();
@@ -20,6 +26,18 @@ namespace ApplicationCore.Services
         {
             IRepositoryPlanCobro repository = new RepositoryPlanCobro();
             return repository.GetById(id);
+        }
+        public void SaveOrUpdate(PlanCobro plan)
+        {
+            IRepositoryPlanCobro repository = new RepositoryPlanCobro();
+            if (GetById(plan.Id) == null)
+            {
+                repository.Save(plan);
+            }
+            else
+            {
+                repository.Update(plan);
+            }
         }
     }
 }

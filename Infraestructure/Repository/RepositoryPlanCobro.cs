@@ -12,6 +12,11 @@ namespace Infraestructure.Repository
 {
     public class RepositoryPlanCobro : IRepositoryPlanCobro
     {
+        public void Delete(int cedula)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<PlanCobro> GetAll()
         {
             try
@@ -65,6 +70,45 @@ namespace Infraestructure.Repository
                 Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
                 throw;
             }
+        }
+
+        public void Save(PlanCobro plan, String[] rubrosSeleccionados)
+        {
+
+            PlanCobro oPlan= null;
+            try
+            {
+
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+
+
+                        ctx.PlanCobro.Add(oPlan);
+                        ctx.SaveChanges();
+
+
+                }
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public void Update(Usuario usuario)
+        {
+            throw new NotImplementedException();
         }
     }
 }
