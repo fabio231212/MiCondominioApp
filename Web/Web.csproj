@@ -306,6 +306,8 @@
     <Content Include="Views\RubroCobro\Index.cshtml" />
     <Content Include="Views\RubroCobro\Create.cshtml" />
     <Content Include="Views\RubroCobro\Edit.cshtml" />
+    <Content Include="Views\PlanesCobro\Create.cshtml" />
+    <Content Include="Views\PlanesCobro\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">
