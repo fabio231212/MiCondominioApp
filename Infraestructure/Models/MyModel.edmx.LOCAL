@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -47,17 +47,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_Usuario" Type="int" />
-          <Property Name="FK_Estado" Type="int" Nullable="false" />
+          <Property Name="FK_Estado" Type="int" />
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Informacion">
-          <Property Name="Id" Type="int" />
-          <Property Name="Descripcion" Type="text" />
-          <Property Name="Archivo" Type="varbinary(max)" />
-        </EntityType>-->
         <EntityType Name="Notificacion">
           <Key>
             <PropertyRef Name="Id" />
@@ -151,7 +144,6 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Clave" Type="nvarchar" MaxLength="500" />
           <Property Name="FK_Rol" Type="int" />
-          <Property Name="Activo" Type="bit" />
         </EntityType>
         <Association Name="FK_Factura_PlanCobro">
           <End Role="PlanCobro" Type="Self.PlanCobro" Multiplicity="0..1" />
@@ -190,7 +182,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_EstadoIncidencia">
-          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="1" />
+          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="0..1" />
           <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EstadoIncidencia">
@@ -202,14 +194,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Incidencias">
-              <PropertyRef Name="FK_Usuario" />
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -394,8 +386,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -447,7 +438,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FK_Usuario" Type="Int32" />
-          <Property Name="FK_Estado" Type="Int32" Nullable="false" />
+          <Property Name="FK_Estado" Type="Int32" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <NavigationProperty Name="EstadoIncidencia" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="Incidencias" ToRole="EstadoIncidencia" />
@@ -470,9 +461,9 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
           <Property Name="IdNotificacion" Type="Int32" Nullable="false" />
           <Property Name="Leida" Type="Boolean" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Notificacion" Relationship="Self.FK_NotificacionUsuario_Notificacion1" FromRole="NotificacionUsuario" ToRole="Notificacion" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="NotificacionUsuario" ToRole="Usuario" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="PlanCobro">
           <Key>
@@ -551,7 +542,6 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Clave" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FK_Rol" Type="Int32" />
-          <Property Name="Activo" Type="Boolean" />
           <NavigationProperty Name="Incidencias" Relationship="Self.FK_Incidencias_Usuario" FromRole="Usuario" ToRole="Incidencias" />
           <NavigationProperty Name="NotificacionUsuario" Relationship="Self.FK_NotificacionUsuario_Usuario1" FromRole="Usuario" ToRole="NotificacionUsuario" />
           <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Usuario" FromRole="Usuario" ToRole="Propiedad" />
@@ -571,7 +561,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_EstadoIncidencia">
-          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="1" />
+          <End Role="EstadoIncidencia" Type="Self.EstadoIncidencia" Multiplicity="0..1" />
           <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EstadoIncidencia">
@@ -631,14 +621,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Incidencias_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="*" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Incidencias" Type="Self.Incidencias" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Incidencias">
-              <PropertyRef Name="FK_Usuario" />
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -842,10 +832,10 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <EntitySetMapping Name="NotificacionUsuario">
             <EntityTypeMapping TypeName="MiCondominioDBModel.NotificacionUsuario">
               <MappingFragment StoreEntitySet="NotificacionUsuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="IdNotificacion" ColumnName="IdNotificacion" />
                 <ScalarProperty Name="Leida" ColumnName="Leida" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -919,7 +909,6 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="FK_Rol" ColumnName="FK_Rol" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

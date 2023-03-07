@@ -66,6 +66,17 @@
                     $('#listaIncidencias').html('');
                     $('#listaIncidencias').html(response);
                     // Manejar la respuesta del servidor aquí
+                    $(document).ready(function () {
+                        $('#dataTableIncidencias').DataTable({
+                            responsive: true,
+                            "language": {
+                                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                            },
+                            "lengthChange": false,
+                            "paging": false,
+
+                        });
+                    });
                 },
                 error: function (error) {
                     // Manejar el error aquí

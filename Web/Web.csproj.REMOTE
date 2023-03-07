@@ -134,8 +134,6 @@
     <Compile Include="Controllers\AutentificacionController.cs" />
     <Compile Include="Controllers\EstadoCuentaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IncidenciaController.cs" />
-    <Compile Include="Controllers\NotificacionUsuarioController.cs" />
     <Compile Include="Controllers\PlanesCobroController.cs" />
     <Compile Include="Controllers\PropiedadController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -285,7 +283,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Image\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\NotificacionUsuario\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -300,15 +297,8 @@
     <Content Include="Content\Images\icon\Thumbs.db" />
     <None Include="packages.config" />
     <Content Include="Views\Propiedad\Create.cshtml" />
-    <Content Include="Views\Usuario\Edit.cshtml" />
-    <Content Include="Views\Usuario\Create.cshtml" />
     <Content Include="Views\Autentificacion\Login.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
-    <Content Include="Views\Shared\_Notificaciones.cshtml" />
-    <Content Include="Views\Incidencia\IndexUsuario.cshtml" />
-    <Content Include="Views\Shared\Incidencias\_Incidencias.cshtml" />
-    <Content Include="Views\Incidencia\IndexAdmin.cshtml" />
-    <Content Include="Views\Shared\Incidencias\_ListaActualizada.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">

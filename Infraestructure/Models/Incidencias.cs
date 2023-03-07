@@ -14,12 +14,6 @@ namespace Infraestructure.Models
     
     public partial class Incidencias
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Incidencias()
-        {
-            this.FK_Estado = 1;
-        }
-    
         public int Id { get; set; }
         public Nullable<int> FK_Usuario { get; set; }
         public int FK_Estado { get; set; }

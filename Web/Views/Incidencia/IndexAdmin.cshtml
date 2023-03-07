@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Infraestructure.Models.Incidencias>
+
+
+@using (Html.BeginForm("IndexAdmin", "Incidencia", FormMethod.Get))
+{
+    <div class="form-group">
+        <label class="col-form-label">Estado</label>
+        @Html.DropDownList("EstadoIncidencia",
+                 (SelectList)ViewBag.listaEstadoIncidencia,
+                 "Seleccione un estado",
+                 htmlAttributes: new { @class = "form-control", @id = "active-filter" })
+    </div>
+
+}
+
+<div class="data-tables datatable-dark" id="listaIncidencias">
+    <table id="dataTableIncidencias" class="text-center">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Fecha)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.EstadoIncidencia)</th>
+                <th scope="col"> Acciones</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr class="selected-row">
+                    <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
+                    <td> @Html.DisplayFor(modelItem => item.Fecha)</td>
+                    <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoIncidencia.Nombre)
+                      
+                    </td>
+                    <td>
+                        <button data-id="@item.Id" title="Cambiar Estado" class="btn bg-info btn-sm px-3 btnCambiarEstado">
+                            <i class="ti-pencil text-white"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $('#active-filter').change(function () {
+                $('form').submit();
+            });
+        });
+    </script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#dataTableIncidencias').DataTable({
+                responsive: true,
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "lengthChange": false,
+                "paging": false,
+
+            });
+        });
+
+        $(document).on("click", ".btnCambiarEstado", function () {
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Cambiar estado',
+                text: 'Selecciona un estado para la incidencia',
+                input: 'select',
+                inputOptions: {
+                    1: 'En solicitud',
+                    2: 'En proceso',
+                    3: 'Finalizado',
+                },
+                inputPlaceholder: 'Selecciona un estado',
+                showCancelButton: true,
+                confirmButtonText: 'Guardar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                    // Guardar el estado en el servidor usando una solicitud AJAX
+                    $.ajax({
+                        url: '/Incidencia/CambiarEstado',
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            estado: result.value
+                        },
+                        success: function (response) {
+
+                            Swal.fire({
+                                position: 'top-center',
+                                icon: 'success',
+                                title: '¡Estado de Incidencia Modificado!',
+                                text: 'La incidencia se ha modificacado exitosamente',
+                                showConfirmButton: false,
+                                timer: 2500
+                            })
+
+                            $('#listaIncidencias').html('');
+                            $('#listaIncidencias').html(response);
+
+                            $('#dataTableIncidencias').DataTable({
+                                responsive: true,
+                                "language": {
+                                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                },
+                                "lengthChange": false,
+                                "paging": false,
+
+                            });
+                        },
+                        error: function () {
+                            Swal.fire('¡Error!', 'Ha ocurrido un error al cambiar el estado de la incidencia.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
+
+
+}

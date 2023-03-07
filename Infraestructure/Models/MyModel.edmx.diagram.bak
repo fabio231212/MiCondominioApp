@@ -4,8 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4997c019525d47c89485d023c30fc64b" Name="Diagram1">
+<<<<<<< HEAD
+      <Diagram DiagramId="0d5d033ee01c4f21b57973fc2be8eb33" Name="Diagram1">
+        <EntityTypeShape EntityType="MiCondominioDBModel.AreaComunal" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+=======
+      <Diagram DiagramId="c6efca7228824805b723090904b5a554" Name="Diagram1">
         <EntityTypeShape EntityType="MiCondominioDBModel.AreaComunal" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+>>>>>>> master
         <EntityTypeShape EntityType="MiCondominioDBModel.EstadoIncidencia" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.EstadoPropiedad" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.Factura" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />

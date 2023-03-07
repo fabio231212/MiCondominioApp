@@ -94,12 +94,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Notificacion.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NotificacionUsuario.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PlanCobro.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -124,12 +118,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\MyContext.cs" />
     <Compile Include="Repository\IRepositoryAutentificacion.cs" />
-    <Compile Include="Repository\IRepositoryEstadoIncidencia.cs" />
-    <Compile Include="Repository\IRepositoryIncidencias.cs" />
-    <Compile Include="Repository\IRepositoryNotificacionUsuario.cs" />
     <Compile Include="Repository\IRepositoryRol.cs" />
     <Compile Include="Repository\RepositoryAutentificacion.cs" />
-    <Compile Include="Repository\RepositoryEstadoIncidencia.cs" />
     <Compile Include="Repository\RepositoryEstadoPropiedad.cs" />
     <Compile Include="Repository\IRepositoryEstadoPropiedad.cs" />
     <Compile Include="Repository\IRepositoryEstadoCuenta.cs" />
@@ -137,8 +127,6 @@
     <Compile Include="Repository\IRepositoryPropiedad.cs" />
     <Compile Include="Repository\IRepositoryUsuario.cs" />
     <Compile Include="Repository\RepositoryEstadoCuenta.cs" />
-    <Compile Include="Repository\RepositoryIncidencias.cs" />
-    <Compile Include="Repository\RepositoryNotificacionUsuario.cs" />
     <Compile Include="Repository\RepositoryPlanCobro.cs" />
     <Compile Include="Repository\RepositoryPropiedad.cs" />
     <Compile Include="Repository\RepositoryRol.cs" />

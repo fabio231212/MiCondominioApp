@@ -10,10 +10,23 @@ namespace ApplicationCore.Services
 {
     public class ServiceIncidencias : IServiceIncidencias
     {
+
+        public int ActualizarEstadoIncidencia(int id, int estado)
+        {
+            IRepositoryIncidencias repository = new RepositoryIncidencias();
+            return repository.ActualizarEstadoIncidencia(id, estado);
+        }
+
         public IEnumerable<Incidencias> GetAll()
         {
             IRepositoryIncidencias repository = new RepositoryIncidencias();
             return repository.GetAll();
+        }
+
+        public IEnumerable<Incidencias> GetByIdEstado(int idEstado)
+        {
+            IRepositoryIncidencias repository = new RepositoryIncidencias();
+            return repository.GetByIdEstado(idEstado);
         }
 
         public IEnumerable<Incidencias> GetByIdUser(int idUser)
