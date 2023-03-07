@@ -3,18 +3,16 @@ using Infraestructure.Repository.Models;
 using Infraestructure.Utils;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Repository
+namespace ApplicationCore.Services
 {
-    public class RepositoryUsuario : IRepositoryUsuario
+    public class RepositoryRubroCobro : IRepositoryRubroCobro
     {
-        public void Delete(int cedula)
+        public void Delete(int id)
         {
             try
             {
@@ -23,9 +21,9 @@ namespace Infraestructure.Repository
                 {
 
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    Usuario oUsuario = ctx.Usuario.FirstOrDefault(p => p.Cedula == cedula);
-                    //Eliminar el usuario de manera logica segun su Cedula
-                    oUsuario.Activo = false;
+                    RubroCobro oRubroCobro = ctx.RubroCobro.FirstOrDefault(p => p.Id == id);
+                    //Eliminar el RubroCobro de manera logica segun su id
+                    //oRubroCobro.Activo = false;
 
                     ctx.SaveChanges();
 
@@ -47,9 +45,9 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public IEnumerable<RubroCobro> GetAll()
         {
-            IEnumerable<Usuario> lista = null;
+            IEnumerable<RubroCobro> lista = null;
             try
             {
 
@@ -58,7 +56,7 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     //Obtener todos los libros incluyendo el autor
-                    lista = ctx.Usuario.Include("Propiedad").ToList();
+                    lista = ctx.RubroCobro.ToList();
 
                     //lista = ctx.Libro.Include(x=>x.Autor).ToList();
 
@@ -80,21 +78,18 @@ namespace Infraestructure.Repository
             }
         }
 
-        public Usuario GetUsuario(string email, string password)
+
+        public RubroCobro GetRubroById(int id)
         {
-            Usuario oUsuario = null;
+            RubroCobro rubro = null;
             try
             {
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    oUsuario = ctx.Usuario.
-                     Where(p => p.Email.Equals(email) && p.Clave == password).
-                    FirstOrDefault<Usuario>();
+                    rubro = ctx.RubroCobro.Where(p => p.Id == id).FirstOrDefault();
                 }
-                if (oUsuario != null)
-                    oUsuario = GetUsuarioById(oUsuario.Cedula);
-                return oUsuario;
+                return rubro;
             }
             catch (DbUpdateException dbEx)
             {
@@ -110,36 +105,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public Usuario GetUsuarioById(int cedula)
-        {
-            Usuario usuario = null;
-            try
-            {
-                using (MyContext ctx = new MyContext())
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    usuario = ctx.Usuario.
-                     Include("Rol").
-                    Where(p => p.Cedula == cedula).
-                    FirstOrDefault<Usuario>();
-                }
-                return usuario;
-            }
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-        }
-
-        public void Save(Usuario usuario)
+        public void Save(RubroCobro rubro)
         {
             try
             {
@@ -149,11 +115,11 @@ namespace Infraestructure.Repository
 
                     ctx.Configuration.LazyLoadingEnabled = false;
 
-                    Usuario oUsuario = usuario;
+                    RubroCobro oRubroCobro = rubro;
 
-                    if (oUsuario != null)
+                    if (oRubroCobro != null)
                     {
-                        ctx.Usuario.Add(oUsuario);
+                        ctx.RubroCobro.Add(oRubroCobro);
                         ctx.SaveChanges();
                     }
 
@@ -174,7 +140,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public void Update(Usuario usuario)
+        public void Update(RubroCobro rubro)
         {
             try
             {
@@ -183,15 +149,11 @@ namespace Infraestructure.Repository
                 {
 
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    Usuario oUsuario = ctx.Usuario.FirstOrDefault(p => p.Cedula == usuario.Cedula);
+                    RubroCobro oRubroCobro = ctx.RubroCobro.FirstOrDefault(p => p.Id == rubro.Id);
 
-                    oUsuario.Nombre = usuario.Nombre;
-                    oUsuario.Apellido1 = usuario.Apellido1;
-                    oUsuario.Apellido2 = usuario.Apellido2;
-                    oUsuario.Email = usuario.Email;
-                    oUsuario.FK_Rol = usuario.FK_Rol;
-                    oUsuario.Activo = usuario.Activo;
-                    oUsuario.Clave = usuario.Clave;
+                    oRubroCobro.Descripcion = rubro.Descripcion;
+                    oRubroCobro.Costo = rubro.Costo;
+
 
                     ctx.SaveChanges();
 

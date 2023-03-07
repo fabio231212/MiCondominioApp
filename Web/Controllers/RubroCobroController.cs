@@ -6,22 +6,21 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
-using System.Reflection;
-using Infraestructure.Utils;
+using Web.Utils;
 
 namespace Web.Controllers
 {
-    public class UsuarioController : Controller
+    public class RubroCobroController : Controller
     {
-        // GET: Usuario
+        // GET: RubroCobro
         public ActionResult Index()
         {
-            IEnumerable<Usuario> lista = null;
+            IEnumerable<RubroCobro> lista = null;
             try
             {
-                IServiceUsuario _ServiceUsuario = new ServiceUsuario();
-                lista = _ServiceUsuario.GetAll();
-                ViewBag.Title = "Lista Usuarios";
+                IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
+                lista = _ServiceRubro.GetAll();
+                ViewBag.Title = "Lista Rubros";
                 return View(lista);
             }
             catch (Exception ex)
@@ -31,22 +30,19 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Usuario/Details/5
+        // GET: RubroCobro/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-         // GET: Usuario/Create
+        // GET: RubroCobro/Create
         public ActionResult Create()
         {
-
-            ViewBag.IdRol = listaRoles();
-            ViewBag.Activo = listaActivo();
             return View();
         }
 
-        // POST: Usuario/Create
+        // POST: RubroCobro/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -62,34 +58,31 @@ namespace Web.Controllers
             }
         }
 
-         // GET: Usuario/Edit/5
-        public ActionResult Edit(int? cedula)
+        // GET: RubroCobro/Edit/5
+        public ActionResult Edit(int? id)
         {
-            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
-            Usuario oUsuario = null;
+            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
+            RubroCobro oRubro = null;
 
             try
             {
-                if (cedula == null)
+                if (id == null)
                 {
                     TempData["Message"] = "El ID no puede ser nulo";
                     return RedirectToAction("Index");
                 }
 
-                oUsuario = _ServiceUsuario.GetUsuarioById(Convert.ToInt32(cedula));
+                oRubro = _ServiceRubro.GetRubroById(Convert.ToInt32(id));
 
-                if (oUsuario == null)
+                if (oRubro == null)
                 {
-                    TempData["Message"] = "No existe el usuario Solicitado";
+                    TempData["Message"] = "No existe el rubro solicitado";
                     TempData["Redirect"] = "Usuario";
                     TempData["Redirect-Action"] = "Index";
                     // Redireccion a la captura del Error
                     return RedirectToAction("Default", "Error");
                 }
-
-                ViewBag.IdRol = listaRoles(oUsuario.FK_Rol);
-                ViewBag.Activo = listaActivo(oUsuario.Activo);
-                return View(oUsuario);
+                return View(oRubro);
 
             }
             catch (Exception ex)
@@ -105,29 +98,27 @@ namespace Web.Controllers
             }
         }
 
-         // POST: Usuario/Edit/5
+
         [HttpPost]
-        public ActionResult Save(Usuario usuario)
+        public ActionResult Save(RubroCobro rubro)
         {
-            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
+            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _ServiceUsuario.SaveOrUpdate(usuario);
+                    _ServiceRubro.SaveOrUpdate(rubro);
 
                 }
                 else
                 {
-                    ViewBag.IdRol = listaRoles(usuario.FK_Rol);
-                    ViewBag.Activo = listaActivo(usuario.Activo);
-                    if (usuario.Id == 0)
+                    if (rubro.Id == 0)
                     {
-                        return View("Create", usuario);
+                        return View("Create", rubro);
                     }
                     else
                     {
-                        return View("Edit", usuario);
+                        return View("Edit", rubro);
                     }
                 }
 
@@ -139,13 +130,13 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Usuario/Delete/5
+        // GET: RubroCobro/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Usuario/Delete/5
+        // POST: RubroCobro/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -160,32 +151,5 @@ namespace Web.Controllers
                 return View();
             }
         }
-
-
-       public ActionResult Login()
-        {
-            return View();
-        }
-
-     
-
-        private SelectList listaRoles(int? idRol = 0)
-        {
-            IServiceRol _ServiceRol = new ServiceRol();
-            IEnumerable<Rol> lista = _ServiceRol.GetAll();
-            return new SelectList(lista, "Id", "Nombre", idRol);
-        }
-
-        private SelectList listaActivo(bool? activo = true)
-        {
-            var lista = new List<SelectListItem>
-                {
-                      new SelectListItem { Value = "true", Text = "Activo" },
-                      new SelectListItem { Value = "false", Text = "Inactivo" }
-                };
-            return new SelectList(lista, "Value", "Text", activo);
-        }
-
-
     }
 }
