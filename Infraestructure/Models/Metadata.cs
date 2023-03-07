@@ -64,6 +64,7 @@ namespace Infraestructure.Models
         public string Descripcion { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C}")]
+        [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})?$", ErrorMessage = "solo acepta números, con dos decimales")]
         public Nullable<decimal> Total { get; set; }
     }
 

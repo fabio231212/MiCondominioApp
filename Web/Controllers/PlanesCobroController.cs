@@ -69,15 +69,24 @@ namespace Web.Controllers
         {
             IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             IEnumerable<RubroCobro> lista = _ServiceRubro.GetAll();
-            //Seleccionar categorias
-            int[] listaRubrosSeleccionados= null;
+
+            // Agregar precios a la lista de rubros
+            var rubrosConPrecios = lista.Select(r => new SelectListItem
+            {
+                Value = r.Id.ToString(),
+                Text = $"{r.Descripcion} - ₡{r.Costo}"
+            });
+
+            // Obtener los IDs de los rubros seleccionados
+            int[] listaRubrosSeleccionados = null;
             if (rubros != null)
             {
                 listaRubrosSeleccionados = rubros.Select(c => c.Id).ToArray();
             }
 
-            return new MultiSelectList(lista, "Id", "Descripcion", listaRubrosSeleccionados);
+            return new MultiSelectList(rubrosConPrecios, "Value", "Text", listaRubrosSeleccionados);
         }
+
 
         // GET: PlanesCobro/Edit/5
         public ActionResult Edit(int? id)

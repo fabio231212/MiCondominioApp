@@ -54,23 +54,28 @@
 
 <script>
     $(document).ready(function () {
-        var precioTotal = 0;
-        var timer = null;
-        $("#RubrosSeleccionados").change(function () {
-            var rubrosSeleccionados = $(this).val();
-            precioTotal = 0;
-            $.each(rubrosSeleccionados, function (index, rubroId) {
-                $.get("/PlanesCobro/GetPrecioRubro?rubroId=" + rubroId, function (data) {
-                    var precio = data.precio;
-                    precioTotal += precio;
-                    if (timer) {
-                        clearTimeout(timer);
-                    }
-                    timer = setTimeout(function () {
-                        $("#precioTotal").val(precioTotal);
-                    }, 1500);
-                });
+        // Obtener el elemento select y el elemento donde se mostrará el total
+        var selectRubros = $('#RubrosSeleccionados');
+        var total = $('#precioTotal');
+
+        // Al cambiar la selección del elemento select
+        selectRubros.change(function () {
+            var selectedOptions = selectRubros.find('option:selected');
+
+            // Sumar o restar el precio de cada opción seleccionada al total
+            var nuevoTotal = 0;
+            selectedOptions.each(function () {
+                var texto = $(this).text();
+                var precio = parseFloat(texto.split('₡')[1]);
+                nuevoTotal += precio;
             });
+
+            // Actualizar el valor del total en tiempo real
+            total.val(nuevoTotal.toFixed(2));
         });
+
     });
+
+
+
 </script>
