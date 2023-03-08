@@ -1,10 +1,6 @@
 ﻿@model Infraestructure.Models.Propiedad
 
-@{
-    ViewBag.Title = "Details";
-}
 
-<h2>Details</h2>
 
 <div>
 
@@ -74,7 +70,7 @@
     </div>
 
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="row justify-content-center mt-3">
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn bg-siteColor text-white" })
+    </div>
+

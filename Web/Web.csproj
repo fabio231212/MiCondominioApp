@@ -148,22 +148,6 @@
     <Compile Include="Utils\Log.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-grid.rtl.css" />
-    <Content Include="Content\bootstrap-grid.rtl.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap-reboot.rtl.css" />
-    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
-    <Content Include="Content\bootstrap-utilities.css" />
-    <Content Include="Content\bootstrap-utilities.min.css" />
-    <Content Include="Content\bootstrap-utilities.rtl.css" />
-    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrap.rtl.css" />
-    <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\default-css.css" />
     <Content Include="Content\css\metisMenu.css" />
@@ -173,6 +157,8 @@
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\css\themify-icons.css" />
     <Content Include="Content\css\typography.css" />
+    <Content Include="Content\dataTable\jquery.dataTables.min.css" />
+    <Content Include="Content\dataTable\responsive.dataTables.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\themify.svg" />
     <Content Include="Content\Images\author\author-img1.jpg" />
@@ -214,38 +200,27 @@
     <Content Include="Content\Images\team\team-author3.jpg" />
     <Content Include="Content\Images\team\team-author4.jpg" />
     <Content Include="Content\Images\team\team-author5.jpg" />
+    <Content Include="Content\jqueryUI\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\jqueryUI\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\jqueryUI\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\jqueryUI\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\jqueryUI\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\jqueryUI\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jqueryUI\jquery-ui.min.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.structure.min.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.theme.min.css" />
     <Content Include="Content\tableData.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.esm.js" />
-    <Content Include="Scripts\bootstrap.esm.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.esm.min.js.map" />
-    <Content Include="Scripts\bootstrap.esm.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.rtl.min.css.map" />
-    <Content Include="Content\bootstrap.rtl.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
-    <Content Include="Content\bootstrap-utilities.min.css.map" />
-    <Content Include="Content\bootstrap-utilities.css.map" />
-    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-grid.rtl.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\dataTable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\dataTable\responsive.dataTables.min.js" />
+    <None Include="Scripts\jquery-3.6.3.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.3.js" />
+    <Content Include="Scripts\jquery-3.6.3.min.js" />
+    <Content Include="Scripts\jquery-3.6.3.slim.js" />
+    <Content Include="Scripts\jquery-3.6.3.slim.min.js" />
+    <Content Include="Scripts\jqueryUI\jquery-ui.min.js" />
     <Content Include="Scripts\js\bar-chart.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
     <Content Include="Scripts\js\jquery.slicknav.min.js" />
@@ -304,20 +279,19 @@
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\Create.cshtml" />
     <Content Include="Views\Autentificacion\Login.cshtml" />
-
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Notificaciones.cshtml" />
     <Content Include="Views\Incidencia\IndexUsuario.cshtml" />
     <Content Include="Views\Shared\Incidencias\_Incidencias.cshtml" />
     <Content Include="Views\Incidencia\IndexAdmin.cshtml" />
     <Content Include="Views\Shared\Incidencias\_ListaActualizada.cshtml" />
-
     <Content Include="Views\RubroCobro\Index.cshtml" />
     <Content Include="Views\RubroCobro\Create.cshtml" />
     <Content Include="Views\RubroCobro\Edit.cshtml" />
     <Content Include="Views\PlanesCobro\Create.cshtml" />
     <Content Include="Views\PlanesCobro\Edit.cshtml" />
-
+    <Content Include="Scripts\jquery-3.6.3.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.3.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj">

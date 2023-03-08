@@ -1,60 +1,55 @@
 ﻿@Styles.Render("~/Content/tableData")
 @model IEnumerable<Infraestructure.Models.Propiedad>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<!-- Dark table start -->
-@*<div class="col-12 mt-5">*@
-    @*<div class="card">
-        <div class="card-body">*@
-            <h4 class="header-title">Información Propiedades</h4>
-            <div class="data-tables datatable-dark">
-                <table id="dataTablePropiedad" class="text-center">
-                    <thead class="text-capitalize">
-                        <tr>
-                            <th scope="col">@Html.DisplayNameFor(model => model.NumPropiedad)</th>
-                            <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
-                            <th scope="col"> @Html.DisplayNameFor(model => model.CantPersonas)</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr class="selected-row">
-                                <td> @Html.DisplayFor(modelItem => item.NumPropiedad)</td>
-                                @*  <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>*@
-                                <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
-                                <td> @Html.DisplayFor(modelItem => item.CantPersonas)</td>
-
-                                <td>
-                                    <a title="Detalles" href="@Url.Action("Details", "Propiedad", new { id = item.NumPropiedad })" class="btn bg-primary btn-sm px-3">
-                                        <i class="fas fa-eye text-white"></i>
-                                    </a>
-                                    <a title="Eliminar" href="#" class="btn bg-danger btn-sm px-3">
-                                        <i class="fas fa-trash text-white"></i>
-                                    </a>
-                                    <a title="Editar" class="btn bg-warning btn-sm px-3">
-                                        <i class="fas fa-edit text-white"></i>
-                                    </a>
-
-                                    <a title="Estado de Cuentas" href="@Url.Action("Index", "EstadoCuenta", new {id = item.Id} )" class="btn bg-info btn-sm px-3">
-                                        <i class="fas fa-file-invoice text-white"></i>
-                                    </a>
 
 
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        @*</div>
-    </div>*@
-@*</div>*@
-<!-- Dark table end -->
+
+<h4 class="header-title">Información Propiedades</h4>
+
+
+<a title="Agregar Propiedad" href="@Url.Action("Create", "Propiedad")" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white"><i class="fa-solid fa-plus text-white"></i>  Agregar Propiedad</a>
+<div class="data-tables datatable-dark table-responsive">
+    <table id="dataTablePropiedad" class="text-center">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.NumPropiedad)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.CantPersonas)</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="selected-row">
+                    <td> @Html.DisplayFor(modelItem => item.NumPropiedad)</td>
+                    @*  <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>*@
+                    <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
+                    <td> @Html.DisplayFor(modelItem => item.CantPersonas)</td>
+
+                    <td>
+                        <a title="Detalles" href="@Url.Action("Details", "Propiedad", new { id = item.NumPropiedad })" class="btn bg-primary btn-sm px-3">
+                            <i class="fas fa-eye text-white"></i>
+                        </a>
+                        <a title="Eliminar" href="#" class="btn bg-danger btn-sm px-3">
+                            <i class="fas fa-trash text-white"></i>
+                        </a>
+                        <a title="Editar" class="btn bg-warning btn-sm px-3">
+                            <i class="fas fa-edit text-white"></i>
+                        </a>
+
+                        <a title="Estado de Cuentas" href="@Url.Action("Index", "EstadoCuenta", new {id = item.Id} )" class="btn bg-info btn-sm px-3">
+                            <i class="fas fa-file-invoice text-white"></i>
+                        </a>
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 <script>
 

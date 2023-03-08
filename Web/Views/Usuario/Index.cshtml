@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<Infraestructure.Models.Usuario>
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h4 class="header-title">Información Usuarios</h4>
-<div class="data-tables datatable-dark">
+
+<h4 class="header-title">Información de Usuarios</h4>
+
+<a title="Crear Usuario" href="@Url.Action("Create", "Usuario")" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white"><i class="fa-solid fa-user-plus text-white"></i>  Crear Usuario</a>
+
+<div class="data-tables datatable-dark table-responsive">
     <table id="dataTableUsuario" class="text-center">
         <thead class="text-capitalize">
             <tr>
@@ -43,7 +44,7 @@
             }
         </tbody>
     </table>
-    <a title="Editar" href="@Url.Action("Create", "Usuario")" class="btn bg-dark"><i class= "fa-solid fa-user-plus text-white"></i></a>
+    
 </div>
 @*</div>
     </div>*@

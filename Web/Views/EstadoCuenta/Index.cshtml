@@ -4,17 +4,18 @@
 
 
 
+<h4 class="header-title">Información Estados de Cuenta</h4>
 
 @using (Html.BeginForm("Index", "EstadoCuenta", FormMethod.Get))
 {
     <div class="form-group">
-        <label class="col-form-label">Estado</label>
+        <label class="col-form-label">Seleccione un Estado</label>
         @Html.DropDownList("Active", new SelectList(new List<SelectListItem>
       {
            new SelectListItem { Text = "Todas", Value = "" },
            new SelectListItem { Text = "Pagada", Value = "true" },
            new SelectListItem { Text = "Pendiente", Value = "false" }
-       }, "Value", "Text"), new { @class = "form-control", @id = "active-filter" })
+       }, "Value", "Text"), new { @class = "form-control text-center", @id = "active-filter" })
     </div>
 
 
@@ -24,12 +25,7 @@
 }
 
 
-
-@*<div class="col-12 mt-5">*@
-@*<div class="card">
-    <div class="card-body">*@
-<h4 class="header-title">Información Estados de Cuenta</h4>
-<div class="data-tables datatable-dark ">
+<div class="data-tables datatable-dark table-responsive ">
     <table id="dataTableEstadoCuenta" class="text-center">
         <thead class="text-capitalize">
             <tr>
@@ -59,9 +55,6 @@
         </tbody>
     </table>
 </div>
-@*</div>
-        </div>
-    </div>*@
 
 
 

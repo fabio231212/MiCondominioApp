@@ -4,7 +4,12 @@
 
 
 <h4 class="header-title">Información Planes de Cobro</h4>
-<div class="data-tables datatable-dark">
+
+
+
+<a title="Añadir" href="@Url.Action("Create", "PlanesCobro")" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white"><i class="fa-solid fa-plus text-white"></i> Añadir Plan de Cobro</a>
+
+<div class="data-tables datatable-dark table-responsive">
     <table id="dataTablePlanes" class="text-center">
         <thead class="text-capitalize">
             <tr>
@@ -37,7 +42,6 @@
             }
         </tbody>
     </table>
-    <a title="Crear" href="@Url.Action("Create", "PlanesCobro")" class="btn bg-dark"><i class="fa-solid fa-user-plus text-white"></i></a>
 </div>
 
 

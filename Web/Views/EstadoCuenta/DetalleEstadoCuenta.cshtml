@@ -1,21 +1,7 @@
 ﻿@model Infraestructure.Models.Factura
 
-@{
-    ViewBag.Title = "DetalleEstadoCuenta";
-}
-
 
 <hr />
-
-
-
-
-
-
-
-
-
-
 
 <div class="main-content-inner">
 
@@ -44,18 +30,16 @@
                             </div>
                         </div>
                     }
-                    <div id="costo" class="according accordion-s2">
+                    <div id="costo" class="">
                         <div class="card">
                             <div class="card-header">
-                                <a class="card-link collapsed" data-toggle="collapse" href="#collapCosto" aria-expanded="false">
-                                    @Html.DisplayNameFor(model => model.PlanCobro.Total)
-                                </a>
+                            <div class="row justify-content-between">
+                                <div> @Html.DisplayNameFor(model => model.PlanCobro.Total)</div>
+                                <div> @Html.DisplayFor(model => model.PlanCobro.Total)</div>
                             </div>
-                            <div id="collapCosto" class="collapse" data-parent="#costo" style="">
-                                <div class="card-body">
-                                    @Html.DisplayFor(model => model.PlanCobro.Total)
-                                </div>
+
                             </div>
+                         
                         </div>
 
                     </div>
@@ -108,10 +92,9 @@
 
 
 
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index", new { id = Model.Propiedad.Id })
-    </p>
+
+        @Html.ActionLink("Volver", "Index", new { id = Model.Propiedad.Id }, new {@class= "btn bg-siteColor text-white" })
+  
     @section Scripts {
         <script>
             $(document).ready(function () {

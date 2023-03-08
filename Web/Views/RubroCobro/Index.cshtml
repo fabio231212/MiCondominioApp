@@ -5,7 +5,9 @@
 }
 
 <h4 class="header-title">Información Rubros</h4>
-<div class="data-tables datatable-dark">
+
+<a title="Añadir" href="@Url.Action("Create", "RubroCobro")" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white"><i class="fa-solid fa-plus text-white"></i> Añadir Rubro</a>
+<div class="data-tables datatable-dark table-responsive">
     <table id="dataTableRubro" class="text-center">
         <thead class="text-capitalize">
             <tr>
@@ -30,7 +32,6 @@
             }
         </tbody>
     </table>
-    <a title="Crear" href="@Url.Action("Create", "RubroCobro")" class="btn bg-dark"><i class="fa-solid fa-user-plus text-white"></i></a>
 </div>
 
 

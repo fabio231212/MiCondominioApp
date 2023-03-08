@@ -1,13 +1,6 @@
 ﻿@model Infraestructure.Models.Propiedad
 
 
-@{
-    ViewBag.Title = "Create";
-}
-
-
-<h2>Create</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -105,14 +98,14 @@
 
         </div>
         <div class="form-row justify-content-around">
-            <div class="form-group  col-sm-6">
+            <div class="form-group col-12 col-sm-2">
                 @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label" })
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
                     </div>
-                    @Html.TextBoxFor(model => model.FechaInicio, new { @class = "datetimepicker"})
+                    @Html.TextBoxFor(model => model.FechaInicio, new { @class = "datetimepicker", @id = "datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -120,27 +113,25 @@
 
 
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
+
+    <button type="submit" class="btn bg-siteColor text-white"> <i class="fa-solid fa-plus text-white"></i> Agregar</button>
+
+
+
+    <a href="@Url.Action("Index")" class="btn bg-danger text-white"><i class="fa-solid fa-x text-white"></i>  Cancelar</a>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts { 
-@Scripts.Render("~/bundles/jqueryval")
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 
 
-<script>
-    $(document).ready(function () { 
-        $('.datetimepicker').datetimepicker({
-            format: 'Y-m-d H:i:s'
+    <script>
+        $(document).ready(function () {
+            $("#datepicker").datepicker({
+                inline: true,
+                format: 'Y-m-d H:i:s'
+            });
         });
- 
-    });
-</script>
+    </script>
 }

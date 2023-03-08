@@ -20,16 +20,26 @@ namespace Web
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.bundle.js"));
+                      "~/Scripts/js/popper.min.js", "~/Scripts/js/bootstrap.min.js"));
 
             bundles.Add(new Bundle("~/bundles/dataTableInit").Include(
                       "~/Scripts/dataTableInit.js"));
 
-            bundles.Add(new Bundle("~/bundles/complementos").Include("~/Scripts/fontawesome/all.min.js"));
+            bundles.Add(new Bundle("~/bundles/complementos").Include("~/Scripts/js/vendor/modernizr-2.8.3.min.js", "~/Scripts/js/bar-chart.js", "~/Scripts/js/jquery.slicknav.min.js",
+                "~/Scripts/js/jquery.slimscroll.min.js", "~/Scripts/js/line-chart.js", "~/Scripts/js/metisMenu.min.js", "~/Scripts/js/owl.carousel.min.js", "~/Scripts/js/pie-chart.js", "~/Scripts/js/plugins.js",
+                "~/Scripts/js/scripts.js", "~/Scripts/dataTable/responsive.dataTables.min.js", "~/Scripts/dataTable/jquery.dataTables.min.js"));
+
+            bundles.Add(new Bundle("~/bundles/jqueryUI").Include("~/Scripts/jqueryUI/jquery-ui.min.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Site/default-css.css", "~/Content/Site/metisMenu.css", "~/Content/Site/owl.carousel.min.css", "~/Content/Site/responsive.css", "~/Content/Site/slicknav.min.css",
-                      "~/Content/Site/styles.css", "~/Content/Site/themify-icons.css", "~/Content/Site/typography.css"));
+                      "~/Content/css/bootstrap.min.css", "~/Content/css/default-css.css", "~/Content/css/metisMenu.css", "~/Content/css/owl.carousel.min.css", "~/Content/css/responsive.css","~/Content/css/slicknav.min.css",
+                      "~/Content/css/styles.css", "~/Content/css/typography.css", "~/Content/css/themify-icons.css", "~/Content/dataTable/responsive.dataTables.min.css", "~/Content/dataTable/jquery.dataTables.min.css"
+                     ));
+
+            bundles.Add(new StyleBundle("~/Content/jqueryUI").Include(
+                    "~/Content/jqueryUI/jquery-ui.min.css", "~/Content/jqueryUI/jquery-ui.structure.min.css", "~/Content/jqueryUI/jquery-ui.theme.min.css"
+                     ));
 
 
 
