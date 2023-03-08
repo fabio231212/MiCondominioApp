@@ -25,16 +25,6 @@ namespace Web.Controllers
             IServiceNotificacionUsuario _ServiceNotificacionUsuario = new ServiceNotificacionUsuario();
             
             oUsuario = service.Login(oUsuario.Email, oUsuario.Clave);
-            foreach (Propiedad itemProp in oUsuario.Propiedad)
-            {
-                foreach (Factura itemFac in itemProp.Factura)
-                {
-                    if ((bool)itemFac.Activo)
-                    {
-                        facturasPendientes++;
-                    }
-                }
-            }
             if (oUsuario != null)
             {
                 IEnumerable<NotificacionUsuario> listaNotificaciones = _ServiceNotificacionUsuario.GetNotificacionByIdUser(oUsuario.Id);
