@@ -11,7 +11,9 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(EstadoCuentaMetadata))]
     public partial class Factura
     {
         public int Id { get; set; }

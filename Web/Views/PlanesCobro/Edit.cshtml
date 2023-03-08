@@ -1,0 +1,131 @@
+﻿@model Infraestructure.Models.PlanCobro
+
+@{
+    ViewBag.Title = "Editar Plan";
+}
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+
+@using (Html.BeginForm("Save", "PlanesCobro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+        <h4>PlanCobro</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RubroCobro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("rubrosSeleccionados",
+               (MultiSelectList)ViewBag.IdRubro,
+               htmlAttributes: new { @class = "form-control", multiple = "multiple", @id = "RubrosSeleccionados" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "precioTotal" } })
+                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        // Obtener el elemento select y el elemento donde se mostrará el total
+        var selectRubros = $('#RubrosSeleccionados');
+        var total = $('#precioTotal');
+
+        // Al cambiar la selección del elemento select
+        selectRubros.change(function () {
+            var selectedOptions = selectRubros.find('option:selected');
+
+            // Sumar o restar el precio de cada opción seleccionada al total
+            var nuevoTotal = 0;
+            selectedOptions.each(function () {
+                var texto = $(this).text();
+                var precio = parseFloat(texto.split('₡')[1]);
+                nuevoTotal += precio;
+            });
+
+            // Actualizar el valor del total en tiempo real
+            total.val(nuevoTotal.toFixed(2));
+        });
+    });
+
+
+
+     $(document).ready(function () {
+        $('#RubrosSeleccionados option').mousedown(function (e) {
+            e.preventDefault();
+
+            var originalScrollTop = $(this).parent().scrollTop();
+
+            $(this).toggleClass('selected');
+
+            $(this).prop('selected', !$(this).prop('selected'));
+
+            var self = this;
+
+            setTimeout(function () {
+                $(self).parent().scrollTop(originalScrollTop);
+            }, 0);
+        });
+
+        $('#RubrosSeleccionados').on('keydown', function (e) {
+            var $select = $(this),
+                $options = $select.find('option:selected'),
+                $option = $select.find('option').eq($options.last().index() + 1);
+
+            if ($option.length == 0) {
+                $option = $select.find('option').first();
+            }
+
+            var originalScrollTop = $select.scrollTop();
+
+            $options.prop('selected', false);
+            $options.removeClass('selected');
+
+            $option.prop('selected', true);
+            $option.addClass('selected');
+
+            setTimeout(function () {
+                $select.scrollTop(originalScrollTop);
+            }, 0);
+        });
+    });
+
+</script>

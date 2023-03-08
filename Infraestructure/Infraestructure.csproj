@@ -128,6 +128,7 @@
     <Compile Include="Repository\IRepositoryIncidencias.cs" />
     <Compile Include="Repository\IRepositoryNotificacionUsuario.cs" />
     <Compile Include="Repository\IRepositoryRol.cs" />
+    <Compile Include="Repository\IRepositoryRubroCobro.cs" />
     <Compile Include="Repository\RepositoryAutentificacion.cs" />
     <Compile Include="Repository\RepositoryEstadoIncidencia.cs" />
     <Compile Include="Repository\RepositoryEstadoPropiedad.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Repository\RepositoryPropiedad.cs" />
     <Compile Include="Repository\RepositoryRol.cs" />
     <Compile Include="Repository\RepositoryUsuario.cs" />
+    <Compile Include="Repository\RepositoryRubroCobro.cs" />
     <Compile Include="Utils\Log.cs" />
   </ItemGroup>
   <ItemGroup>

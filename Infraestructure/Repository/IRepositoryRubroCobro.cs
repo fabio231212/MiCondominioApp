@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public interface IServicePlanCobro
+    public interface IRepositoryRubroCobro
     {
-        IEnumerable<PlanCobro> GetAll();
-        PlanCobro GetById(int id);
-        void SaveOrUpdate(PlanCobro plan, String[] rubrosSeleccionados);
+        RubroCobro GetRubroById(int id);
+        void Save(RubroCobro rubro);
         void Delete(int id);
+        void Update(RubroCobro rubro);
+        IEnumerable<RubroCobro> GetAll();
     }
 }

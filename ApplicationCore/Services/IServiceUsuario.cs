@@ -14,7 +14,6 @@ namespace ApplicationCore.Services
         void Delete(int cedula);
         Usuario GetUsuario(string email, string password);
         IEnumerable<Usuario> GetAll();
-        Usuario Login(string email, string clave);
 
     }
 }
