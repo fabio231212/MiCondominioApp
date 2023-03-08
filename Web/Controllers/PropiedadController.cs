@@ -27,7 +27,6 @@ namespace Web.Controllers
                 IServicePropiedad _ServicePropiedad = new ServicePropiedad();
                 lista = _ServicePropiedad.GetAll();
                 ViewBag.Title = "Lista Propiedad";
-                ViewBag.Notification = "Hola soy Fabio";
                 return View(lista);
             }
             catch (Exception ex)

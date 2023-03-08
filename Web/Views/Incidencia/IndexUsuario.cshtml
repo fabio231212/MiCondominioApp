@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Infraestructure.Models.Incidencias>
+
+
+    <div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Registro de incidencias</h4>
+                <form id="registrarIncidencia">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea style="resize: none;" class="form-control" id="descripcion" name="descripcion" placeholder="¡Coméntanos tu problema!"></textarea>
+                    </div>
+                    <button type="submit" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white">Registrar Incidencia</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="data-tables datatable-dark" id="listaIncidencias">
+        <table id="dataTableIncidencias" class="text-center">
+            <thead class="text-capitalize">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Fecha)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.EstadoIncidencia)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr class="selected-row">
+                        <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
+                        @*  <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>*@
+                        <td> @Html.DisplayFor(modelItem => item.Fecha)</td>
+                        <td> @Html.DisplayFor(modelItem => item.EstadoIncidencia.Nombre)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $('#registrarIncidencia').submit(function (event) {
+            //Evita redirección
+            event.preventDefault();
+            var formData = $('#registrarIncidencia').serialize();
+            // Hacer una solicitud AJAX al servidor
+            $.ajax({
+                url: '/Incidencia/CrearIncidencia',
+                type: 'POST', // o 'GET' según lo que necesites
+                data: formData,
+                success: function (response) {
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: '¡Hemos recibido tu solicitud!',
+                        text: 'La resolveremos con la mayor brevedad posible',
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                    $('#listaIncidencias').html('');
+                    $('#listaIncidencias').html(response);
+                    // Manejar la respuesta del servidor aquí
+                    $(document).ready(function () {
+                        $('#dataTableIncidencias').DataTable({
+                            responsive: true,
+                            "language": {
+                                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                            },
+                            "lengthChange": false,
+                            "paging": false,
+
+                        });
+                    });
+                },
+                error: function (error) {
+                    // Manejar el error aquí
+                }
+            });
+        });
+
+
+
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#dataTableIncidencias').DataTable({
+                responsive: true,
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "lengthChange": false,
+                "paging": false,
+                
+            });
+        });
+
+    </script>
+
+
+}

@@ -23,7 +23,7 @@
 
                         <li class="dropdown" id="listaNotificaciones">
                             <i class="fa-solid fa-bell dropdown-toggle" data-toggle="dropdown">
-                                <span>@notificaciones.Count</span>
+                                <span class="bg-siteColor">@notificaciones.Count</span>
                             </i>
                             <div class="dropdown-menu bell-notify-box notify-box">
                                 <span class="notify-title">Sus notificaciones</span>
@@ -54,7 +54,7 @@
                         </li>
 
                         <li class="dropdown">
-                            <i class="fa fa-envelope dropdown-toggle" data-toggle="dropdown"><span>3</span></i>
+                            <i class="fa fa-envelope dropdown-toggle" data-toggle="dropdown"><span class="bg-siteColor">3</span></i>
                             <div class="dropdown-menu notify-box nt-enveloper-box">
                                 <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
                                 <div class="nofity-list">
@@ -129,13 +129,16 @@
                                     </ul>
                                 </li>
                             }
-                            <li>
-                                <a href="javascript:void(0)"><i class="ti-pie-chart"></i><span>Charts</span></a>
-                                <ul class="submenu">
-                                    <li><a href="barchart.html">bar chart</a></li>
-                                    <li><a href="linechart.html">line Chart</a></li>
-                                    <li><a href="piechart.html">pie chart</a></li>
-                                </ul>
+                        <li>
+                            @if (oUsuario.FK_Rol == 1)
+                            {
+                                <a href="@Url.Action("IndexAdmin", "Incidencia")"><i class="ti-alert"></i><span>Incidencias</span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("IndexUsuario", "Incidencia")"><i class="ti-alert"></i><span>Incidencias</span></a>
+                            }
+
                             </li>
                             <li class="mega-menu">
                                 <a href="javascript:void(0)"><i class="ti-palette"></i><span>UI Features</span></a>

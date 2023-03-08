@@ -16,7 +16,7 @@ namespace Infraestructure.Models
     {
         public int Id { get; set; }
         public Nullable<int> FK_Usuario { get; set; }
-        public Nullable<int> FK_Estado { get; set; }
+        public int FK_Estado { get; set; }
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
     

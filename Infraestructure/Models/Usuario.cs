@@ -19,6 +19,7 @@ namespace Infraestructure.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
+            this.Incidencias = new HashSet<Incidencias>();
             this.NotificacionUsuario = new HashSet<NotificacionUsuario>();
             this.Propiedad = new HashSet<Propiedad>();
             this.Reservacion = new HashSet<Reservacion>();
@@ -34,7 +35,8 @@ namespace Infraestructure.Models
         public Nullable<int> FK_Rol { get; set; }
         public Nullable<bool> Activo { get; set; }
     
-        public virtual Incidencias Incidencias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Incidencias> Incidencias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificacionUsuario> NotificacionUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

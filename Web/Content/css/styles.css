@@ -510,10 +510,10 @@
     transition: color 0.3s ease 0s;
 }
 
-.notification-area li:hover>i,
-.dropdown.show>i {
-    color: var(--primary-color);
-}
+    .notification-area li:hover > i,
+    .dropdown.show > i {
+        color: #5eb548;
+    }
 
 .notification-area li i>span {
     position: absolute;
@@ -523,7 +523,6 @@
     font-size: 10px;
     font-weight: 600;
     color: #fff;
-    background: var(--primary-color);
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -541,7 +540,7 @@
 }
 
 .notify-title {
-    background: var(--primary-color);
+    background: #5eb548;
     display: block;
     padding: 18px 30px;
     color: #fff;
@@ -2716,6 +2715,9 @@ table.dataTable thead td {
     font-family: 'lato', sans-serif;
     position: relative;
     padding-bottom: 15px;
+}
+.bg-siteColor {
+    background-color: #5eb548;
 }
 
 .offset-menu-tab li a.active {
