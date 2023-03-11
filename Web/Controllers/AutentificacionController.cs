@@ -36,7 +36,7 @@ namespace Web.Controllers
 
                 Session["Usuario"] = oUsuario;
                 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("IndexAdmin", "Home");
             }
             else
             {

@@ -1310,8 +1310,8 @@ table.dbkit-table tr td {
 }
 
 .sbg1 {
-    background: -webkit-linear-gradient(291deg, rgb(77, 77, 253) 0%, rgb(108, 143, 234) 100%);
-    background: linear-gradient(159deg, rgb(77, 77, 253) 0%, rgb(108, 143, 234) 100%);
+    background: -webkit-linear-gradient(291deg, rgb(94, 181, 72) 0%, rgb(107, 181, 89) 100%);
+    background: linear-gradient(159deg, rgb(94, 181, 72) 0%, rgb(107, 181, 89) 100%);
 }
 
 .sbg2 {
@@ -2843,3 +2843,12 @@ table.dataTable thead td {
 }
 
 /*-------------------- END Offset Sidebar ------------------- */
+
+/*----------------ESTILOS AGREGADOS FABIO-------------------*/
+
+.cardDashboard:hover {
+    transform: scale(1.05);
+    background-color: rgb(61, 181, 31);
+    transition: background-color 1000ms linear;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}

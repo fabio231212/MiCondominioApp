@@ -1,4 +1,5 @@
 ﻿using Infraestructure.Models;
+using Infraestructure.Models.DTO;
 using Infraestructure.Repository.Models;
 using Infraestructure.Utils;
 using System;
@@ -124,5 +125,6 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
     }
 }
