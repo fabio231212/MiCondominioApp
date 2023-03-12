@@ -6,7 +6,7 @@
                 <div class="seo-fact sbg1">
                     <div class="p-4 d-flex justify-content-between align-items-center">
                         <div class="seofct-icon"><i class="fa-solid fa-money-bill"></i>Ganancias</div>
-                        <h2 id="total"></h2>
+                        <h2 id="totalGanancias"></h2>
                     </div>
                     <canvas id="seolinechart1" height="50"></canvas>
                 </div>
@@ -15,14 +15,27 @@
 
 
         <div class="col-md-6 mt-5 mb-3">
+            <a title="Mostrar Facturas Pendientes" href="@Url.Action("EstadosCuentaPendientes","EstadoCuenta")">
+                <div class="card cardDashboard">
+                    <div class="seo-fact sbg2">
+                        <div class="p-4 d-flex justify-content-between align-items-center">
+                            <div class="seofct-icon"><i class="fa-solid fa-warning"></i>Deudas</div>
+                            <h2 id="cantDeudas"></h2>
+                        </div>
+                        <canvas id="seolinechart2" height="50"></canvas>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 mb-3 mb-lg-0">
             <a title="Mostrar Incidencias" href="@Url.Action("IndexAdmin","Incidencia")">
                 <div class="card cardDashboard">
-                    <div class="seo-fact sbg1">
+                    <div class="seo-fact sbg3">
                         <div class="p-4 d-flex justify-content-between align-items-center">
                             <div class="seofct-icon"><i class="fa-solid fa-warning"></i>Incidencias</div>
                             <h2 id="cantIncidencias"></h2>
                         </div>
-                        <canvas id="seolinechart2" height="65"></canvas>
                     </div>
                 </div>
             </a>
@@ -36,8 +49,10 @@
                 url: '/Home/getHomeInfo',
                 type: 'GET',
                 success: function (response) {
-                    lineChartGanancias(response.listaMeses, response.listaTotales);
-                    $("#total").text("₡ " + response.total);
+                    lineChartGanancias(response.lista.map(item => item.Mes), response.lista.map(item => item.Total));
+                    lineChartDeudas(response.listaDeudas.map(item => item.Mes), response.listaDeudas.map(item => item.Cantidad));
+                    $("#totalGanancias").text("₡ " + response.totalGanancias);
+                    $("#cantDeudas").text(response.cantDeudas);
                     $("#cantIncidencias").text(response.cantIncidencias);
                     
                 },

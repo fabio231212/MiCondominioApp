@@ -2,14 +2,23 @@
 @{
     var notificaciones = Session["Notificaciones"] as List<Infraestructure.Models.NotificacionUsuario>;
 }
+
+
 <i class="fa-solid fa-bell dropdown-toggle" data-toggle="dropdown">
-    <span>@notificaciones.Count</span>
+    <span class="bg-siteColor">@notificaciones.Count</span>
 </i>
 <div class="dropdown-menu bell-notify-box notify-box">
     <span class="notify-title">Sus notificaciones</span>
     <div class="nofity-list">
+        @if (Model.Count() == 0)
+        {
+            <div class="notify-item mb-3">
+                <p class="text-center">Todo está tranquilo por acá...</p>
+            </div>
+        }
         @foreach (var item in Model)
         {
+
             <div class="notify-item mb-3">
                 <div class="notify-thumb"><i class="ti-info btn-danger"></i></div>
                 <div class="notify-text">
@@ -18,6 +27,7 @@
                 </div>
                 <hr />
             </div>
+
         }
 
 

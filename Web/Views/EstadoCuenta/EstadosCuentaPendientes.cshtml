@@ -1,28 +1,7 @@
 ﻿@model IEnumerable<Infraestructure.Models.Factura>
 
+<h4 class="header-title">Estados de Cuenta Pendientes</h4>
 
-
-
-
-<h4 class="header-title">Información Estados de Cuenta</h4>
-
-@using (Html.BeginForm("Index", "EstadoCuenta", FormMethod.Get))
-{
-    <div class="form-group">
-        <label class="col-form-label">Seleccione un Estado</label>
-        @Html.DropDownList("Active", new SelectList(new List<SelectListItem>
-      {
-           new SelectListItem { Text = "Todas", Value = "" },
-           new SelectListItem { Text = "Pagada", Value = "false" },
-           new SelectListItem { Text = "Pendiente", Value = "true" }
-       }, "Value", "Text"), new { @class = "form-control text-center", @id = "active-filter" })
-    </div>
-
-
-  
-
-
-}
 
 
 <div class="data-tables datatable-dark table-responsive ">
@@ -49,13 +28,15 @@
                         <a title="Estado de Cuentas" href="@Url.Action("DetalleEstadoCuenta", "EstadoCuenta", new { idEstadoCuenta = item.Id })" class="btn bg-primary btn-sm px-3">
                             <i class="fas fa-eye text-white"></i>
                         </a>
+                        <button type="button" title="Estado de Cuentas" data-user="@item.Propiedad.FK_Usuario" class="btn bg-primary btn-sm px-3 btnEnviarNotificacion">
+                            <i class="fas fa-send text-white"></i>
+                        </button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
 
 
 @section scripts {
@@ -80,6 +61,32 @@
                 responsive: true
             });
         });
+        $(document).on("click", ".btnEnviarNotificacion", function () {
+            var idUsuario = $(this).data('user');
+
+            $.ajax({
+                url: '/NotificacionUsuario/SaveNotificacion',
+                type: 'POST',
+                data: {
+                    idUsuario: idUsuario,
+                },
+                success: function () {
+
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: '¡Notificación envíada!',
+                        text: 'La notificación se ha envíado exitosamente',
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                },
+                error: function () {
+                    Swal.fire('¡Error!', 'Ha ocurrido un error al cambiar el estado de la incidencia.', 'error');
+                }
+            });
+        });
+
 
     </script>
 

@@ -11,5 +11,7 @@ namespace Infraestructure.Repository
     {
         IEnumerable<NotificacionUsuario> GetNotificacionByIdUser(int id);
         NotificacionUsuario MarcarLeido(int id);
+        int SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario);
     }
+
 }

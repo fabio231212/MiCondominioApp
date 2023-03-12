@@ -21,6 +21,10 @@ namespace Web.Controllers
         {
             return View();
         }
+        public ActionResult IndexUsuario()
+        {
+            return View();
+        }
 
         public ActionResult About()
         {
@@ -45,23 +49,19 @@ namespace Web.Controllers
 
         public JsonResult getHomeInfo()
         {
+            double totalGanancias = 0;
+            int cantDeudas = 0;
             int cantIncidencias = 0;
             IServiceHomeInfo serviceHomeInfo = new ServiceHomeInfo();
             IServiceEstadoCuenta serviceEstadoCuenta = new ServiceEstadoCuenta();
-            IEnumerable<TotalesPorMesDTO> lista = serviceHomeInfo.GetTotalFacturaPorMes(serviceEstadoCuenta.GetAll());
+            IEnumerable<TotalesPorMesDTO> listaTotalesFactura = serviceHomeInfo.GetTotalFacturaPorMes(serviceEstadoCuenta.GetAll());
+            IEnumerable<DeudasVigentesDTO> listaDeudas = serviceHomeInfo.GetCantFacPendientes(serviceEstadoCuenta.GetAll());
             cantIncidencias = serviceHomeInfo.cantidadIncidencias();
-            List<string> listaMeses = new List<string>();
-            List<decimal> listaTotales = new List<decimal>();
-            decimal total = 0;
-            foreach (TotalesPorMesDTO item in lista)
-            {
-                DateTimeFormatInfo monthInfo = new DateTimeFormatInfo();
-                listaMeses.Add(monthInfo.GetMonthName(item.Mes));
-                listaTotales.Add(item.Total);
-                total += item.Total;
-            }
-           
-            return Json(new { listaMeses = listaMeses,listaTotales=listaTotales,total=total, cantIncidencias = cantIncidencias}, JsonRequestBehavior.AllowGet);
+            totalGanancias = (double)listaTotalesFactura.Sum(f => f.Total);
+            cantDeudas = listaDeudas.Sum(d => d.Cantidad);
+
+
+            return Json(new { lista = listaTotalesFactura,listaDeudas=listaDeudas, totalGanancias = totalGanancias,cantIncidencias = cantIncidencias, cantDeudas= cantDeudas }, JsonRequestBehavior.AllowGet);
         }
     }
 }

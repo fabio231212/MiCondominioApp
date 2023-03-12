@@ -5,6 +5,7 @@ using Infraestructure.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,19 +41,42 @@ namespace Infraestructure.Repository
             }
         }
 
+        public IEnumerable<DeudasVigentesDTO> GetCantFacPendientes(IEnumerable<Factura> facturas)
+        {
+            DateTimeFormatInfo monthInfo = new DateTimeFormatInfo();
+            var cantFacPendientes = facturas.Where(f => f.FechaFacturacion.Value.Year == DateTime.Now.Year).Where(f => (bool)f.Activo)
+
+                .GroupBy(f => new { f.FechaFacturacion.Value.Month })
+            .Select(g => new DeudasVigentesDTO
+            {
+                Mes = new DateTime(g.Key.Month, g.Key.Month, 1).ToString("MMMM"),
+                Cantidad = g.Count()
+
+            })
+            .OrderBy(r => DateTime.ParseExact(r.Mes, "MMMM", System.Globalization.CultureInfo.CurrentCulture).Month).ToList();
+            return cantFacPendientes;
+        }
+
         public IEnumerable<TotalesPorMesDTO> GetTotalFacturaPorMes(IEnumerable<Factura> facturas)
         {
-                var totalesPorMes = facturas.Where(f => f.FechaFacturacion.Value.Year == DateTime.Now.Year)
-                    .GroupBy(f => new { Mes = f.FechaFacturacion.Value.Month})
-                    .Select(g => new TotalesPorMesDTO
-                    {
-                        Mes = g.Key.Mes,
-                        Total = (decimal)g.Sum(f => f.Total)
-                    })
-                    .OrderBy(g => g.Mes)
-                    .ToList();
+            DateTimeFormatInfo monthInfo = new DateTimeFormatInfo();
+            var totalesPorMes = facturas.Where(f => f.FechaFacturacion.Value.Year == DateTime.Now.Year)
 
-                return totalesPorMes;
+                .GroupBy(f => new { f.FechaFacturacion.Value.Month })
+            .Select(g => new TotalesPorMesDTO
+            {
+                Mes = new DateTime(g.Key.Month, g.Key.Month, 1).ToString("MMMM"),
+                Total = (decimal)g.Sum(f => f.Total)
+            })
+            .OrderBy(r => DateTime.ParseExact(r.Mes, "MMMM", System.Globalization.CultureInfo.CurrentCulture).Month).ToList();
+
+
+
+
+
+
+
+            return totalesPorMes;
             
         }
     }

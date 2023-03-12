@@ -15,5 +15,6 @@ namespace ApplicationCore.Services
         IEnumerable<Factura> GetEstadoCuentaByFilter(bool active, int id);
 
         Factura GetDetalleEstadoCuenta(int idEstadoCuenta);
+        IEnumerable<Factura> GetEstadoCuentaPendiente();
     }
 }

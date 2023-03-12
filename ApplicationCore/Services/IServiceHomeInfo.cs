@@ -12,5 +12,6 @@ namespace ApplicationCore.Services
     {
         IEnumerable<TotalesPorMesDTO> GetTotalFacturaPorMes(IEnumerable<Factura> facturas);
         int cantidadIncidencias();
+        IEnumerable<DeudasVigentesDTO> GetCantFacPendientes(IEnumerable<Factura> facturas);
     }
 }

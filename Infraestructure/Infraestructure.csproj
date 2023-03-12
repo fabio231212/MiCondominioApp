@@ -66,6 +66,7 @@
     <Compile Include="Models\AreaComunal.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTO\DeudasVigentesDTO.cs" />
     <Compile Include="Models\DTO\TotalesPorMesDTO.cs" />
     <Compile Include="Models\EstadoIncidencia.cs">
       <DependentUpon>MyModel.tt</DependentUpon>

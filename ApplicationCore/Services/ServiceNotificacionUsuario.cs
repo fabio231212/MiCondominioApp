@@ -21,5 +21,11 @@ namespace ApplicationCore.Services
             IRepositoryNotificacionUsuario repository = new RepositoryNotificacionUsuario();
             return repository.MarcarLeido(id);
         }
+
+        public int SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario)
+        {
+            IRepositoryNotificacionUsuario repository = new RepositoryNotificacionUsuario();
+            return repository.SaveNotificacionUsuario(notificacionUsuario);
+        }
     }
 }

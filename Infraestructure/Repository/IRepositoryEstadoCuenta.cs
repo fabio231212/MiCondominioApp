@@ -13,5 +13,6 @@ namespace Infraestructure.Repository
         IEnumerable<Factura> GetByIdProp(int id);
         IEnumerable<Factura> GetEstadoCuentaByFilter(bool active, int id);
         Factura GetDetalleEstadoCuenta(int idEstadoCuenta);
+        IEnumerable<Factura> GetEstadoCuentaPendiente();
     }
 }

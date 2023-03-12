@@ -25,5 +25,14 @@ namespace Web.Controllers
             Session["Notificaciones"] = listaNotificaciones;
             return PartialView("_Notificaciones", listaNotificaciones);
         }
+
+
+        public void SaveNotificacion(int idUsuario,int? idNotificacion=3)
+        {
+            NotificacionUsuario oNotificacionUsuario = new NotificacionUsuario { IdNotificacion= (int)idNotificacion,IdUsuario=idUsuario,Leida=false }; 
+            IServiceNotificacionUsuario serviceNotificacionUsuario = new ServiceNotificacionUsuario();
+            int result = serviceNotificacionUsuario.SaveNotificacionUsuario(oNotificacionUsuario);
+
+        }
     }
 }

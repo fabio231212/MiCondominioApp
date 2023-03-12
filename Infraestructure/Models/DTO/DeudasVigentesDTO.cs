@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Models.DTO
 {
-    public class TotalesPorMesDTO
+    public class DeudasVigentesDTO
     {
         public string Mes { get; set; }
-        public decimal Total { get; set; }
+        public int Cantidad { get; set; }
     }
 }

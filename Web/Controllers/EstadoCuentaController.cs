@@ -15,40 +15,11 @@ namespace Web.Controllers
     [Authorize]
     public class EstadoCuentaController : Controller
     {
-        // GET: EstadoCuenta
-        //public ActionResult Index()
-        //{
-        //    IEnumerable<Factura> lista = null;
-        //    try
-        //    {
-        //        IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
-        //        lista = _Service.GetAll();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Log.Error(ex, MethodBase.GetCurrentMethod());
-        //        TempData["Message"] = "Error al procesar los datos!" + ex.Message;
-        //        return RedirectToAction("Default", "Error");
-        //    }
-        //    return View(lista);
-        //}
 
         // GET: EstadoCuenta/Details/5
         public ActionResult Index(int? id, bool? active)
         {
-            //IEnumerable<Factura> lista = null;
-            //try
-            //{
-            //    IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
-            //    lista = _Service.GetByIdProp(id);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Error(ex, MethodBase.GetCurrentMethod());
-            //    TempData["Message"] = "Error al procesar los datos!" + ex.Message;
-            //    return RedirectToAction("Default", "Error");
-            //}
-            //return View(lista);
+
 
             IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
             IEnumerable<Factura> lista = null;
@@ -67,6 +38,25 @@ namespace Web.Controllers
             return View(lista);
         
     }
+
+
+        public ActionResult EstadosCuentaPendientes()
+        {
+            IEnumerable<Factura> lista = null;
+            try
+            {
+                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+                lista = _Service.GetEstadoCuentaPendiente();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+            return View(lista);
+
+        }
 
         public ActionResult DetalleEstadoCuenta(int idEstadoCuenta)
         {

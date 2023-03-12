@@ -12,5 +12,8 @@ namespace Infraestructure.Repository
     {
          IEnumerable<TotalesPorMesDTO> GetTotalFacturaPorMes(IEnumerable<Factura> facturas);
         int cantidadIncidencias();
+        IEnumerable<DeudasVigentesDTO> GetCantFacPendientes(IEnumerable<Factura> facturas);
+
+
     }
 }

@@ -35,8 +35,15 @@ namespace Web.Controllers
                 FormsAuthentication.SetAuthCookie(oUsuario.Email, true);
 
                 Session["Usuario"] = oUsuario;
+                if(oUsuario.FK_Rol == 1)
+                {
+                    return RedirectToAction("IndexAdmin", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("IndexUsuario", "Home");
+                }
                 
-                return RedirectToAction("IndexAdmin", "Home");
             }
             else
             {

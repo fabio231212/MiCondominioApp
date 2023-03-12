@@ -17,6 +17,12 @@ namespace ApplicationCore.Services
             return repository.cantidadIncidencias();
         }
 
+        public IEnumerable<DeudasVigentesDTO> GetCantFacPendientes(IEnumerable<Factura> facturas)
+        {
+            IRepositoryHomeInfo repository = new RepositoryHomeInfo();
+            return repository.GetCantFacPendientes(facturas);
+        }
+
         public IEnumerable<TotalesPorMesDTO> GetTotalFacturaPorMes(IEnumerable<Factura> facturas)
         {
             IRepositoryHomeInfo repository = new RepositoryHomeInfo();
