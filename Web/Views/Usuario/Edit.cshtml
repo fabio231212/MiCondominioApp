@@ -115,9 +115,9 @@
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-house"></i></span>
                     </div>
                     @Html.DropDownListFor(model => model.Activo,
-                    (SelectList)ViewBag.Activo,
-                    "Seleccione un Estado",
-                    htmlAttributes: new { @class = "form-control" })
+                  (SelectList)ViewBag.IdActivo,
+                  "Seleccione un estado",
+                  htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Activo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -134,9 +134,6 @@
 
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 
 @section Scripts {

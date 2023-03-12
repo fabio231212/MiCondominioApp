@@ -16,16 +16,30 @@ namespace ApplicationCore.Services
             return repository.GetAll();
         }
 
+        public Propiedad GetPropiedadById(int id)
+        {
+            IRepositoryPropiedad repository = new RepositoryPropiedad();
+            return repository.GetPropiedadById(id);
+        }
+
         public Propiedad GetPropiedadByNumProp(string numPropiedad)
         {
             IRepositoryPropiedad repository = new RepositoryPropiedad();
             return repository.GetPropiedadByNumProp(numPropiedad);
         }
 
-        public Propiedad Save(Propiedad propiedad)
+        public void  SaveOrUpdate(Propiedad propiedad)
         {
             IRepositoryPropiedad repository = new RepositoryPropiedad();
-            return repository.Save(propiedad);
+            if (repository.GetPropiedadById(propiedad.Id) == null)
+            {
+                repository.Save(propiedad);
+            }
+            else
+            {
+                repository.Update(propiedad);
+            }
+
         }
     }
 }

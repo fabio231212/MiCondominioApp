@@ -86,23 +86,37 @@ namespace Infraestructure.Repository
 
             int retorno = 0;
 
-            using (MyContext ctx = new MyContext())
+            try
             {
-                ctx.Configuration.LazyLoadingEnabled = false;
-                //Registradas: 1,2,3
-                //Actualizar: 1,3,4
 
-                //Insertar Libro
-                ctx.NotificacionUsuario.Add(notificacionUsuario);
-                //SaveChanges
-                //guarda todos los cambios realizados en el contexto de la base de datos.
-                retorno = ctx.SaveChanges();
 
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    //Registradas: 1,2,3
+                    //Actualizar: 1,3,4
+
+                    //Insertar Libro
+                    ctx.NotificacionUsuario.Add(notificacionUsuario);
+                    //SaveChanges
+                    //guarda todos los cambios realizados en el contexto de la base de datos.
+                    retorno = ctx.SaveChanges();
+
+                }
+                return retorno;
             }
-
-
-
-            return retorno;
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
 
         }
     }

@@ -1,0 +1,103 @@
+﻿@model Infraestructure.Models.Usuario
+
+
+
+<div>
+
+    <h4>Usuario</h4>
+    <hr />
+    <div class="row justify-content-around">
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-id-card" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Cedula)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Cedula)</p>
+            </div>
+        </div>
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-user" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Nombre)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Nombre)</p>
+            </div>
+        </div>
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-a" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Apellido1)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Apellido1)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-around mt-5">
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-a" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Apellido2)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Apellido2)</p>
+            </div>
+        </div>
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i style="font-size:3em;" class="fa-solid fa-person-circle-question"></i>
+
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Rol.Nombre)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Rol.Nombre)</p>
+            </div>
+        </div>
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Activo)</h5>
+                @if (Model.Activo == true)
+                {
+                    <p class="card-header">Activo</p>
+
+                }
+                else
+                {
+                    <p class="card-header">Inactivo</p>
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row justify-content-around mt-5">
+
+        <div class="card col-3">
+            <div class="card-img-top card-img-top text-center p-3">
+                <i class="fa-solid fa-at" style="font-size:3em;"></i>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@Html.DisplayNameFor(model => model.Email)</h5>
+                <p class="card-header">@Html.DisplayFor(model => model.Email)</p>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="row justify-content-center mt-3">
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn bg-siteColor text-white" })
+</div>

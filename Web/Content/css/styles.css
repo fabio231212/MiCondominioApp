@@ -2629,33 +2629,42 @@ table.dataTable thead td {
     padding: 70px 30px;
 }
 
-.error-content h2 {
-    font-size: 98px;
-    font-weight: 800;
-    color: #686cdc;
-    margin-bottom: 28px;
-    text-shadow: -3px -3px 0 #ffffff, 3px -3px 0 #ffffff, -3px 3px 0 #ffffff, 3px 3px 0 #ffffff, 4px 4px 0 #6569dc, 5px 5px 0 #6569dc, 6px 6px 0 #6569dc, 7px 7px 0 #6569dc;
-    font-family: 'lato', sans-serif;
-}
+    .error-content h2 {
+        font-size: 98px;
+        font-weight: 800;
+        color: #6bc654;
+        margin-bottom: 28px;
+        text-shadow: -3px -3px 0 #ffffff, 3px -3px 0 #ffffff, -3px 3px 0 #ffffff, 3px 3px 0 #ffffff, 4px 4px 0 #50a33c, 5px 5px 0 #50a33c, 6px 6px 0 #50a33c, 7px 7px 0 #50a33c;
+        font-family: 'lato', sans-serif;
+    }
 
 .error-content img {
     margin-bottom: 50px;
 }
 
-.error-content p {
-    font-size: 17px;
-    color: #787bd8;
-    font-weight: 600;
-}
+    .error-content p {
+        font-size: 17px;
+        color: #50a33c;
+        font-weight: 600;
+    }
 
-.error-content a {
-    display: inline-block;
-    margin-top: 40px;
-    background: #656aea;
-    color: #fff;
-    padding: 16px 26px;
-    border-radius: 3px;
-}
+    .error-content a {
+        display: inline-block;
+        margin-top: 40px;
+        background: #50a33c;
+        color: #fff;
+        padding: 16px 26px;
+        border-radius: 3px;
+    }
+
+    .error-content a :hover{
+        display: inline-block;
+        margin-top: 40px;
+        background: #50a33c!important;
+        color: #fff;
+        padding: 16px 26px;
+        border-radius: 3px;
+    }
 
 /*-------------------- END 404 Page ------------------- */
 

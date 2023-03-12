@@ -20,22 +20,31 @@ namespace Web.Controllers
         public ActionResult Index(int? id, bool? active)
         {
 
-
-            IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
-            IEnumerable<Factura> lista = null;
-
-            if (active.HasValue)
+            try
             {
-                lista = _Service.GetEstadoCuentaByFilter((bool)active,(int) id);
+
+                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+                IEnumerable<Factura> lista = null;
+
+                if (active.HasValue)
+                {
+                    lista = _Service.GetEstadoCuentaByFilter((bool)active, (int)id);
+                }
+                else
+                {
+                    lista = _Service.GetByIdProp((int)id);
+                }
+
+                return View(lista);
             }
-            else
+            catch (Exception ex)
             {
-                lista = _Service.GetByIdProp((int) id);
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
-
-
-
-            return View(lista);
         
     }
 
@@ -47,6 +56,7 @@ namespace Web.Controllers
             {
                 IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 lista = _Service.GetEstadoCuentaPendiente();
+                return View(lista);
             }
             catch (Exception ex)
             {
@@ -54,7 +64,7 @@ namespace Web.Controllers
                 TempData["Message"] = "Error al procesar los datos!" + ex.Message;
                 return RedirectToAction("Default", "Error");
             }
-            return View(lista);
+
 
         }
 
@@ -65,6 +75,7 @@ namespace Web.Controllers
             {
                 IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 oFactura = _Service.GetDetalleEstadoCuenta(idEstadoCuenta);
+                return View(oFactura);
             }
             catch (Exception ex)
             {
@@ -72,7 +83,6 @@ namespace Web.Controllers
                 TempData["Message"] = "Error al procesar los datos!" + ex.Message;
                 return RedirectToAction("Default", "Error");
             }
-            return View(oFactura);
         }
 
         // GET: EstadoCuenta/Create

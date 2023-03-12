@@ -10,7 +10,8 @@ namespace ApplicationCore.Services
     public interface IServicePropiedad
     {
         Propiedad GetPropiedadByNumProp(string numPropiedad);
-        Propiedad Save(Propiedad propiedad);
+        Propiedad GetPropiedadById(int id);
+        void SaveOrUpdate(Propiedad propiedad);
         IEnumerable<Propiedad> GetAll();
     }
 }

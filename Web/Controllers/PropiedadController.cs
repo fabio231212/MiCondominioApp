@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Web.Utils;
 
 namespace Web.Controllers
 {
@@ -31,10 +32,13 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
 
-                throw;
-            }
-        }
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+    }
+}
 
         // GET: Propiedad/Details/5
 
@@ -50,7 +54,13 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Propiedad";
+                TempData["Redirect-Action"] = "Index";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 
@@ -65,58 +75,111 @@ namespace Web.Controllers
 
         // POST: Propiedad/Create
         [HttpPost]
-        public ActionResult Create(Propiedad oPropiedad)
+        public ActionResult Create (FormCollection collection)
         {
-            IServicePropiedad _ServicePropiedad = new ServicePropiedad();
             try
             {
-                if (ModelState.IsValid)
-                {
-                    Propiedad oPropiedadI = _ServicePropiedad.Save(oPropiedad);
+                // TODO: Add insert logic here
 
-                }
-                else
-                {
-                    //Cargar la vista crear o actualizar
-
-                    ViewBag.idUsuario = listaUsuarios((int)oPropiedad.FK_Usuario);
-                    ViewBag.idEstadoPropiedad = listaEstadoPropiedad((int)oPropiedad.FK_EstadoPropiedad);
-                    ViewBag.idPlanCobro = listaPlanCobro((int)oPropiedad.FK_PlanCobro);
-                    //Lógica para cargar vista correspondiente
-                    return View("Create", oPropiedad);
-
-                }
                 return RedirectToAction("Index");
             }
+            catch
+            {
+                return View();
+            }
+        }
 
+
+        // GET: Propiedad/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+            Propiedad oPropiedad = null;
+
+            try
+            {
+                if (id == null)
+                {
+                    TempData["Message"] = "El ID no puede ser nulo";
+                    return RedirectToAction("Index");
+                }
+
+                oPropiedad = _ServicePropiedad.GetPropiedadById(Convert.ToInt32(id));
+
+                if (oPropiedad == null)
+                {
+                    TempData["Message"] = "No existe la propiedad solicitada";
+                    TempData["Redirect"] = "Propiedad";
+                    TempData["Redirect-Action"] = "Index";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
+
+                ViewBag.idUsuario = listaUsuarios((int)oPropiedad.FK_Usuario);
+                ViewBag.idEstadoPropiedad = listaEstadoPropiedad((int)oPropiedad.FK_EstadoPropiedad);
+                ViewBag.idPlanCobro = listaPlanCobro((int)oPropiedad.FK_PlanCobro);
+                return View(oPropiedad);
+
+            }
             catch (Exception ex)
             {
-                // Salvar el error en un archivo 
 
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Libro";
+                TempData["Redirect"] = "Home";
                 TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
             }
         }
 
-
-        // GET: Propiedad/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
         // POST: Propiedad/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Save(Propiedad propiedad)
         {
             try
             {
-                // TODO: Add update logic here
+                IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                       _ServicePropiedad.SaveOrUpdate(propiedad);
 
-                return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        //Cargar la vista crear o actualizar
+
+                        ViewBag.idUsuario = listaUsuarios((int)propiedad.FK_Usuario);
+                        ViewBag.idEstadoPropiedad = listaEstadoPropiedad((int)propiedad.FK_EstadoPropiedad);
+                        ViewBag.idPlanCobro = listaPlanCobro((int)propiedad.FK_PlanCobro);
+                        //Lógica para cargar vista correspondiente
+
+                        if (propiedad.Id == 0)
+                        {
+                            return View("Create", propiedad);
+                        }
+                        else
+                        {
+                            return View("Edit", propiedad);
+                        }
+
+                    }
+                    return RedirectToAction("Index");
+                }
+
+                catch (Exception ex)
+                {
+                    // Salvar el error en un archivo 
+
+                    TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                    TempData["Redirect"] = "Home";
+                    TempData["Redirect-Action"] = "IndexAdmin";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
             }
             catch
             {

@@ -60,9 +60,21 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult GetPrecioRubro(int rubroId)
         {
+            try
+            {
+
             IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             var rubro = _ServiceRubro.GetRubroById(rubroId);
             return Json(new { precio = rubro.Costo }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
         }
 
         private MultiSelectList listaRubro(ICollection<RubroCobro> rubros = null)
@@ -120,8 +132,8 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "PlanesCobros";
-                TempData["Redirect-Action"] = "Index";
+                TempData["Redirect"] = "PlanesCobro";
+                TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
             }
@@ -163,7 +175,7 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Libro";
+                TempData["Redirect"] = "PlanesCobro";
                 TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");

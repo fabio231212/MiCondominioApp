@@ -10,7 +10,9 @@ namespace Infraestructure.Repository
     public  interface IRepositoryPropiedad
     {
         Propiedad GetPropiedadByNumProp(string numPropiedad);
-        Propiedad Save(Propiedad propiedad);
+        Propiedad GetPropiedadById(int id);
+        void Save(Propiedad propiedad);
+        void Update(Propiedad propiedad);
         IEnumerable<Propiedad> GetAll();
     }
 }

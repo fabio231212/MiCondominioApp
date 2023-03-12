@@ -25,8 +25,11 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
 
-                throw;
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 
@@ -77,7 +80,7 @@ namespace Web.Controllers
                 if (oRubro == null)
                 {
                     TempData["Message"] = "No existe el rubro solicitado";
-                    TempData["Redirect"] = "Usuario";
+                    TempData["Redirect"] = "RubroCobro";
                     TempData["Redirect-Action"] = "Index";
                     // Redireccion a la captura del Error
                     return RedirectToAction("Default", "Error");
@@ -91,7 +94,7 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Libro";
+                TempData["Redirect"] = "Home";
                 TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
@@ -124,9 +127,15 @@ namespace Web.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Home";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 

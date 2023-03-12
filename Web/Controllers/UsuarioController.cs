@@ -26,15 +26,36 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
 
-                throw;
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 
         // GET: Usuario/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Usuario oUsuario= null;
+            try
+            {
+                IServiceUsuario _ServiceUsuario = new ServiceUsuario();
+                oUsuario = _ServiceUsuario.GetUsuarioById(id);
+                ViewBag.IdActivo = listaActivo(oUsuario.Activo);
+                return View(oUsuario);
+
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Home";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
         }
 
          // GET: Usuario/Create
@@ -42,25 +63,10 @@ namespace Web.Controllers
         {
 
             ViewBag.IdRol = listaRoles();
-            ViewBag.Activo = listaActivo();
+            ViewBag.IdActivo = listaActivo();
             return View();
         }
 
-        // POST: Usuario/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
          // GET: Usuario/Edit/5
         public ActionResult Edit(int? cedula)
@@ -88,7 +94,7 @@ namespace Web.Controllers
                 }
 
                 ViewBag.IdRol = listaRoles(oUsuario.FK_Rol);
-                ViewBag.Activo = listaActivo(oUsuario.Activo);
+                ViewBag.IdActivo = listaActivo(oUsuario.Activo);
                 return View(oUsuario);
 
             }
@@ -98,7 +104,7 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Libro";
+                TempData["Redirect"] = "Home";
                 TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
@@ -120,7 +126,7 @@ namespace Web.Controllers
                 else
                 {
                     ViewBag.IdRol = listaRoles(usuario.FK_Rol);
-                    ViewBag.Activo = listaActivo(usuario.Activo);
+                    ViewBag.IdActivo = listaActivo(usuario.Activo);
                     if (usuario.Id == 0)
                     {
                         return View("Create", usuario);
@@ -133,9 +139,15 @@ namespace Web.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Home";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 
@@ -160,13 +172,6 @@ namespace Web.Controllers
                 return View();
             }
         }
-
-
-       public ActionResult Login()
-        {
-            return View();
-        }
-
      
 
         private SelectList listaRoles(int? idRol = 0)
