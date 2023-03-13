@@ -1,11 +1,15 @@
 ﻿
 @{
     ViewBag.Title = "Recurso no encontrado";
+    Infraestructure.Models.Usuario usuario = Session["Usuario"] as Infraestructure.Models.Usuario;
+    Layout = null;
 }
 
-@{
-    Infraestructure.Models.Usuario usuario = Session["Usuario"] as Infraestructure.Models.Usuario;
-}
+@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/jqueryUI")
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
 @*<div id="preloader">
         <div class="loader"></div>
@@ -18,7 +22,11 @@
             <h2>404</h2>
             <p>Ooops! Recurso no encontrado.</p>
             <p>Lo sentimos, se ha producido un error, no se ha encontrado el recurso o página solicitada.</p>
-            @if (usuario.FK_Rol == 1)
+            @if (usuario == null)
+            {
+                @Html.ActionLink("Regresar", "Login", "Autentificacion", null, new { @class = "btn btn-primary btn-lg", @style = "margin-right:10px;" })
+            }
+            else if (usuario.FK_Rol == 1)
             {
                 @Html.ActionLink("Regresar", "IndexAdmin", "Home", null, new { @class = "btn btn-primary btn-lg", @style = "margin-right:10px;" })
             }
@@ -30,3 +38,8 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/complementos")
+@Scripts.Render("~/bundles/jqueryUI")
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
