@@ -63,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDashboardInfo.cs" />
+    <Compile Include="Models\Archivo.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AreaComunal.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -78,6 +81,9 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Incidencias.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Informacion.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Metadata.cs" />
@@ -125,13 +131,16 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\MyContext.cs" />
+    <Compile Include="Repository\IRepositoryArchivo.cs" />
     <Compile Include="Repository\IRepositoryHomeInfo.cs" />
     <Compile Include="Repository\IRepositoryAutentificacion.cs" />
     <Compile Include="Repository\IRepositoryEstadoIncidencia.cs" />
     <Compile Include="Repository\IRepositoryIncidencias.cs" />
+    <Compile Include="Repository\IRepositoryInformacion.cs" />
     <Compile Include="Repository\IRepositoryNotificacionUsuario.cs" />
     <Compile Include="Repository\IRepositoryRol.cs" />
     <Compile Include="Repository\IRepositoryRubroCobro.cs" />
+    <Compile Include="Repository\RepositoryArchivo.cs" />
     <Compile Include="Repository\RepositoryAutentificacion.cs" />
     <Compile Include="Repository\RepositoryEstadoIncidencia.cs" />
     <Compile Include="Repository\RepositoryEstadoPropiedad.cs" />
@@ -143,6 +152,7 @@
     <Compile Include="Repository\RepositoryEstadoCuenta.cs" />
     <Compile Include="Repository\RepositoryHomeInfo.cs" />
     <Compile Include="Repository\RepositoryIncidencias.cs" />
+    <Compile Include="Repository\RepositoryInformacion.cs" />
     <Compile Include="Repository\RepositoryNotificacionUsuario.cs" />
     <Compile Include="Repository\RepositoryPlanCobro.cs" />
     <Compile Include="Repository\RepositoryPropiedad.cs" />

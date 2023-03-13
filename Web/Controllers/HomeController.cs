@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Services;
+using Infraestructure.Models;
 using Infraestructure.Models.DTO;
 using Infraestructure.Repository;
 using System;
@@ -23,6 +24,11 @@ namespace Web.Controllers
         }
         public ActionResult IndexUsuario()
         {
+            IServiceInformacion _Service = new ServiceInformacion();
+            ViewBag.listaInformacion = _Service.GetAll();
+            IServiceArchivo _ServiceArchivo = new ServiceArchivo();
+            ViewBag.listaArchivos =  _ServiceArchivo.GetAll();
+
             return View();
         }
 

@@ -4,12 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4997c019525d47c89485d023c30fc64b" Name="Diagram1">
+      <Diagram DiagramId="a39d7071e8e8451da42651bbe281a76e" Name="Diagram1">
         <EntityTypeShape EntityType="MiCondominioDBModel.AreaComunal" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.EstadoIncidencia" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.EstadoPropiedad" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.Factura" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.Incidencias" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Informacion" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.Notificacion" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.NotificacionUsuario" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.PlanCobro" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
@@ -32,6 +33,7 @@
         <AssociationConnector Association="MiCondominioDBModel.FK_Reservacion_Usuario1" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Usuario_Rol" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.PlanxRubro" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Archivo" Width="1.5" PointX="7.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
