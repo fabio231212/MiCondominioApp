@@ -28,11 +28,24 @@ namespace Web.Controllers
 
                 IServiceAutentificacion service = new ServiceAutentificacion();
                 IServiceNotificacionUsuario _ServiceNotificacionUsuario = new ServiceNotificacionUsuario();
-                //if (ModelState.IsValid)
-                //{
+
+                ModelState.Remove("Nombre");
+                ModelState.Remove("Apellido1");
+                ModelState.Remove("Apellido2");
+                ModelState.Remove("Cedula");
+                ModelState.Remove("FK_Rol");
+                ModelState.Remove("Activo");
+                if (ModelState.IsValid)
+                {
                     oUsuario = service.Login(oUsuario.Email, oUsuario.Clave);
+
                     if (oUsuario != null)
                     {
+                        if (oUsuario.Activo == false)
+                        {
+                            ViewData["Mensaje"] = "El usuario se encuentra inactivo";
+                            return View();
+                        }
                         IEnumerable<NotificacionUsuario> listaNotificaciones = _ServiceNotificacionUsuario.GetNotificacionByIdUser(oUsuario.Id);
                         if (listaNotificaciones != null)
                         {
@@ -56,13 +69,13 @@ namespace Web.Controllers
                         ViewData["Mensaje"] = "Usuario no encontrado";
                         return View();
                     }
-                //}
-                //else
-                //{
-                //    ViewData["Mensaje"] = "Algún dato no coincide o no fue digitado.";
-                //    return View();
-                //}
             }
+                else
+            {
+                ViewData["Mensaje"] = "Algún dato no coincide o no fue digitado.";
+                return View();
+            }
+        }
             catch (Exception ex)
             {
                 Log.Error(ex, MethodBase.GetCurrentMethod());

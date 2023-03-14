@@ -100,15 +100,16 @@ namespace Web.Controllers
 
             Usuario usuario = (Usuario)Session["Usuario"];
             IServiceIncidencias _Service = new ServiceIncidencias();
-            if (!String.IsNullOrEmpty(descripcion))
-            {
-                Incidencias oIncidencia = new Incidencias { Descripcion = descripcion, FK_Usuario = usuario.Id, Fecha = DateTime.Now, FK_Estado = 1 };
-                if (_Service.RegistrarIncidencia(oIncidencia) > 0)
-                {
-                    IEnumerable<Incidencias> lista = _Service.GetByIdUser(usuario.Id);
-                    return PartialView("~/Views/Shared/Incidencias/_Incidencias.cshtml", lista);
-                }
-            }
+                    if (!String.IsNullOrEmpty(descripcion))
+                    {
+                        Incidencias oIncidencia = new Incidencias { Descripcion = descripcion, FK_Usuario = usuario.Id, Fecha = DateTime.Now, FK_Estado = 1 };
+                        if (_Service.RegistrarIncidencia(oIncidencia) > 0)
+                        {
+                            IEnumerable<Incidencias> lista = _Service.GetByIdUser(usuario.Id);
+                            return PartialView("~/Views/Shared/Incidencias/_Incidencias.cshtml", lista);
+                        }
+                    }
+                
             return View();
             }
             catch (Exception ex)

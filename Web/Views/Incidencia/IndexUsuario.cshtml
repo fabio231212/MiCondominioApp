@@ -1,45 +1,53 @@
 ﻿@model IEnumerable<Infraestructure.Models.Incidencias>
 
 
-    <div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="header-title">Registro de incidencias</h4>
-                <form id="registrarIncidencia">
-                    <div class="form-group">
-                        <label for="descripcion">Descripción</label>
-                        <textarea style="resize: none;" class="form-control" id="descripcion" name="descripcion" placeholder="¡Coméntanos tu problema!"></textarea>
-                    </div>
-                    <button type="submit" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white">Registrar Incidencia</button>
-                </form>
-            </div>
+
+<div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Registro de incidencias</h4>
+            <form id="registrarIncidencia">
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    @*@Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label", @for = "descripcion" })
+                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @id = "descripcion", @name = "descripcion", placeholder = "¡Coméntanos tu problema!" } })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })*@
+                    <textarea style="resize: none;" class="form-control" id="descripcion" name="descripcion" placeholder="¡Coméntanos tu problema!"></textarea>
+                </div>
+                <button type="submit" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white">Registrar Incidencia</button>
+            </form>
         </div>
     </div>
+</div>
 
 
-    <div class="data-tables datatable-dark table-responsive" id="listaIncidencias">
-        <table id="dataTableIncidencias" class="text-center">
-            <thead class="text-capitalize">
-                <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.Fecha)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.EstadoIncidencia)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
 
-                    <tr class="selected-row">
-                        <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
-                        @*  <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>*@
-                        <td> @Html.DisplayFor(modelItem => item.Fecha)</td>
-                        <td> @Html.DisplayFor(modelItem => item.EstadoIncidencia.Nombre)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+
+
+
+<div class="data-tables datatable-dark table-responsive" id="listaIncidencias">
+    <table id="dataTableIncidencias" class="text-center">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Fecha)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.EstadoIncidencia)</th>
+            </tr>
+        </thead>
+        <tbody>
+@foreach (var item in Model)
+    {
+
+        <tr class="selected-row">
+            <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
+              <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
+            <td> @Html.DisplayFor(modelItem => item.Fecha)</td>
+            <td> @Html.DisplayFor(modelItem => item.EstadoIncidencia.Nombre)</td>
+        </tr>
+    }
+</tbody>
+    </table>
+</div>
 
 
 @section Scripts{
@@ -98,7 +106,7 @@
                 },
                 "lengthChange": false,
                 "paging": false,
-                
+
             });
         });
 
