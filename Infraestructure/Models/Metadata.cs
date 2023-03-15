@@ -35,26 +35,45 @@ namespace Infraestructure.Models
     internal partial class PropiedadMetadata
     {
 
-        [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Required(ErrorMessage = "Dato requerido")]
         [Display(Name = "Fecha de Inicio")]
         public Nullable<System.DateTime> FechaInicio { get; set; }
 
 
-        [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Required(ErrorMessage = "Dato requerido")]
         [Display(Name = "Número de Propiedad")]
         public string NumPropiedad { get; set; }
 
 
-        [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Required(ErrorMessage = "Dato requerido")]
         [RegularExpression(@"^\d+$", ErrorMessage = "{0} solo acepta números")]
         [Display(Name = "Cantidad de Personas")]
         public Nullable<int> CantPersonas { get; set; }
 
 
-        [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Required(ErrorMessage = "Dato requerido")]
         [RegularExpression(@"^\d+$", ErrorMessage = "{0} solo acepta números")]
         [Display(Name = "Cantidad de Carros")]
         public string CantCarros { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Propietario")]
+        public Nullable<int> FK_Usuario { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        public virtual Usuario Usuario { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Estado de la propiedad")]
+        public Nullable<int> FK_EstadoPropiedad { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        public virtual EstadoPropiedad EstadoPropiedad { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Plan de cobro")]
+        public Nullable<int> FK_PlanCobro { get; set; }
+
     }
 
     internal partial class UsuarioMetadata

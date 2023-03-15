@@ -152,9 +152,9 @@ namespace Web.Controllers
                     {
                         //Cargar la vista crear o actualizar
 
-                        ViewBag.idUsuario = listaUsuarios((int)propiedad.FK_Usuario);
-                        ViewBag.idEstadoPropiedad = listaEstadoPropiedad((int)propiedad.FK_EstadoPropiedad);
-                        ViewBag.idPlanCobro = listaPlanCobro((int)propiedad.FK_PlanCobro);
+                        ViewBag.idUsuario = listaUsuarios(propiedad.FK_Usuario);
+                        ViewBag.idEstadoPropiedad = listaEstadoPropiedad(propiedad.FK_EstadoPropiedad);
+                        ViewBag.idPlanCobro = listaPlanCobro(propiedad.FK_PlanCobro);
                         //Lógica para cargar vista correspondiente
 
                         if (propiedad.Id == 0)
@@ -208,21 +208,21 @@ namespace Web.Controllers
                 return View();
             }
         }
-        public SelectList listaUsuarios(int id = 0)
+        public SelectList listaUsuarios(int? id = 0)
         {
             IServiceUsuario _ServiceUsuario = new ServiceUsuario();
             IEnumerable<Usuario> lista = _ServiceUsuario.GetAll();
             return new SelectList(lista, "Id", "Nombre",id);
         }
 
-        public SelectList listaEstadoPropiedad(int id = 0)
+        public SelectList listaEstadoPropiedad(int? id = 0)
         {
             IServiceEstadoPropiedad _ServiceEstadoPropiedad = new ServiceEstadoPropiedad();
             IEnumerable<EstadoPropiedad> lista = _ServiceEstadoPropiedad.GetAll();
             return new SelectList(lista, "Id", "Nombre", id);
         }
 
-        public SelectList listaPlanCobro(int id = 0)
+        public SelectList listaPlanCobro(int? id = 0)
         {
             IServicePlanCobro _ServicePlanCobro = new ServicePlanCobro();
             IEnumerable<PlanCobro> lista = _ServicePlanCobro.GetAll();
