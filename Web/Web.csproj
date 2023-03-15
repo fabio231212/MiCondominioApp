@@ -131,11 +131,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArchivoController.cs" />
     <Compile Include="Controllers\AutentificacionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EstadoCuentaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IncidenciaController.cs" />
+    <Compile Include="Controllers\InformacionController.cs" />
     <Compile Include="Controllers\NotificacionUsuarioController.cs" />
     <Compile Include="Controllers\PlanesCobroController.cs" />
     <Compile Include="Controllers\PropiedadController.cs" />
@@ -195,7 +197,8 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\media\media1.jpg" />
     <Content Include="Content\Images\media\media2.jpg" />
-    <Content Include="Content\Images\shevas.png" />
+    <Content Include="Content\Images\mesh-276.png" />
+    <Content Include="Content\Images\svg.png" />
     <Content Include="Content\Images\team\team-author1.jpg" />
     <Content Include="Content\Images\team\team-author2.jpg" />
     <Content Include="Content\Images\team\team-author3.jpg" />
@@ -261,6 +264,9 @@
     <Content Include="Views\Propiedad\Edit.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Archivo\Index.cshtml" />
+    <Content Include="Views\Informacion\Create.cshtml" />
+    <Content Include="Views\Informacion\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

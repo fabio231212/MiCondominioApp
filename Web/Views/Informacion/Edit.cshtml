@@ -1,0 +1,43 @@
+﻿@model Infraestructure.Models.Informacion
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Informacion</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+    <button type="submit" class="btn bg-siteColor text-white"> <i class="fa-solid fa-plus text-white"></i> Agregar</button>
+
+
+
+
+<a href="@Url.Action("IndexAdmin", "Home")" class="btn bg-danger text-white"><i class="fa-solid fa-x text-white"></i>  Cancelar</a>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

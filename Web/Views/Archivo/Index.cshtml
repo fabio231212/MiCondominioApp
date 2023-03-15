@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Infraestructure.Models.Archivo>
+
+
+@using (Html.BeginForm("CargarPDF", "Archivo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="custom-file">
+        <input name="archivo" type="file" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile">Elegir Archivo</label>
+    </div>
+    <button type="submit" class="btn bg-siteColor text-white mt-3">Guardar</button>
+}
+
+
+
+<div class="data-tables datatable-dark table-responsive">
+    <table id="dataTableArchivo" class="text-center">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th scope="col">Descargar</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="selected-row">
+                    <td> @Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td><a class="" href="@Url.Action("DescargarPDF", "Archivo", new { id = item.Id })">@item.Nombre</a></td>
+                    <td>
+                        <a title="Eliminar" href="#" class="btn bg-danger btn-sm px-3">
+                            <i class="fas fa-trash text-white"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#dataTableArchivo').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+            },
+            "lengthChange": false,
+            "paging": false,
+            responsive: true
+        });
+    });
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+</script>

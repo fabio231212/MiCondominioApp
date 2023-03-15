@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Archivo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contenido" Type="varbinary(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -51,13 +59,14 @@
           <Property Name="Descripcion" Type="text" />
           <Property Name="Fecha" Type="smalldatetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="Informacion">
-          <Property Name="Id" Type="int" />
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="text" />
-          <Property Name="Archivo" Type="varbinary(max)" />
-        </EntityType>-->
+          <Property Name="Titulo" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Notificacion">
           <Key>
             <PropertyRef Name="Id" />
@@ -322,11 +331,13 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MiCondominioDBModelStoreContainer">
+          <EntitySet Name="Archivo" EntityType="Self.Archivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AreaComunal" EntityType="Self.AreaComunal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoIncidencia" EntityType="Self.EstadoIncidencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Informacion" EntityType="Self.Informacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notificacion" EntityType="Self.Notificacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotificacionUsuario" EntityType="Self.NotificacionUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" Schema="dbo" store:Type="Tables" />
@@ -394,8 +405,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -452,6 +462,14 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <NavigationProperty Name="EstadoIncidencia" Relationship="Self.FK_Incidencias_EstadoIncidencia" FromRole="Incidencias" ToRole="EstadoIncidencia" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Incidencias_Usuario" FromRole="Incidencias" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Informacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Notificacion">
           <Key>
@@ -712,6 +730,7 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" />
           <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" />
+          <EntitySet Name="Informacion" EntityType="Self.Informacion" />
           <EntitySet Name="Notificacion" EntityType="Self.Notificacion" />
           <EntitySet Name="NotificacionUsuario" EntityType="Self.NotificacionUsuario" />
           <EntitySet Name="PlanCobro" EntityType="Self.PlanCobro" />
@@ -773,7 +792,16 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
             <End Role="PlanCobro" EntitySet="PlanCobro" />
             <End Role="RubroCobro" EntitySet="RubroCobro" />
           </AssociationSet>
+          <EntitySet Name="Archivo" EntityType="MiCondominioDBModel.Archivo" />
         </EntityContainer>
+        <EntityType Name="Archivo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contenido" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -828,6 +856,15 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
                 <ScalarProperty Name="FK_Estado" ColumnName="FK_Estado" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Informacion">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Informacion">
+              <MappingFragment StoreEntitySet="Informacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -931,6 +968,15 @@ warning 6013: The table/view 'MiCondominioDB.dbo.Informacion' does not have a pr
               <ScalarProperty Name="Id" ColumnName="FK_Rubro" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Archivo">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Archivo">
+              <MappingFragment StoreEntitySet="Archivo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
