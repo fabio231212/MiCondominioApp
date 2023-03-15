@@ -13,31 +13,32 @@
     <h4>PlanCobro</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
     </div>
+    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.RubroCobro, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("rubrosSeleccionados",
-           (MultiSelectList)ViewBag.IdRubro,
-           htmlAttributes: new { @class = "form-control", multiple = "multiple", @id = "RubrosSeleccionados" })
+<div class="form-group">
+    @Html.LabelFor(model => model.RubroCobro, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("rubrosSeleccionados",
+       (MultiSelectList)ViewBag.IdRubro,
+       htmlAttributes: new { @class = "form-control", multiple = "multiple", @id = "RubrosSeleccionados" })
 
-        </div>
     </div>
+    @Html.ValidationMessageFor(model => model.RubroCobro, "", new { @class = "text-danger" })
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "precioTotal", htmlAttributes = new { @readonly = "readonly" } } })
-            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "precioTotal", htmlAttributes = new { @readonly = "readonly" } } })
     </div>
+    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+</div>
 
     <button type="submit" class="btn bg-siteColor text-white"> <i class="fa-solid fa-plus text-white"></i> Añadir</button>
 

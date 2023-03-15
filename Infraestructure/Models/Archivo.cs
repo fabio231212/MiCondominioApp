@@ -11,7 +11,9 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(ArchivoMetadata))]
     public partial class Archivo
     {
         public string Nombre { get; set; }

@@ -115,9 +115,9 @@ namespace Web.Controllers
                     return RedirectToAction("Default", "Error");
                 }
 
-                ViewBag.idUsuario = listaUsuarios((int)oPropiedad.FK_Usuario);
-                ViewBag.idEstadoPropiedad = listaEstadoPropiedad((int)oPropiedad.FK_EstadoPropiedad);
-                ViewBag.idPlanCobro = listaPlanCobro((int)oPropiedad.FK_PlanCobro);
+                ViewBag.idUsuario = listaUsuarios(oPropiedad.FK_Usuario);
+                ViewBag.idEstadoPropiedad = listaEstadoPropiedad(oPropiedad.FK_EstadoPropiedad);
+                ViewBag.idPlanCobro = listaPlanCobro(oPropiedad.FK_PlanCobro);
                 return View(oPropiedad);
 
             }

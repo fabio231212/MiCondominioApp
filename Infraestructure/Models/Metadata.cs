@@ -76,6 +76,7 @@ namespace Infraestructure.Models
 
     }
 
+
     internal partial class UsuarioMetadata
     {
 
@@ -112,7 +113,7 @@ namespace Infraestructure.Models
         public Nullable<int> FK_Rol { get; set; }
 
 
-        [Display(Name = "Usuario Activo")]
+        [Display(Name = "Activo")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public Nullable<bool> Activo { get; set; }
 
@@ -129,6 +130,25 @@ namespace Infraestructure.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})?$", ErrorMessage = "solo acepta números, con dos decimales")]
         public Nullable<decimal> Total { get; set; }
+    }
+
+    internal partial class InformacionMetadata
+    {
+        [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
+
+        [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Display(Name = "Título")]
+        public string Titulo { get; set; }
+    }
+
+    internal partial class ArchivoMetadata
+    {
+        [Required(ErrorMessage = "{0} es un dato requerido")]
+        public byte[] Contenido { get; set; }
+
+ 
     }
 
     internal partial class RubroCobroMetadata
