@@ -10,5 +10,7 @@ namespace ApplicationCore.Services
     public interface IServiceInformacion
     {
         IEnumerable<Informacion> GetAll();
+        void Create(Informacion oInformacion);
+        Informacion GetById(int id);
     }
 }

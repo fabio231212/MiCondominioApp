@@ -11,5 +11,7 @@ namespace Infraestructure.Repository
     {
 
         IEnumerable<Informacion> GetAll();
+        void Create(Informacion oInformacion);
+        Informacion GetById(int id);
     }
 }
