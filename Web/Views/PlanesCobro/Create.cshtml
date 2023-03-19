@@ -4,54 +4,79 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
-
+<link href="~/Content/Select/sumoselect.css" rel="stylesheet" />
 @using (Html.BeginForm("Save", "PlanesCobro", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>PlanCobro</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<div class="form-group">
-    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-</div>
+    <div class="form-horizontal">
+        <h4>PlanCobro</h4>
+        <hr />
 
-<div class="form-group">
-    @Html.LabelFor(model => model.RubroCobro, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownList("rubrosSeleccionados",
-       (MultiSelectList)ViewBag.IdRubro,
-       htmlAttributes: new { @class = "form-control", multiple = "multiple", @id = "RubrosSeleccionados" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    </div>
-    @Html.ValidationMessageFor(model => model.RubroCobro, "", new { @class = "text-danger" })
-</div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "precioTotal", htmlAttributes = new { @readonly = "readonly" } } })
+
+        <div class="form-row">
+            <div class="form-group col-12 col-sm-6 col-lg-4">
+                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label" })
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+                    </div>
+                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12 col-sm-6 col-lg-4">
+                @Html.LabelFor(model => model.RubroCobro, htmlAttributes: new { @class = "control-label" })
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-bars"></i></span>
+                    </div>
+                    @Html.DropDownList("rubrosSeleccionados",
+                   (MultiSelectList)ViewBag.IdRubro,
+                   htmlAttributes: new { @class = "form-control", multiple = "multiple", @id = "RubrosSeleccionados", @placeholder="Seleccione los rubros"})
+
+                </div>
+                @Html.ValidationMessageFor(model => model.RubroCobro, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12 col-sm-6 col-lg-4">
+                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label" })
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-money-bills"></i></span>
+                    </div>
+                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "precioTotal", @readonly = "readonly" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+            </div>
+        </div>
     </div>
-    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-</div>
+
+
+
+
+
 
     <button type="submit" class="btn bg-siteColor text-white"> <i class="fa-solid fa-plus text-white"></i> Añadir</button>
 
 
 
     <a href="@Url.Action("Index")" class="btn bg-danger text-white"><i class="fa-solid fa-x text-white"></i>  Cancelar</a>
-</div>
+
 }
 
 
 
-
+<script src="~/Scripts/Select/jquery.sumoselect.min.js"></script>
 <script>
+
+    $('#RubrosSeleccionados').SumoSelect();
+
+
     $(document).ready(function () {
         // Obtener el elemento select y el elemento donde se mostrará el total
         var selectRubros = $('#RubrosSeleccionados');
@@ -70,7 +95,7 @@
             });
 
             // Actualizar el valor del total en tiempo real
-            total.val(nuevoTotal.toFixed(2));
+            total.val(nuevoTotal);
         });
 
     });

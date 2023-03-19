@@ -213,6 +213,7 @@
     <Content Include="Content\jqueryUI\jquery-ui.min.css" />
     <Content Include="Content\jqueryUI\jquery-ui.structure.min.css" />
     <Content Include="Content\jqueryUI\jquery-ui.theme.min.css" />
+    <Content Include="Content\Select\sumoselect.css" />
     <Content Include="Content\tableData.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -239,6 +240,7 @@
     <Content Include="Scripts\js\vendor\jquery-2.2.4.min.js" />
     <Content Include="Scripts\js\vendor\modernizr-2.8.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Select\jquery.sumoselect.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
