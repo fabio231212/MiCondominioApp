@@ -74,7 +74,12 @@
 <script src="~/Scripts/Select/jquery.sumoselect.min.js"></script>
 <script>
 
-    $('#RubrosSeleccionados').SumoSelect();
+    $(document).ready(function () {
+        $('#RubrosSeleccionados').SumoSelect({
+            captionFormat: '{0} Rubros seleccionados',
+            captionFormatAllSelected: '{0} Todos los rubros seleccionados'
+        });
+    });
 
 
     $(document).ready(function () {
