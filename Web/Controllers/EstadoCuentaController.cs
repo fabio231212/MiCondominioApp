@@ -180,7 +180,6 @@ namespace Web.Controllers
             }
         }
 
-
         public SelectList listaPropiedades(int? id = 0)
         {
             IServicePropiedad _ServicePropiedad = new ServicePropiedad();
@@ -193,6 +192,14 @@ namespace Web.Controllers
             IServicePlanCobro _ServicePlanCobro = new ServicePlanCobro();
             IEnumerable<PlanCobro> lista = _ServicePlanCobro.GetAll();
             return new SelectList(lista, "Id", "Descripcion", id);
+        }
+
+        public ActionResult GetPlanById(int id)
+        {
+            IServicePlanCobro _ServicePlan = new ServicePlanCobro();
+             PlanCobro plan = _ServicePlan.GetById(id);
+            return Json(plan.Total, JsonRequestBehavior.AllowGet);
+
         }
 
     }

@@ -88,18 +88,31 @@
    $(document).ready(function () {
         $('#cboPlan').change(function () {
             var id = document.getElementById("cboPlan").value;
-        $.ajax({
+        @*$.ajax({
             url: '@Url.Action("GetPlanById", "PRUEBA")',
             data: { id: id },
             type: 'GET',
             dataType: 'json',
-            success: function (data) {
-                console.log(data.data)
+            success: function (response) {
+                console.log(response.data)
             },
             error: function (xhr, status, error) {
                 console.log('Error al obtener el dato: ' + error + xhr);
             }
-        });
+        });*@
+
+
+            $.ajax({
+                url: '/EstadoCuenta/GetPlanById',
+                type: 'GET', // o 'GET' según lo que necesites
+                data: {id : id},
+                success: function (response) {
+                    console.log(response.data);
+                },
+                error: function (error) {
+                    console.log('Error al obtener el dato: ' + error);
+                }
+            });
     });
 });
 
