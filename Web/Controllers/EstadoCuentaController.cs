@@ -12,7 +12,7 @@ using Web.Utils;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EstadoCuentaController : Controller
     {
 
@@ -88,6 +88,8 @@ namespace Web.Controllers
         // GET: EstadoCuenta/Create
         public ActionResult Create()
         {
+            ViewBag.idPropiedad = listaPropiedades();
+            ViewBag.idPlanCobro = listaPlanCobro();
             return View();
         }
 
@@ -115,13 +117,40 @@ namespace Web.Controllers
 
         // POST: EstadoCuenta/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Save(Factura factura)
         {
             try
             {
-                // TODO: Add update logic here
+                IServiceEstadoCuenta _ServiceEstadoCuenta = new ServiceEstadoCuenta();
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        _ServiceEstadoCuenta.Create(factura);
 
-                return RedirectToAction("Index");
+                    }
+                    else
+                    {
+
+                        ViewBag.idPropiedad = listaPropiedades(factura.Propiedad.Id);
+                        ViewBag.idPlanCobro = listaPlanCobro(factura.PlanCobro.Id);
+
+
+                            return View("Create", factura);                     
+                    }
+                    return RedirectToAction("Index");
+                }
+
+                catch (Exception ex)
+                {
+                    // Salvar el error en un archivo 
+
+                    TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                    TempData["Redirect"] = "Home";
+                    TempData["Redirect-Action"] = "IndexAdmin";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
             }
             catch
             {
@@ -151,6 +180,20 @@ namespace Web.Controllers
             }
         }
 
-       
+
+        public SelectList listaPropiedades(int? id = 0)
+        {
+            IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+            IEnumerable<Propiedad> lista = _ServicePropiedad.GetAll();
+            return new SelectList(lista, "Id", "NumPropiedad", id);
+        }
+
+        public SelectList listaPlanCobro(int? id = 0)
+        {
+            IServicePlanCobro _ServicePlanCobro = new ServicePlanCobro();
+            IEnumerable<PlanCobro> lista = _ServicePlanCobro.GetAll();
+            return new SelectList(lista, "Id", "Descripcion", id);
+        }
+
     }
 }

@@ -13,6 +13,41 @@ namespace Infraestructure.Repository
 {
     public class RepositoryEstadoCuenta : IRepositoryEstadoCuenta
     {
+        public void Create(Factura factura)
+        {
+            try
+            {
+
+                using (MyContext ctx = new MyContext())
+                {
+
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    Factura oFactura = factura;
+
+                    if (oFactura != null)
+                    {
+                        ctx.Factura.Add(oFactura);
+                        ctx.SaveChanges();
+                    }
+
+                }
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
         public IEnumerable<Factura> GetAll()
         {
             try

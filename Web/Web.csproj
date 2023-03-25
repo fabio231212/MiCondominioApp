@@ -141,6 +141,7 @@
     <Compile Include="Controllers\NotificacionUsuarioController.cs" />
     <Compile Include="Controllers\PlanesCobroController.cs" />
     <Compile Include="Controllers\PropiedadController.cs" />
+    <Compile Include="Controllers\PRUEBAController.cs" />
     <Compile Include="Controllers\RubroCobroController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -269,12 +270,14 @@
     <Content Include="Views\Archivo\Index.cshtml" />
     <Content Include="Views\Informacion\Create.cshtml" />
     <Content Include="Views\Informacion\Edit.cshtml" />
+    <Content Include="Views\EstadoCuenta\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Image\" />
     <Folder Include="Models\" />
     <Folder Include="Views\NotificacionUsuario\" />
+    <Folder Include="Views\PRUEBA\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
