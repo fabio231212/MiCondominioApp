@@ -17,5 +17,6 @@ namespace ApplicationCore.Services
         Factura GetDetalleEstadoCuenta(int idEstadoCuenta);
         void Create(Factura factura);
         IEnumerable<Factura> GetEstadoCuentaPendiente();
+        IEnumerable<Factura> GetFacturasByFecha();
     }
 }

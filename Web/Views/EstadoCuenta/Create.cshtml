@@ -3,7 +3,7 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
-@using (Html.BeginForm("Save", "EstadoCuenta", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Save", "EstadoCuenta", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -51,31 +51,40 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-house"></i></span>
                     </div>
-                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @id = "total" } })
+                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @id = "total", @readonly = "readonly" } })
                 </div>
                 @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
+
+
+
+    <button type="submit" class="btn bg-siteColor text-white" id="crear-factura"> <i class="fa-solid fa-plus text-white"></i> Crear Factura</button>
+
+
+
+    <a href="@Url.Action("Index")" class="btn bg-danger text-white"><i class="fa-solid fa-x text-white"></i>  Cancelar</a>
+
+
+
 }
-
-
-<input type="text" id="total-element" readonly>
 
 <script>
 
 
-    @*$(document).ready(function () {
+    $(document).ready(function () {
         $('#cboPlan').change(function () {
             var id = document.getElementById("cboPlan").value;
             $.ajax({
                 url: '@Url.Action("GetPlanById", "EstadoCuenta")',
                 type: "GET",
-                data: JSON.stringify({ id: id }),
+                data: { id: id },
                 dataType: "json",
                 contentType: "application/json; charset=utf8",
                 success: function (result) {
-                    $('#total-element').Value = result.data; // asigna el valor al EditorFor
+                    console.log(result.data);
+                    $('#total').val(result.data); // asigna el valor al EditorFor
                 },
                 error: function (result) {
                     alert("Error");
@@ -83,38 +92,54 @@
                 }
             });
         });
-    });*@
-
-   $(document).ready(function () {
-        $('#cboPlan').change(function () {
-            var id = document.getElementById("cboPlan").value;
-        @*$.ajax({
-            url: '@Url.Action("GetPlanById", "PRUEBA")',
-            data: { id: id },
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                console.log(response.data)
-            },
-            error: function (xhr, status, error) {
-                console.log('Error al obtener el dato: ' + error + xhr);
-            }
-        });*@
-
-
-            $.ajax({
-                url: '/EstadoCuenta/GetPlanById',
-                type: 'GET', // o 'GET' según lo que necesites
-                data: {id : id},
-                success: function (response) {
-                    console.log(response.data);
-                },
-                error: function (error) {
-                    console.log('Error al obtener el dato: ' + error);
-                }
-            });
     });
+
+
+$(document).ready(function () {
+    var existeTempData = '@TempData["existe"]';
+    if (existeTempData == 'True') {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'error',
+            title: '¡Ya existe una factura!',
+            text: 'La factura no se puede crear debido a que ya existe una para este mes',
+            showConfirmButton: true,
+        })
+    }
 });
+
+    $(document).ready(function () {
+    var creada = '@TempData["creada"]';
+    if (creada == 'True') {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: '¡Factura Creada!',
+            text: 'La factura se creo correctamente',
+            showConfirmButton: true,
+        })
+    }
+});
+
+
+    //$(document).ready(function () {
+    //    $('#form').submit(function (event) {
+    //        //Evita redirección
+    //        event.preventDefault();
+    //        Swal.fire({
+    //            position: 'top-center',
+    //            icon: 'success',
+    //            title: '¡Factura Creada!',
+    //            text: 'La factura se creo correctamente',
+    //            showConfirmButton: false,
+    //            timer: 1500
+    //        }).then((result) => {
+    //            // Recargar la página después de que la alerta se cierre
+    //            location.reload();
+    //        });
+    //    });
+    //});
+
 
 
 

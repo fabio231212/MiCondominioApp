@@ -3,11 +3,13 @@ using ApplicationCore.Services;
 using Infraestructure.Models;
 using Infraestructure.Repository;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Utils;
 
 namespace Web.Controllers
@@ -91,7 +93,7 @@ namespace Web.Controllers
             ViewBag.idPropiedad = listaPropiedades();
             ViewBag.idPlanCobro = listaPlanCobro();
             return View();
-        }
+    }
 
         // POST: EstadoCuenta/Create
         [HttpPost]
@@ -124,21 +126,59 @@ namespace Web.Controllers
                 IServiceEstadoCuenta _ServiceEstadoCuenta = new ServiceEstadoCuenta();
                 try
                 {
+                    ModelState.Remove("FechaFacturacion");
+                    ModelState.Remove("Tarjeta");
+                    ModelState.Remove("Activo");
+
                     if (ModelState.IsValid)
                     {
+                        factura.Activo = true;
+                        factura.FK_Tarjeta = 1;
+                        factura.FechaFacturacion = DateTime.Now;
+                        factura.Tarjeta = "1234";
+
+                        IEnumerable<Factura>  listaFacturas = _ServiceEstadoCuenta.GetByIdProp((int)factura.FK_Propiedad);
+                        foreach (Factura oFact in listaFacturas)
+                        {
+                                if (oFact.FechaFacturacion.Value.Month == factura.FechaFacturacion.Value.Month && oFact.FechaFacturacion.Value.Year == factura.FechaFacturacion.Value.Year)
+                                {
+                                    ViewBag.idPropiedad = listaPropiedades(factura.FK_Propiedad);
+                                    ViewBag.idPlanCobro = listaPlanCobro(factura.FK_PlanCobro);
+                                    TempData["existe"] = true;
+                                    return View("Create", factura);
+                                }                           
+                        }
+
                         _ServiceEstadoCuenta.Create(factura);
+
+                        ViewBag.idPropiedad = listaPropiedades();
+                        ViewBag.idPlanCobro = listaPlanCobro();
+                        TempData["creada"] = true;
+                        //return RedirectToAction("Create");
+                        return RedirectToAction("Create");
 
                     }
                     else
                     {
+                        if (factura.Propiedad == null)
+                        {
+                            ViewBag.idPropiedad = listaPropiedades();
+                        }
+                        else
+                        {
+                            ViewBag.idPropiedad = listaPropiedades(factura.FK_Propiedad);
+                        }
 
-                        ViewBag.idPropiedad = listaPropiedades(factura.Propiedad.Id);
-                        ViewBag.idPlanCobro = listaPlanCobro(factura.PlanCobro.Id);
-
-
+                        if (factura.PlanCobro == null)
+                        {
+                            ViewBag.idPlanCobro = listaPlanCobro();
+                        }
+                        else
+                        {
+                            ViewBag.idPlanCobro = listaPlanCobro(factura.FK_PlanCobro);
+                        }
                             return View("Create", factura);                     
                     }
-                    return RedirectToAction("Index");
                 }
 
                 catch (Exception ex)
@@ -198,7 +238,7 @@ namespace Web.Controllers
         {
             IServicePlanCobro _ServicePlan = new ServicePlanCobro();
              PlanCobro plan = _ServicePlan.GetById(id);
-            return Json(plan.Total, JsonRequestBehavior.AllowGet);
+            return Json(new { data = plan.Total }, JsonRequestBehavior.AllowGet);
 
         }
 
