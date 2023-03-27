@@ -141,6 +141,7 @@
     <Compile Include="Controllers\NotificacionUsuarioController.cs" />
     <Compile Include="Controllers\PlanesCobroController.cs" />
     <Compile Include="Controllers\PropiedadController.cs" />
+    <Compile Include="Controllers\ReservacionController.cs" />
     <Compile Include="Controllers\RubroCobroController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -204,6 +205,7 @@
     <Content Include="Content\Images\team\team-author3.jpg" />
     <Content Include="Content\Images\team\team-author4.jpg" />
     <Content Include="Content\Images\team\team-author5.jpg" />
+    <Content Include="Content\jquery.datetimepicker.min.css" />
     <Content Include="Content\jqueryUI\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\jqueryUI\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\jqueryUI\images\ui-icons_777620_256x240.png" />
@@ -225,6 +227,7 @@
     <Content Include="Scripts\jquery-3.6.3.min.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\jqueryUI\jquery-ui.min.js" />
     <Content Include="Scripts\js\bar-chart.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
@@ -240,6 +243,9 @@
     <Content Include="Scripts\js\vendor\jquery-2.2.4.min.js" />
     <Content Include="Scripts\js\vendor\modernizr-2.8.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\Select\jquery.sumoselect.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -269,6 +275,11 @@
     <Content Include="Views\Archivo\Index.cshtml" />
     <Content Include="Views\Informacion\Create.cshtml" />
     <Content Include="Views\Informacion\Edit.cshtml" />
+    <Content Include="Views\Shared\Reservacion\_Reservacion.cshtml" />
+    <Content Include="Scripts\moment.min.js.map" />
+    <Content Include="Scripts\moment-with-locales.min.js.map" />
+    <Content Include="Views\Reservacion\IndexAdmin.cshtml" />
+    <Content Include="Views\Reservacion\IndexUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,259 @@
+﻿@model  Infraestructure.Models.Reservacion
+@{
+        dynamic listaReservacion = ViewBag.listaReservacion;
+    }
+
+@using (Html.BeginForm("Save", "Reservacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h4 class="header-title">Registro de incidencias</h4>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-row">
+        <div class="form-group col-12 col-sm-6 col-lg-4">
+            @Html.LabelFor(model => model.FK_AreaComunal, htmlAttributes: new { @class = "control-label" })
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                </div>
+                @Html.DropDownListFor(model => model.FK_AreaComunal,
+        (SelectList)ViewBag.listaAreas,
+        "Seleccione un Area",
+        htmlAttributes: new { @class = "form-control", @id = "lista" })
+            </div>
+            @Html.ValidationMessageFor(model => model.FK_AreaComunal, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-12 col-sm-6 col-lg-4">
+
+            @Html.LabelFor(model => model.FechaEntrada, htmlAttributes: new { @class = "control-label" })
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
+                </div>
+                @Html.TextBoxFor(model => model.FechaEntrada, new { htmlAttributes = new { @class = "form-control", @id = "FechaEntrada", @readonly = "readonly" } })
+            </div>
+            @Html.ValidationMessageFor(model => model.FechaEntrada, "", new { @class = "text-danger " })
+        </div>
+
+        <div class="form-group col-12 col-sm-6 col-lg-4">
+
+            @Html.LabelFor(model => model.FechaSalida, htmlAttributes: new { @class = "control-label" })
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
+                </div>
+                @Html.TextBoxFor(model => model.FechaSalida, new { htmlAttributes = new { @class = "form-control", @id = "FechaSalida", @readonly = "readonly" } })
+            </div>
+            @Html.ValidationMessageFor(model => model.FechaSalida, "", new { @class = "text-danger " })
+        </div>
+
+
+    </div>
+    <button type="submit" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white">Registrar Reservación</button>
+}
+
+
+
+
+<div class="data-tables datatable-dark table-responsive" id="listaReservacion">
+        <table id="dataTableReservacion" class="text-center">
+            <thead class="text-capitalize">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Infraestructure.Models.Reservacion item in listaReservacion)
+                {
+
+                    <tr class="selected-row">
+                        <td> @Html.DisplayFor(item => item.FechaEntrada)</td>
+                        <td> @Html.DisplayFor(item => item.FechaSalida)</td>
+                        <td> @Html.DisplayFor(item => item.AreaComunal.Nombre)</td>
+                        <td> @Html.DisplayFor(item => item.EstadoReservacion.Nombre)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        //$('#registrarReservacion').submit(function (event) {
+        //    //Evita redirección
+        //    event.preventDefault();
+        //    var formData = $('#registrarReservacion').serialize();
+        //    // Hacer una solicitud AJAX al servidor
+        //    $.ajax({
+        //        url: '/Reservacion/Save',
+        //        type: 'POST',
+        //        data: formData,
+        //        success: function (response) {
+        //            Swal.fire({
+        //                position: 'center',
+        //                icon: 'success',
+        //                title: '¡Hemos recibido tu solicitud!',
+        //                text: 'La responderemos con la mayor brevedad posible',
+        //                showConfirmButton: false,
+        //                timer: 2500
+        //            })
+        //            $('#listaReservacion').html('');
+        //            $('#listaReservacion').html(response);
+        //            // Manejar la respuesta del servidor aquí
+        //            $(document).ready(function () {
+        //                $('#dataTableReservacion').DataTable({
+        //                    responsive: true,
+        //                    "language": {
+        //                        "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+        //                    },
+        //                    "lengthChange": false,
+        //                    "paging": false,
+
+        //                });
+        //            });
+        //        },
+        //        error: function (error) {
+        //            // Manejar el error aquí
+        //        }
+        //    });
+        //});
+        $(document).ready(function () {
+            var isSaved = @ViewBag.isSaved;
+            if (isSaved) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Guardado Correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+
+        $("#lista").on("change", function () {
+            var id = $(this).val();
+            if (id == "") {
+                destroyPicker();
+                return;
+            }
+            $.ajax({
+                url: "/Reservacion/GetHorarioById",
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    if (response != null) {
+                        setPicker(response.horaApertura, response.horaCierre);
+                    }
+                }
+
+            });
+
+        });
+
+        function destroyPicker() {
+            $('#FechaEntrada, #FechaSalida').datetimepicker("destroy");
+        }
+        function setPicker(hourMin = "00:00", hourMax = "23:59") {
+
+            $('#FechaEntrada, #FechaSalida').datetimepicker({
+                format: 'd-m-Y H:i',
+                minTime: hourMin,
+                maxTime: hourMax,
+                minDate: 0,
+            });
+            $.datetimepicker.setLocale('es');
+        }
+
+
+        $(document).ready(function () {
+
+            $('#FechaSalida').on('change', function () {
+                validarHorario();
+            });
+        });
+
+        $(document).ready(function () {
+            $('#dataTableReservacion').DataTable({
+                responsive: true,
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "lengthChange": false,
+                "paging": false,
+
+            });
+        });
+
+
+        function validarHorario() {
+            $("#fechaEntradaInvalid").addClass("d-none");
+            $("#fechaSalidaInvalid").addClass("d-none");
+
+            var fechaEntrada = $('#FechaEntrada').val();
+            var fechaSalida = $('#FechaSalida').val();
+
+            var FechaEntradaParsed = new Date(fechaEntrada);
+            var FechaSalidaParsed = new Date(fechaSalida);
+            if (FechaEntradaParsed >= FechaSalidaParsed) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'La hora de salida debe de ser mayor',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+
+            if (!moment(fechaEntrada, "DD-MM-YY HH:mm", true).isValid()) {
+                $("#fechaEntradaInvalid").text("Digite la fecha de inicio");
+                $("#fechaEntradaInvalid").removeClass("d-none");
+                return;
+            }
+
+            if (!moment(fechaSalida, "DD-MM-YY HH:mm", true).isValid()) {
+                $("#fechaSalidaInvalid").text("Digite la fecha de salida");
+                $("#fechaSalidaInvalid").removeClass("d-none");
+                return;
+            }
+
+
+            $.ajax({
+                url: "/Reservacion/ValidarHorario",
+                data: {
+                    fechaEntrada: fechaEntrada,
+                    fechaSalida: fechaSalida
+                },
+                success: function (response) {
+                    if (response.existeHorario) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Ya existe una reservación en el horario digitado',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                    }
+                }
+
+            });
+        }
+
+
+
+
+    </script>
+
+
+
+
+}

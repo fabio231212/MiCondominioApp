@@ -16,11 +16,13 @@ namespace Infraestructure.Models
     {
         public int FK_Usuario { get; set; }
         public int FK_AreaComunal { get; set; }
-        public Nullable<bool> Aprobada { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public Nullable<System.DateTime> FechaEntrada { get; set; }
         public int Id { get; set; }
+        public Nullable<int> FK_Estado { get; set; }
+        public Nullable<System.DateTime> FechaSalida { get; set; }
     
         public virtual AreaComunal AreaComunal { get; set; }
+        public virtual EstadoReservacion EstadoReservacion { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

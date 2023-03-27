@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public class RepositoryEstadoIncidencia : IRepositoryEstadoIncidencia
+    public class RepositoryEstadoIncidencia : IRepositoryEstados<EstadoIncidencia>
     {
         public IEnumerable<EstadoIncidencia> GetAll()
         {

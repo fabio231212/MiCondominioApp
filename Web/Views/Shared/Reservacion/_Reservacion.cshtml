@@ -1,0 +1,24 @@
+﻿
+@model IEnumerable<Infraestructure.Models.Reservacion>
+<table id="dataTableReservacion" class="text-center">
+    <thead class="text-capitalize">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
+            <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
+            <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr class="selected-row">
+                <td> @Html.DisplayFor(modelItem => item.FechaEntrada)</td>
+                <td> @Html.DisplayFor(modelItem => item.FechaSalida)</td>
+                <td> @Html.DisplayFor(modelItem => item.AreaComunal.Nombre)</td>
+                <td> @Html.DisplayFor(modelItem => item.EstadoReservacion.Nombre)</td>
+            </tr>
+        }
+    </tbody>
+</table>

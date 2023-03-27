@@ -127,7 +127,7 @@ namespace Web.Controllers
         private SelectList listaEstadoIncidencia(int? idEstado = 0)
         {
 
-            IServiceEstadoIncidencia _Service = new ServiceEstadoIncidencia();
+            IServiceEstados<EstadoIncidencia> _Service = new ServiceEstadoIncidencia();
             IEnumerable<EstadoIncidencia> lista = _Service.GetAll();
             return new SelectList(lista, "Id", "Nombre", idEstado);
         }
