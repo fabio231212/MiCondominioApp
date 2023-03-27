@@ -276,7 +276,6 @@
     <Folder Include="Content\Image\" />
     <Folder Include="Models\" />
     <Folder Include="Views\NotificacionUsuario\" />
-    <Folder Include="Views\Shared\EstadoCuenta\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\fontawesome-webfont.eot" />

@@ -92,6 +92,7 @@ namespace Web.Controllers
         {
             ViewBag.idPropiedad = listaPropiedades();
             ViewBag.idPlanCobro = listaPlanCobro();
+            ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
             return View();
     }
 
@@ -144,6 +145,7 @@ namespace Web.Controllers
                                 {
                                     ViewBag.idPropiedad = listaPropiedades(factura.FK_Propiedad);
                                     ViewBag.idPlanCobro = listaPlanCobro(factura.FK_PlanCobro);
+                                    ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
                                     TempData["existe"] = true;
                                     return View("Create", factura);
                                 }                           
@@ -177,7 +179,8 @@ namespace Web.Controllers
                         {
                             ViewBag.idPlanCobro = listaPlanCobro(factura.FK_PlanCobro);
                         }
-                            return View("Create", factura);                     
+                        ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
+                        return View("Create", factura);                     
                     }
                 }
 
