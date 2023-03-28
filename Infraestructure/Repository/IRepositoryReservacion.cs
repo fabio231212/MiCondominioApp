@@ -16,7 +16,7 @@ namespace Infraestructure.Repository
 
         IEnumerable<Reservacion> GetByEstado(int estado);
 
-        bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida);
+        bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal);
         
     }
 }

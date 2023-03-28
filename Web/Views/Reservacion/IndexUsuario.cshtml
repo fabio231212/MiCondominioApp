@@ -1,131 +1,99 @@
 ﻿@model  Infraestructure.Models.Reservacion
-@{
-        dynamic listaReservacion = ViewBag.listaReservacion;
-    }
 
-@using (Html.BeginForm("Save", "Reservacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+@using (Html.BeginForm("Save", "Reservacion", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4 class="header-title">Registro de incidencias</h4>
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-row">
-        <div class="form-group col-12 col-sm-6 col-lg-4">
-            @Html.LabelFor(model => model.FK_AreaComunal, htmlAttributes: new { @class = "control-label" })
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-                </div>
-                @Html.DropDownListFor(model => model.FK_AreaComunal,
-        (SelectList)ViewBag.listaAreas,
-        "Seleccione un Area",
-        htmlAttributes: new { @class = "form-control", @id = "lista" })
+<div class="form-row">
+    <div class="form-group col-12 col-sm-6 col-lg-4">
+        @Html.LabelFor(model => model.FK_AreaComunal, htmlAttributes: new { @class = "control-label" })
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
             </div>
-            @Html.ValidationMessageFor(model => model.FK_AreaComunal, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.FK_AreaComunal,
+    (SelectList)ViewBag.listaAreas,
+    "Seleccione un Area",
+    htmlAttributes: new { @class = "form-control", @id = "lista" })
         </div>
-
-        <div class="form-group col-12 col-sm-6 col-lg-4">
-
-            @Html.LabelFor(model => model.FechaEntrada, htmlAttributes: new { @class = "control-label" })
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
-                </div>
-                @Html.TextBoxFor(model => model.FechaEntrada, new { htmlAttributes = new { @class = "form-control", @id = "FechaEntrada", @readonly = "readonly" } })
-            </div>
-            @Html.ValidationMessageFor(model => model.FechaEntrada, "", new { @class = "text-danger " })
-        </div>
-
-        <div class="form-group col-12 col-sm-6 col-lg-4">
-
-            @Html.LabelFor(model => model.FechaSalida, htmlAttributes: new { @class = "control-label" })
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
-                </div>
-                @Html.TextBoxFor(model => model.FechaSalida, new { htmlAttributes = new { @class = "form-control", @id = "FechaSalida", @readonly = "readonly" } })
-            </div>
-            @Html.ValidationMessageFor(model => model.FechaSalida, "", new { @class = "text-danger " })
-        </div>
-
-
+        @Html.ValidationMessageFor(model => model.FK_AreaComunal, "", new { @class = "text-danger" })
+        <div id="invalidFechaEntrada"></div>
     </div>
+
+
+    <div class="form-group col-12 col-sm-6 col-lg-4">
+
+        @Html.LabelFor(model => model.FechaEntrada, htmlAttributes: new { @class = "control-label" })
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
+            </div>
+            @Html.TextBoxFor(model => model.FechaEntrada, new { @class = "form-control", @id = "FechaEntrada", @readonly = "readonly", @name = "FechaEntrada", @type = "datetime" })
+        </div>
+        @Html.ValidationMessageFor(model => model.FechaEntrada, "", new { @class = "text-danger ", @id = "validateFechaEntrada" })
+    </div>
+
+    <div class="form-group col-12 col-sm-6 col-lg-4">
+
+        @Html.LabelFor(model => model.FechaSalida, htmlAttributes: new { @class = "control-label" })
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days"></i></span>
+            </div>
+            @Html.TextBoxFor(model => model.FechaSalida, new { @class = "form-control", @id = "FechaSalida", @readonly = "readonly", @name = "FechaSalida", @type = "datetime" })
+        </div>
+        @Html.ValidationMessageFor(model => model.FechaSalida, "", new { @class = "text-danger ", @id = "validateFechaSalida" })
+    </div>
+
+
+</div>
+
     <button type="submit" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white">Registrar Reservación</button>
 }
 
 
-
+@{
+    IEnumerable<Infraestructure.Models.Reservacion> reservaciones = ViewBag.listaReservacion;
+}
 
 <div class="data-tables datatable-dark table-responsive" id="listaReservacion">
-        <table id="dataTableReservacion" class="text-center">
-            <thead class="text-capitalize">
-                <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Infraestructure.Models.Reservacion item in listaReservacion)
-                {
+    <table id="dataTableReservacion" class="text-center">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in reservaciones)
+            {
 
-                    <tr class="selected-row">
-                        <td> @Html.DisplayFor(item => item.FechaEntrada)</td>
-                        <td> @Html.DisplayFor(item => item.FechaSalida)</td>
-                        <td> @Html.DisplayFor(item => item.AreaComunal.Nombre)</td>
-                        <td> @Html.DisplayFor(item => item.EstadoReservacion.Nombre)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                <tr class="selected-row">
+                    <td>@item.FechaEntrada</td>
+                    <td> @item.FechaSalida</td>
+                    <td> @item.AreaComunal.Nombre</td>
+                    <td> @item.EstadoReservacion.Nombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 
 @section Scripts{
     <script type="text/javascript">
 
-        //$('#registrarReservacion').submit(function (event) {
-        //    //Evita redirección
-        //    event.preventDefault();
-        //    var formData = $('#registrarReservacion').serialize();
-        //    // Hacer una solicitud AJAX al servidor
-        //    $.ajax({
-        //        url: '/Reservacion/Save',
-        //        type: 'POST',
-        //        data: formData,
-        //        success: function (response) {
-        //            Swal.fire({
-        //                position: 'center',
-        //                icon: 'success',
-        //                title: '¡Hemos recibido tu solicitud!',
-        //                text: 'La responderemos con la mayor brevedad posible',
-        //                showConfirmButton: false,
-        //                timer: 2500
-        //            })
-        //            $('#listaReservacion').html('');
-        //            $('#listaReservacion').html(response);
-        //            // Manejar la respuesta del servidor aquí
-        //            $(document).ready(function () {
-        //                $('#dataTableReservacion').DataTable({
-        //                    responsive: true,
-        //                    "language": {
-        //                        "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        //                    },
-        //                    "lengthChange": false,
-        //                    "paging": false,
-
-        //                });
-        //            });
-        //        },
-        //        error: function (error) {
-        //            // Manejar el error aquí
-        //        }
-        //    });
-        //});
-        $(document).ready(function () {
-            var isSaved = @ViewBag.isSaved;
+        @*$(document).ready(function () {
+            var isSaved = @ViewBag.isSaved
             if (isSaved) {
                 Swal.fire({
                     position: 'center',
@@ -135,7 +103,7 @@
                     timer: 1500
                 })
             }
-        }
+        }*@
 
         $("#lista").on("change", function () {
             var id = $(this).val();
@@ -158,25 +126,74 @@
 
         });
 
+        function showWeather() {
+            var fecha = moment($('#FechaEntrada').val(), 'DD-MM-YYYY HH:mm:ss').format('YYYY-MM-DD');
+
+            const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=e698473dbea54602882eb96b181fc234&city=Alajuela,CR&lang=es&units=M&days=7&include=weather_icon&include=minutely`;
+            $.ajax({
+                url: url,
+                success: function (response) {
+                    var fechaData = null;
+                    response.data.forEach(function (forecast) {
+                        if (forecast.valid_date === fecha) {
+                            fechaData = forecast;
+                        }
+                    });
+                    if (fechaData === null) {
+                        return;
+                    }
+
+
+            Swal.fire({
+                position: 'center',
+                title: 'Pronóstico',
+                text: 'El clima estará : ' + fechaData.weather.description,
+               // text: 'holaaaaaaaaaaaaa',
+                imageUrl: 'https://www.weatherbit.io/static/img/icons/' + fechaData.weather.icon + '.png',
+                imageWidth: 100,
+                imageHeight: 100,
+                imageAlt: 'Custom image',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (!result.isConfirmed) {
+                    $('#FechaEntrada').val("");
+                    $('#FechaSalida').val("");
+                }
+            });
+                },
+
+
+        });
+
+        }
+
         function destroyPicker() {
-            $('#FechaEntrada, #FechaSalida').datetimepicker("destroy");
+            $('#FechaEntrada, #FechaSalida').datetimepicker("destroy");  //destruir el picker
+            $('#FechaEntrada').val("");
+            $('#FechaSalida').val("");
         }
         function setPicker(hourMin = "00:00", hourMax = "23:59") {
 
             $('#FechaEntrada, #FechaSalida').datetimepicker({
-                format: 'd-m-Y H:i',
+                format: 'd-m-Y H:i:s',
                 minTime: hourMin,
                 maxTime: hourMax,
-                minDate: 0,
+                minDate: 0,   //día actual
+                maxDate: moment().add(7, 'days').toDate(), //los siguientes 7 días
+                closeOnDateSelect: true,
+                closeOnWithoutClick: true,
             });
             $.datetimepicker.setLocale('es');
         }
 
 
         $(document).ready(function () {
-
-            $('#FechaSalida').on('change', function () {
-                validarHorario();
+            $("#FechaSalida").on("change", function () {
+                showWeather();
             });
         });
 
@@ -190,50 +207,61 @@
                 "paging": false,
 
             });
-        });
+        })
 
 
-        function validarHorario() {
-            $("#fechaEntradaInvalid").addClass("d-none");
-            $("#fechaSalidaInvalid").addClass("d-none");
-
-            var fechaEntrada = $('#FechaEntrada').val();
-            var fechaSalida = $('#FechaSalida').val();
-
-            var FechaEntradaParsed = new Date(fechaEntrada);
-            var FechaSalidaParsed = new Date(fechaSalida);
-            if (FechaEntradaParsed >= FechaSalidaParsed) {
+        function isFechaSalidaMayor(fechaEntrada,fechaSalida) {
+            if (fechaEntrada >= fechaSalida) {
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
                     title: 'La hora de salida debe de ser mayor',
                     showConfirmButton: false,
                     timer: 1500
-                })
+                });
+                $('#FechaEntrada').val("");
+                $('#FechaSalida').val("");
+                return;
             }
+        }
+
+        $("#form").submit(function (event) {
+            event.preventDefault();
+            $("#validateFechaEntrada").addClass("d-none");
+            $("#validateFechaSalida").addClass("d-none");
 
 
-            if (!moment(fechaEntrada, "DD-MM-YY HH:mm", true).isValid()) {
-                $("#fechaEntradaInvalid").text("Digite la fecha de inicio");
-                $("#fechaEntradaInvalid").removeClass("d-none");
+            var fechaEntrada = moment($('#FechaEntrada').val(), 'DD-MM-YYYY HH:mm:ss').toDate();
+            var fechaSalida = moment($('#FechaSalida').val(), 'DD-MM-YYYY HH:mm:ss').toDate();
+
+            isFechaSalidaMayor(fechaEntrada, fechaSalida);
+
+
+            if (!moment(fechaEntrada, "DD-MM-YYYY HH:mm:ss", true).isValid()) {
+                $("#validateFechaEntrada").text("Digite la fecha de inicio");
+                $("#validateFechaEntrada").removeClass("d-none");
                 return;
             }
 
-            if (!moment(fechaSalida, "DD-MM-YY HH:mm", true).isValid()) {
-                $("#fechaSalidaInvalid").text("Digite la fecha de salida");
-                $("#fechaSalidaInvalid").removeClass("d-none");
+            if (!moment(fechaSalida, "DD-MM-YYYY HH:mm:ss", true).isValid()) {
+                $("#validateFechaSalida").text("Digite la fecha de salida");
+                $("#validateFechaSalida").removeClass("d-none");
                 return;
             }
+
 
 
             $.ajax({
                 url: "/Reservacion/ValidarHorario",
                 data: {
-                    fechaEntrada: fechaEntrada,
-                    fechaSalida: fechaSalida
+                    fechaEntrada: fechaEntrada.toISOString(),
+                    fechaSalida: fechaSalida.toISOString(),
+                    idAreaComunal : $("#lista").val()
                 },
                 success: function (response) {
                     if (response.existeHorario) {
+                        $('#FechaEntrada').val("");
+                        $('#FechaSalida').val("");
                         Swal.fire({
                             position: 'center',
                             icon: 'error',
@@ -242,11 +270,13 @@
                             timer: 1500
                         })
 
+                    } else {
+                        $("#form")[0].submit();
                     }
                 }
 
             });
-        }
+        })
 
 
 

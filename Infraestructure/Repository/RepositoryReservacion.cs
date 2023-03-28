@@ -133,7 +133,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida)
+        public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal)
         {
             bool existeHorario = false; 
 
@@ -145,7 +145,7 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
 
-                    existeHorario = ctx.Reservacion.Any(r => (r.FechaEntrada <= fechaSalida && r.FechaSalida >= fechaEntrada));
+                    existeHorario = ctx.Reservacion.Where(r=>r.FK_AreaComunal == areaComunal).Any(r => (r.FechaEntrada <= fechaSalida && r.FechaSalida >= fechaEntrada));
 
                 }
 

@@ -36,9 +36,9 @@ namespace ApplicationCore.Services
             return repository.Save(reservacion);
         }
 
-        public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida)
+        public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal)
         {
-            return repository.ValidarHorario(fechaEntrada, fechaSalida);
+            return repository.ValidarHorario(fechaEntrada, fechaSalida,areaComunal);
         }
     }
 }

@@ -53,10 +53,9 @@ namespace Web.Controllers
 
                 Usuario usuario = (Usuario)Session["Usuario"];
                 IServiceReservacion _Service = new ServiceReservacion();
-                IEnumerable<Reservacion> lista = _Service.GetByIdUsuario(usuario.Id);
                 ViewBag.listaAreas = listaAreas();
-                ViewBag.listaReservacion = _Service.GetAll();
-                return View(lista);
+                ViewBag.listaReservacion = _Service.GetByIdUsuario(usuario.Id);
+                return View();
             }
             catch (Exception ex)
             {
@@ -71,25 +70,33 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Save(Reservacion oReservacion)
         {
+            IServiceReservacion _Service = new ServiceReservacion();
             try
             {
-
-
                 Usuario usuario = (Usuario)Session["Usuario"];
-                IServiceReservacion _Service = new ServiceReservacion();
-                if (oReservacion != null)
+                oReservacion.FK_Usuario = usuario.Id;
+                oReservacion.FK_Estado = 1;
+                if (ModelState.IsValid)
                 {
-                    oReservacion.FK_Estado = 1;
-                    oReservacion.FK_AreaComunal = 1;
-                    oReservacion.FK_Usuario = usuario.Id;
                     if (_Service.Save(oReservacion) > 0)
                     {
-                        IEnumerable<Reservacion> lista = _Service.GetByIdUsuario(usuario.Id);
-                        return PartialView("~/Views/Shared/Reservacion/_Reservacion.cshtml", lista);
+                        ViewBag.listaReservacion = _Service.GetByIdUsuario(usuario.Id);
+                        return RedirectToAction("IndexUsuario");
                     }
-                }
+                    else
+                    {
+                    }
 
-                return View();
+                }
+                else
+                {
+                    ViewBag.listaAreas = listaAreas();
+                    ViewBag.listaReservacion = _Service.GetByIdUsuario(usuario.Id);
+                    return View("IndexUsuario",oReservacion);
+
+                }
+                return RedirectToAction("Index");          
+  
             }
             catch (Exception ex)
             {
@@ -111,14 +118,14 @@ namespace Web.Controllers
             return new SelectList(lista, "Id", "Nombre", idEstado);
         }
         [HttpGet]
-        public JsonResult ValidarHorario(string fechaEntrada, string fechaSalida)
+        public JsonResult ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int idAreaComunal)
         {
             try
             {
 
 
                 IServiceReservacion _Service = new ServiceReservacion();
-                bool existeHorario = _Service.ValidarHorario(DateTime.Parse(fechaEntrada), DateTime.Parse(fechaSalida));
+                bool existeHorario = _Service.ValidarHorario(fechaEntrada, fechaSalida,idAreaComunal);
                 return Json(new { existeHorario = existeHorario }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

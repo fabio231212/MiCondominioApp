@@ -130,10 +130,10 @@
           </Key>
           <Property Name="FK_Usuario" Type="int" Nullable="false" />
           <Property Name="FK_AreaComunal" Type="int" Nullable="false" />
-          <Property Name="FechaEntrada" Type="smalldatetime" />
+          <Property Name="FechaEntrada" Type="smalldatetime" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_Estado" Type="int" />
-          <Property Name="FechaSalida" Type="smalldatetime" />
+          <Property Name="FechaSalida" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -570,10 +570,10 @@
           </Key>
           <Property Name="FK_Usuario" Type="Int32" Nullable="false" />
           <Property Name="FK_AreaComunal" Type="Int32" Nullable="false" />
-          <Property Name="FechaEntrada" Type="DateTime" Precision="0" />
+          <Property Name="FechaEntrada" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FK_Estado" Type="Int32" />
-          <Property Name="FechaSalida" Type="DateTime" Precision="0" />
+          <Property Name="FechaSalida" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="AreaComunal" Relationship="Self.FK_Reservacion_AreaComunal" FromRole="Reservacion" ToRole="AreaComunal" />
           <NavigationProperty Name="EstadoReservacion" Relationship="Self.FK_Reservacion_EstadoReservacion" FromRole="Reservacion" ToRole="EstadoReservacion" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Reservacion" ToRole="Usuario" />
