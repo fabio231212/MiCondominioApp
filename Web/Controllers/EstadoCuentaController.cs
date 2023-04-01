@@ -156,7 +156,6 @@ namespace Web.Controllers
                         ViewBag.idPropiedad = listaPropiedades();
                         ViewBag.idPlanCobro = listaPlanCobro();
                         TempData["creada"] = true;
-                        //return RedirectToAction("Create");
                         return RedirectToAction("Create");
 
                     }

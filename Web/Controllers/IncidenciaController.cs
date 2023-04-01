@@ -53,30 +53,7 @@ namespace Web.Controllers
                 Usuario usuario = (Usuario)Session["Usuario"];
                 IServiceIncidencias _Service = new ServiceIncidencias();
                 IEnumerable<Incidencias> lista = _Service.GetByIdUser(usuario.Id);
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-
-                // Redireccion a la captura del Error
-                return RedirectToAction("Default", "Error");
-            }
-        }
-
-
-        public ActionResult CambiarEstado(int id, string estado)
-        {
-            try
-            {
-                IServiceIncidencias _Service = new ServiceIncidencias();
-                IEnumerable<Incidencias> lista = null;
-                if (_Service.ActualizarEstadoIncidencia(id, int.Parse(estado)) >= 0)
-                {
-                    lista = _Service.GetAll();
-                    return PartialView("~/Views/Shared/Incidencias/_ListaActualizada.cshtml", lista);
-                }
+                ViewBag.listaIncidencias = lista;
                 return View();
             }
             catch (Exception ex)
@@ -87,30 +64,59 @@ namespace Web.Controllers
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
             }
+        }
+
+
+        [HttpPost]
+        public void CambiarEstado(int id, string estado)
+        {
+            try
+            {
+                IServiceIncidencias _Service = new ServiceIncidencias();
+                IEnumerable<Incidencias> lista = null;
+                if (_Service.ActualizarEstadoIncidencia(id, int.Parse(estado)) >= 0)
+                {
+                    lista = _Service.GetAll();
+                    ViewBag.listaEstadoIncidencia = listaEstadoIncidencia();
+                    TempData["modificado"] = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+
+                // Redireccion a la captura del Error
+                RedirectToAction("Default", "Error");
+            }
 
         }
 
 
 
-        public ActionResult CrearIncidencia(string descripcion)
+        public ActionResult CrearIncidencia(Incidencias oIncidencias)
         {
+            IServiceIncidencias _Service = new ServiceIncidencias();
+            Usuario usuario = (Usuario)Session["Usuario"];
             try
             {
+                ModelState.Remove("FK_Usuario");
+                ModelState.Remove("FK_Estado");
+                ModelState.Remove("Fecha");
+                if (ModelState.IsValid)
+                {           
 
-
-            Usuario usuario = (Usuario)Session["Usuario"];
-            IServiceIncidencias _Service = new ServiceIncidencias();
-                    if (!String.IsNullOrEmpty(descripcion))
-                    {
-                        Incidencias oIncidencia = new Incidencias { Descripcion = descripcion, FK_Usuario = usuario.Id, Fecha = DateTime.Now, FK_Estado = 1 };
+                        Incidencias oIncidencia = new Incidencias { Descripcion = oIncidencias.Descripcion, FK_Usuario = usuario.Id, Fecha = DateTime.Now, FK_Estado = 1 };
                         if (_Service.RegistrarIncidencia(oIncidencia) > 0)
                         {
                             IEnumerable<Incidencias> lista = _Service.GetByIdUser(usuario.Id);
-                            return PartialView("~/Views/Shared/Incidencias/_Incidencias.cshtml", lista);
-                        }
-                    }
-                
-            return View();
+                            ViewBag.listaIncidencias = lista;
+                            TempData["creada"] = true;
+                            return RedirectToAction("IndexUsuario");
+                        }     
+                }
+                ViewBag.listaIncidencias = _Service.GetByIdUser(usuario.Id);
+                return View("IndexUsuario");
             }
             catch (Exception ex)
             {
