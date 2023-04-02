@@ -9,7 +9,9 @@ namespace Infraestructure.Repository
 {
     public interface IRepositoryReservacion
     {
-        IEnumerable<Reservacion> GetByIdUsuario(int id);
+        IEnumerable<Reservacion> GetAllByIdUsuario(int id);
+
+        Reservacion GetByIdReservacion(int id);
         IEnumerable<Reservacion> GetAll();
 
         int Save(Reservacion reservacion);
@@ -17,6 +19,8 @@ namespace Infraestructure.Repository
         IEnumerable<Reservacion> GetByEstado(int estado);
 
         bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal);
-        
+
+        void CambiarEstado(int id, string nota, int idEstado);
+
     }
 }

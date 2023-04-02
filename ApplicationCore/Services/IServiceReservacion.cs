@@ -9,7 +9,9 @@ namespace ApplicationCore.Services
 {
     public interface IServiceReservacion
     {
-        IEnumerable<Reservacion> GetByIdUsuario(int id);
+        Reservacion GetByIdReservacion(int id);
+
+        IEnumerable<Reservacion> GetAllByIdUsuario(int id);
         IEnumerable<Reservacion> GetAll();
 
         int Save(Reservacion reservacion);
@@ -17,5 +19,7 @@ namespace ApplicationCore.Services
         IEnumerable<Reservacion> GetByEstado(int estado);
 
         bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal);
+        void CambiarEstado(int id, string nota, int idEstado);
+
     }
 }

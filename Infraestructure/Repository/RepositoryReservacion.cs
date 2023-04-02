@@ -13,6 +13,40 @@ namespace Infraestructure.Repository
 {
     public class RepositoryReservacion : IRepositoryReservacion
     {
+        public void CambiarEstado(int id, string nota, int idEstado)
+        {
+            try
+            {
+
+                using (MyContext ctx = new MyContext())
+                {
+
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    Reservacion oReservacion = ctx.Reservacion.FirstOrDefault(p => p.Id == id);
+
+                    oReservacion.FK_Estado = idEstado;
+                    oReservacion.Nota = nota;
+
+                    ctx.SaveChanges();
+
+                    
+                }
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
         public IEnumerable<Reservacion> GetAll()
         {
             IEnumerable<Reservacion> lista = null;
@@ -72,7 +106,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Reservacion> GetByIdUsuario(int id)
+        public IEnumerable<Reservacion> GetAllByIdUsuario(int id)
         {
             IEnumerable<Reservacion> lista = null;
             try
@@ -152,6 +186,35 @@ namespace Infraestructure.Repository
 
                 return existeHorario;
             }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public Reservacion GetByIdReservacion(int id)
+        {
+           Reservacion oReservacion = null;
+            try
+            {
+
+
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    oReservacion = ctx.Reservacion.Include("Usuario").Include("AreaComunal").Include("EstadoReservacion").Where(r => r.Id == id).FirstOrDefault();
+                }
+                return oReservacion;
+            }
+
             catch (DbUpdateException dbEx)
             {
                 string mensaje = "";

@@ -80,12 +80,8 @@ namespace Infraestructure.Repository
             }
         }
 
-
-        public int SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario)
+        public void SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario)
         {
-
-            int retorno = 0;
-
             try
             {
 
@@ -93,17 +89,12 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    //Registradas: 1,2,3
-                    //Actualizar: 1,3,4
-
-                    //Insertar Libro
                     ctx.NotificacionUsuario.Add(notificacionUsuario);
-                    //SaveChanges
-                    //guarda todos los cambios realizados en el contexto de la base de datos.
-                    retorno = ctx.SaveChanges();
+
+                    ctx.SaveChanges();
 
                 }
-                return retorno;
+
             }
             catch (DbUpdateException dbEx)
             {
@@ -117,7 +108,6 @@ namespace Infraestructure.Repository
                 Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
                 throw;
             }
-
         }
     }
 }

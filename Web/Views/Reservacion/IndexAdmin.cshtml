@@ -1,65 +1,156 @@
-﻿@model Infraestructure.Models.Reservacion
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
+﻿@model IEnumerable<Infraestructure.Models.Reservacion>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("IndexAdmin", "Reservacion", FormMethod.Get))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Reservacion</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.FK_Usuario, "FK_Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("FK_Usuario", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FK_Usuario, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FK_AreaComunal, "FK_AreaComunal", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("FK_AreaComunal", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FK_AreaComunal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaEntrada, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaEntrada, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaEntrada, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FK_Estado, "FK_Estado", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("FK_Estado", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FK_Estado, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaSalida, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaSalida, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaSalida, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    <div class="form-group">
+        <label class="col-form-label">Estado</label>
+        @Html.DropDownList("estado",
+                 (SelectList)ViewBag.EstadoReservacion,
+                 "Seleccione un estado",
+                 htmlAttributes: new { @class = "form-control text-center", @id = "active-filter" })
     </div>
+
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="data-tables datatable-dark table-responsive" id="listaReservacion">
+    <table id="dataTableReservacion" class="text-center">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
+                <th scope="col">Cancelar Reservación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr class="selected-row">
+                    <td>@item.FechaEntrada</td>
+                    <td> @item.FechaSalida</td>
+                    <td> @item.AreaComunal.Nombre</td>
+                    <td> @item.EstadoReservacion.Nombre</td>
+                    <td>
+                        <button data-id="@item.Id" title="Cancelar Reservación" class="btn bg-warning btn-sm px-3 btnCambiarEstado">
+                            <i class="ti-trash text-white"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+@section scripts {
+
+
+    <script type="text/javascript">
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        //se ejecuta al seleccionar en el combo de estados
+        $(function () {
+            $('#active-filter').change(function () {
+                $('form').submit();
+            });
+        });
+
+        $(document).ready(function () {
+            $('#dataTableReservacion').DataTable({
+                responsive: true,
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                },
+                "lengthChange": false,
+                "paging": false,
+
+            });
+        });
+
+        //Se ejecuta al presionar botón de cambiar estado
+        $(document).on("click", ".btnCambiarEstado", function () {
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Cambiar estado',
+                html: '<select id="cmbEstado" class="custom-select">' +
+                    '<option value="0" selected>Seleccione una opción de confirmación</option>' +
+                    ' <option value="2" >Aceptar</option>' +
+                    ' <option value="3">Rechazar</option>' +
+                    '</select >' +
+                    '<span class="text-warning" id="errorSA"></span>' +
+                    '<input id="txtNota" name="txtNota" autocapitalize="off" class="form-control mt-4" placeholder="Nota(opcional)" type="text">',
+
+                showCancelButton: true,
+                confirmButtonText: 'Guardar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                // Guardar el estado en el servidor usando una solicitud AJAX
+                if (result.isConfirmed) {
+                    var estado  = $("#cmbEstado").val();
+                    var nota = $("#txtNota").val();
+                    if (estado == "0") {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Debe seleccionar un estado'
+                        })
+                        return;
+                    }
+                  
+                    $.ajax({
+                        url: '/Reservacion/CambiarEstado',
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            idEstado : estado,
+                            nota: nota,
+                        },
+                        success: function (response) {
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'La reservación se modificó exitosamente'
+                            });
+
+                            $('#listaReservacion').html('');
+                            $('#listaReservacion').html(response);
+
+                            $('#dataTableReservacion').DataTable({
+                                responsive: true,
+                                "language": {
+                                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                                },
+                                "lengthChange": false,
+                                "paging": false,
+
+                            });
+                        },
+                        error: function () {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Error al cambiar el estado'
+                            })
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
+
+
+}

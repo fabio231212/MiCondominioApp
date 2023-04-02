@@ -11,17 +11,17 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(ReservacionMetadata))]
+    
     public partial class Reservacion
     {
         public int FK_Usuario { get; set; }
         public int FK_AreaComunal { get; set; }
-        public Nullable<System.DateTime> FechaEntrada { get; set; }
+        public System.DateTime FechaEntrada { get; set; }
         public int Id { get; set; }
         public Nullable<int> FK_Estado { get; set; }
-        public Nullable<System.DateTime> FechaSalida { get; set; }
+        public System.DateTime FechaSalida { get; set; }
+        public bool Cancelada { get; set; }
+        public string Nota { get; set; }
     
         public virtual AreaComunal AreaComunal { get; set; }
         public virtual EstadoReservacion EstadoReservacion { get; set; }

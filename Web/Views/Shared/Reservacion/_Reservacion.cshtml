@@ -7,6 +7,7 @@
             <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
             <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
             <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
+            <th scope="col">Cancelar Reservación</th>
         </tr>
     </thead>
     <tbody>
@@ -14,10 +15,15 @@
         {
 
             <tr class="selected-row">
-                <td> @Html.DisplayFor(modelItem => item.FechaEntrada)</td>
-                <td> @Html.DisplayFor(modelItem => item.FechaSalida)</td>
-                <td> @Html.DisplayFor(modelItem => item.AreaComunal.Nombre)</td>
-                <td> @Html.DisplayFor(modelItem => item.EstadoReservacion.Nombre)</td>
+                <td>@item.FechaEntrada</td>
+                <td> @item.FechaSalida</td>
+                <td> @item.AreaComunal.Nombre</td>
+                <td> @item.EstadoReservacion.Nombre</td>
+                <td>
+                    <button data-id="@item.Id" title="Cancelar Reservación" class="btn bg-warning btn-sm px-3 btnCancelar">
+                        <i class="ti-trash text-white"></i>
+                    </button>
+                </td>
             </tr>
         }
     </tbody>

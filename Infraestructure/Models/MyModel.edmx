@@ -134,6 +134,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_Estado" Type="int" />
           <Property Name="FechaSalida" Type="smalldatetime" Nullable="false" />
+          <Property Name="Cancelada" Type="bit" Nullable="false" />
+          <Property Name="Nota" Type="text" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -574,6 +576,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FK_Estado" Type="Int32" />
           <Property Name="FechaSalida" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Cancelada" Type="Boolean" Nullable="false" />
+          <Property Name="Nota" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AreaComunal" Relationship="Self.FK_Reservacion_AreaComunal" FromRole="Reservacion" ToRole="AreaComunal" />
           <NavigationProperty Name="EstadoReservacion" Relationship="Self.FK_Reservacion_EstadoReservacion" FromRole="Reservacion" ToRole="EstadoReservacion" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Reservacion" ToRole="Usuario" />
@@ -991,6 +995,8 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FK_Estado" ColumnName="FK_Estado" />
                 <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+                <ScalarProperty Name="Cancelada" ColumnName="Cancelada" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

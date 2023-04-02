@@ -30,7 +30,7 @@ namespace Web.Controllers
                     lista = _Service.GetAll();
                 }
 
-                ViewBag.listaEstadoReservacion = listaEstadoReservacion();
+                ViewBag.EstadoReservacion = listaEstadoReservacion();
 
                 return View(lista);
             }
@@ -54,7 +54,7 @@ namespace Web.Controllers
                 Usuario usuario = (Usuario)Session["Usuario"];
                 IServiceReservacion _Service = new ServiceReservacion();
                 ViewBag.listaAreas = listaAreas();
-                ViewBag.listaReservacion = _Service.GetByIdUsuario(usuario.Id);
+                ViewBag.listaReservacion = _Service.GetAllByIdUsuario(usuario.Id);
                 return View();
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace Web.Controllers
                 {
                     if (_Service.Save(oReservacion) > 0)
                     {
-                        ViewBag.listaReservacion = _Service.GetByIdUsuario(usuario.Id);
+                        ViewBag.listaReservacion = _Service.GetAllByIdUsuario(usuario.Id);
                         return RedirectToAction("IndexUsuario");
                     }
                     else
@@ -91,7 +91,7 @@ namespace Web.Controllers
                 else
                 {
                     ViewBag.listaAreas = listaAreas();
-                    ViewBag.listaReservacion = _Service.GetByIdUsuario(usuario.Id);
+                    ViewBag.listaReservacion = _Service.GetAllByIdUsuario(usuario.Id);
                     return View("IndexUsuario",oReservacion);
 
                 }
@@ -150,6 +150,40 @@ namespace Web.Controllers
             {
                 oArea = _Service.GetAreaComunalById(id);
                 return Json(new {horaApertura = oArea.HoraApertura.Value.ToString(), horaCierre = oArea.HoraCierre.Value.ToString()}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CambiarEstado(int id, string nota, int idEstado = 4 ) //Si no viene, cancelada por usuario
+        {
+            try
+            {
+                Usuario usuario = (Usuario)Session["Usuario"];
+                IServiceReservacion _Service = new ServiceReservacion();
+                IServiceNotificacionUsuario _ServiceNotificaion = new ServiceNotificacionUsuario();
+                IEnumerable<Reservacion> lista = null;
+                _Service.CambiarEstado(id, nota,idEstado);
+                if(usuario.FK_Rol == 1)
+                {
+                    _ServiceNotificaion.SaveNotificacionUsuario(new NotificacionUsuario { IdNotificacion = 4, IdUsuario = _Service.GetByIdReservacion(id).FK_Usuario, Leida=false });
+
+                    lista = _Service.GetAll();
+                    
+                }
+                else
+                {
+                    lista = _Service.GetAllByIdUsuario(usuario.Id);
+                }
+                 return PartialView("~/Views/Shared/Reservacion/_Reservacion.cshtml", lista);
+
             }
             catch (Exception ex)
             {

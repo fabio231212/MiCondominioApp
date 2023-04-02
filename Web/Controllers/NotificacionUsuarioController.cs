@@ -41,7 +41,7 @@ namespace Web.Controllers
 
             if (ModelState.IsValid)
             {
-                int result = serviceNotificacionUsuario.SaveNotificacionUsuario(oNotificacionUsuario);
+                serviceNotificacionUsuario.SaveNotificacionUsuario(oNotificacionUsuario);
             }
             }
             catch (Exception ex)

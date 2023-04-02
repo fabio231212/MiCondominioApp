@@ -16,6 +16,11 @@ namespace ApplicationCore.Services
             repository = new RepositoryReservacion();
         }
 
+        public void CambiarEstado(int id, string nota, int idEstado)
+        {
+            repository.CambiarEstado(id,nota,idEstado);
+        }
+
         public IEnumerable<Reservacion> GetAll()
         {
             return repository.GetAll();
@@ -26,9 +31,9 @@ namespace ApplicationCore.Services
             return repository.GetByEstado(estado);
         }
 
-        public IEnumerable<Reservacion> GetByIdUsuario(int id)
+        public IEnumerable<Reservacion> GetAllByIdUsuario(int id)
         {
-            return repository.GetByIdUsuario(id);
+            return repository.GetAllByIdUsuario(id);
         }
 
         public int Save(Reservacion reservacion)
@@ -39,6 +44,11 @@ namespace ApplicationCore.Services
         public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal)
         {
             return repository.ValidarHorario(fechaEntrada, fechaSalida,areaComunal);
+        }
+
+        public Reservacion GetByIdReservacion(int id)
+        {
+            return repository.GetByIdReservacion(id);
         }
     }
 }
