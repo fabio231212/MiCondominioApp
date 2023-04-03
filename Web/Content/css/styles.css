@@ -380,7 +380,6 @@
 
 .slicknav_nav .slicknav_row:hover {
     border-radius: 0;
-    background: #8e66f7;
 }
 
 .slicknav_nav li i {
@@ -2422,10 +2421,10 @@ table.dataTable thead td {
     transition: all 0.3s ease 0s;
 }
 
-.submit-btn-area button:hover {
-    background: #2c71da;
-    color: #ffffff;
-}
+    .submit-btn-area button:hover {
+        background: #5eb548;
+        color: #ffffff;
+    }
 
 .submit-btn-area button i {
     margin-left: 15px;
@@ -2866,4 +2865,7 @@ table.dataTable thead td {
     background-image: url('../images/mesh-276.png');
     opacity: 85%;
     padding: 50px;
+}
+.text-siteColor {
+    color: #5eb548;
 }

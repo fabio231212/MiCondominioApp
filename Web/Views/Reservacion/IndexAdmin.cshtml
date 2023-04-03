@@ -17,11 +17,15 @@
     <table id="dataTableReservacion" class="text-center">
         <thead class="text-capitalize">
             <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
                 <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
                 <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
-                <th scope="col">Cancelar Reservación</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Nota)</th>
+                <th scope="col">Acción</th>
+
+
             </tr>
         </thead>
         <tbody>
@@ -29,15 +33,28 @@
             {
 
                 <tr class="selected-row">
+                    <td>@item.Usuario.Nombre</td>
                     <td>@item.FechaEntrada</td>
                     <td> @item.FechaSalida</td>
                     <td> @item.AreaComunal.Nombre</td>
                     <td> @item.EstadoReservacion.Nombre</td>
                     <td>
-                        <button data-id="@item.Id" title="Cancelar Reservación" class="btn bg-warning btn-sm px-3 btnCambiarEstado">
-                            <i class="ti-trash text-white"></i>
-                        </button>
+                        @if (item.FK_Estado != 1)
+                        {
+                            @item.Nota
+
+                        }
                     </td>
+                    <td>
+                        @if (item.FK_Estado == 1)
+                        {
+                            <button data-id="@item.Id" title="Cambiar Estado" class="btn bg-warning btn-sm px-3 btnCambiarEstado">
+                                <i class="ti-settings text-white"></i>
+                            </button>
+
+                        }
+                    </td>
+
                 </tr>
             }
         </tbody>
