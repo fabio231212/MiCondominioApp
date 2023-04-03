@@ -11,6 +11,6 @@ namespace ApplicationCore.Services
     {
         IEnumerable<NotificacionUsuario> GetNotificacionByIdUser(int id);
         NotificacionUsuario MarcarLeido(int id);
-        int SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario);
+        void SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario);
     }
 }

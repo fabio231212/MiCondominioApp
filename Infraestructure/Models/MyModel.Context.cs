@@ -25,9 +25,11 @@ namespace Infraestructure.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Archivo> Archivo { get; set; }
         public virtual DbSet<AreaComunal> AreaComunal { get; set; }
         public virtual DbSet<EstadoIncidencia> EstadoIncidencia { get; set; }
         public virtual DbSet<EstadoPropiedad> EstadoPropiedad { get; set; }
+        public virtual DbSet<EstadoReservacion> EstadoReservacion { get; set; }
         public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Incidencias> Incidencias { get; set; }
         public virtual DbSet<Informacion> Informacion { get; set; }
@@ -40,6 +42,5 @@ namespace Infraestructure.Models
         public virtual DbSet<RubroCobro> RubroCobro { get; set; }
         public virtual DbSet<Tarjeta> Tarjeta { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Archivo> Archivo { get; set; }
     }
 }

@@ -179,24 +179,16 @@
                                     </ul>
                                 </li>
                             }
-                            <li class="mega-menu">
-                                <a href="javascript:void(0)"><i class="ti-layers-alt"></i> <span>Pages</span></a>
-                                <ul class="submenu">
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="login2.html">Login 2</a></li>
-                                    <li><a href="login3.html">Login 3</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="register2.html">Register 2</a></li>
-                                    <li><a href="register3.html">Register 3</a></li>
-                                    <li><a href="register4.html">Register 4</a></li>
-                                    <li><a href="screenlock.html">Lock Screen</a></li>
-                                    <li><a href="screenlock2.html">Lock Screen 2</a></li>
-                                    <li><a href="reset-pass.html">reset password</a></li>
-                                    <li><a href="pricing.html">Pricing</a></li>
-                                    <li><a href="404.html">Error 404</a></li>
-                                    <li><a href="500.html">Error 500</a></li>
-                                    <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Invoice Summary</span></a></li>
-                                </ul>
+                            <li>
+                                @if (oUsuario.FK_Rol == 1)
+                                {
+                                    <a href="@Url.Action("IndexAdmin", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("IndexUsuario", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
+                                }
+
                             </li>
                             <li>
                                 <a href="javascript:void(0)"><i class="ti-slice"></i><span>icons</span></a>

@@ -72,7 +72,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    lista = ctx.Informacion.ToList();
+                    lista = ctx.Informacion.Where(i => i.FechaVencimiento >= DateTime.Now).ToList();
 
                 }
                 return lista;

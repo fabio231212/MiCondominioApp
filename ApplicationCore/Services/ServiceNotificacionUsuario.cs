@@ -22,10 +22,10 @@ namespace ApplicationCore.Services
             return repository.MarcarLeido(id);
         }
 
-        public int SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario)
+        public void SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario)
         {
             IRepositoryNotificacionUsuario repository = new RepositoryNotificacionUsuario();
-            return repository.SaveNotificacionUsuario(notificacionUsuario);
+            repository.SaveNotificacionUsuario(notificacionUsuario);
         }
     }
 }

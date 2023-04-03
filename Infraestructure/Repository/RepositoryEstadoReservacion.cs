@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public class RepositoryEstadoPropiedad : IRepositoryEstados<EstadoPropiedad>
+    public class RepositoryEstadoReservacion : IRepositoryEstados<EstadoReservacion>
     {
-        public IEnumerable<EstadoPropiedad> GetAll()
+        public IEnumerable<EstadoReservacion> GetAll()
         {
-            IEnumerable<EstadoPropiedad> lista = null;
             try
             {
+                IEnumerable<EstadoReservacion> lista = null;
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    lista = ctx.EstadoPropiedad.ToList();
-
+                    lista = ctx.EstadoReservacion.ToList();
                 }
+
                 return lista;
             }
 

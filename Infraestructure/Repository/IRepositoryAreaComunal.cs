@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public interface IRepositoryEstadoIncidencia
+    public interface IRepositoryAreaComunal
     {
-        IEnumerable<EstadoIncidencia> GetAll();
+        IEnumerable<AreaComunal> GetAll();
+        AreaComunal GetAreaComunalById(int id);
     }
 }

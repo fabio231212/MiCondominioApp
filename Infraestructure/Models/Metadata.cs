@@ -9,6 +9,22 @@ using System.Xml.Linq;
 namespace Infraestructure.Models
 {
 
+    internal partial class ReservacionMetadata
+    {
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Area Comunal")]
+        public int FK_AreaComunal { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Fecha de Entrada")]
+        public Nullable<System.DateTime> FechaEntrada { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Fecha de Salida")]
+        public Nullable<System.DateTime> FechaSalida { get; set; }
+    }
+
     internal partial class EstadoCuentaMetadata
     {
 

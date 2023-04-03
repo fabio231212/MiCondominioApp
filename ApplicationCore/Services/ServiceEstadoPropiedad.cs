@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public class ServiceEstadoPropiedad : IServiceEstadoPropiedad
+    public class ServiceEstadoPropiedad : IServiceEstados<EstadoPropiedad>
     {
         public IEnumerable<EstadoPropiedad> GetAll()
         {
-            IRepositoryEstadoPropiedad repository = new RepositoryEstadoPropiedad();
+            IRepositoryEstados<EstadoPropiedad> repository = new RepositoryEstadoPropiedad();
             return repository.GetAll();
         }
     }

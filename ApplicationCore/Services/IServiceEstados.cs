@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public interface IServiceEstadoIncidencia
+    public interface IServiceEstados<T>
     {
-        IEnumerable<EstadoIncidencia> GetAll();
+        IEnumerable<T> GetAll();
     }
 }
