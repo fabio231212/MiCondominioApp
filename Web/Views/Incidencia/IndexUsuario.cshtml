@@ -1,51 +1,52 @@
-﻿@model IEnumerable<Infraestructure.Models.Incidencias>
+﻿@model Infraestructure.Models.Incidencias
 
-
-
-<div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="header-title">Registro de incidencias</h4>
-            <form id="registrarIncidencia">
+@using (Html.BeginForm("CrearIncidencia", "Incidencia", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Registro de incidencias</h4>
                 <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    @*@Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label", @for = "descripcion" })
-                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @id = "descripcion", @name = "descripcion", placeholder = "¡Coméntanos tu problema!" } })
-                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })*@
-                    <textarea style="resize: none;" class="form-control" id="descripcion" name="descripcion" placeholder="¡Coméntanos tu problema!"></textarea>
+                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label", @for = "descripcion" })
+                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @id = "descripcion", @name = "descripcion", placeholder = "¡Coméntanos tu problema!" } })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                 </div>
                 <button type="submit" class="btn mt-4 pr-4 pl-4 bg-siteColor text-white">Registrar Incidencia</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
 
+}
 
-
+@{
+    IEnumerable<Infraestructure.Models.Incidencias> incidencias = ViewBag.listaIncidencias;
+}
 
 
 
 <div class="data-tables datatable-dark table-responsive" id="listaIncidencias">
     <table id="dataTableIncidencias" class="text-center">
-        <thead class="text-capitalize">
+        <thead class="text-capitalize text-center">
             <tr>
                 <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
                 <th scope="col"> @Html.DisplayNameFor(model => model.Fecha)</th>
                 <th scope="col"> @Html.DisplayNameFor(model => model.EstadoIncidencia)</th>
             </tr>
         </thead>
         <tbody>
-@foreach (var item in Model)
-    {
+            @foreach (var item in incidencias)
+            {
 
-        <tr class="selected-row">
-            <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
-              <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
-            <td> @Html.DisplayFor(modelItem => item.Fecha)</td>
-            <td> @Html.DisplayFor(modelItem => item.EstadoIncidencia.Nombre)</td>
-        </tr>
-    }
-</tbody>
+                <tr class="selected-row">
+                    <td> @item.Descripcion</td>
+                    <td> @item.Usuario.Nombre</td>
+                    <td> @item.Fecha</td>
+                    <td> @item.EstadoIncidencia.Nombre</td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
 
@@ -53,44 +54,20 @@
 @section Scripts{
     <script type="text/javascript">
 
-        $('#registrarIncidencia').submit(function (event) {
-            //Evita redirección
-            event.preventDefault();
-            var formData = $('#registrarIncidencia').serialize();
-            // Hacer una solicitud AJAX al servidor
-            $.ajax({
-                url: '/Incidencia/CrearIncidencia',
-                type: 'POST', // o 'GET' según lo que necesites
-                data: formData,
-                success: function (response) {
-                    Swal.fire({
-                        position: 'top-center',
-                        icon: 'success',
-                        title: '¡Hemos recibido tu solicitud!',
-                        text: 'La resolveremos con la mayor brevedad posible',
-                        showConfirmButton: false,
-                        timer: 2500
-                    })
-                    $('#listaIncidencias').html('');
-                    $('#listaIncidencias').html(response);
-                    // Manejar la respuesta del servidor aquí
-                    $(document).ready(function () {
-                        $('#dataTableIncidencias').DataTable({
-                            responsive: true,
-                            "language": {
-                                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                            },
-                            "lengthChange": false,
-                            "paging": false,
+//Se encarga de mostrar la alerta en caso de que la factura se halla creado correctamente
+    $(document).ready(function () {
+    var creada = '@TempData["creada"]';
+    if (creada == 'True') {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: '¡Incidencias Creada!',
+            text: 'La incidencia se creo correctamente',
+            showConfirmButton: true,
+        })
+    }
+    });
 
-                        });
-                    });
-                },
-                error: function (error) {
-                    // Manejar el error aquí
-                }
-            });
-        });
 
 
 

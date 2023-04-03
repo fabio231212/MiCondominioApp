@@ -3,16 +3,18 @@ using ApplicationCore.Services;
 using Infraestructure.Models;
 using Infraestructure.Repository;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Utils;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EstadoCuentaController : Controller
     {
 
@@ -88,8 +90,11 @@ namespace Web.Controllers
         // GET: EstadoCuenta/Create
         public ActionResult Create()
         {
+            ViewBag.idPropiedad = listaPropiedades();
+            ViewBag.idPlanCobro = listaPlanCobro();
+            ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
             return View();
-        }
+    }
 
         // POST: EstadoCuenta/Create
         [HttpPost]
@@ -115,13 +120,79 @@ namespace Web.Controllers
 
         // POST: EstadoCuenta/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Save(Factura factura)
         {
             try
             {
-                // TODO: Add update logic here
+                IServiceEstadoCuenta _ServiceEstadoCuenta = new ServiceEstadoCuenta();
+                try
+                {
+                    ModelState.Remove("FechaFacturacion");
+                    ModelState.Remove("Tarjeta");
+                    ModelState.Remove("Activo");
 
-                return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        factura.Activo = true;
+                        factura.FK_Tarjeta = 1;
+                        factura.FechaFacturacion = DateTime.Now;
+                        factura.Tarjeta = "1234";
+
+                        IEnumerable<Factura>  listaFacturas = _ServiceEstadoCuenta.GetByIdProp((int)factura.FK_Propiedad);
+                        foreach (Factura oFact in listaFacturas)
+                        {
+                                if (oFact.FechaFacturacion.Value.Month == factura.FechaFacturacion.Value.Month && oFact.FechaFacturacion.Value.Year == factura.FechaFacturacion.Value.Year)
+                                {
+                                    ViewBag.idPropiedad = listaPropiedades(factura.FK_Propiedad);
+                                    ViewBag.idPlanCobro = listaPlanCobro(factura.FK_PlanCobro);
+                                    ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
+                                    TempData["existe"] = true;
+                                    return View("Create", factura);
+                                }                           
+                        }
+
+                        _ServiceEstadoCuenta.Create(factura);
+
+                        ViewBag.idPropiedad = listaPropiedades();
+                        ViewBag.idPlanCobro = listaPlanCobro();
+                        TempData["creada"] = true;
+                        return RedirectToAction("Create");
+
+                    }
+                    else
+                    {
+                        if (factura.Propiedad == null)
+                        {
+                            ViewBag.idPropiedad = listaPropiedades();
+                        }
+                        else
+                        {
+                            ViewBag.idPropiedad = listaPropiedades(factura.FK_Propiedad);
+                        }
+
+                        if (factura.PlanCobro == null)
+                        {
+                            ViewBag.idPlanCobro = listaPlanCobro();
+                        }
+                        else
+                        {
+                            ViewBag.idPlanCobro = listaPlanCobro(factura.FK_PlanCobro);
+                        }
+                        ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
+                        return View("Create", factura);                     
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    // Salvar el error en un archivo 
+
+                    TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                    TempData["Redirect"] = "Home";
+                    TempData["Redirect-Action"] = "IndexAdmin";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
             }
             catch
             {
@@ -151,6 +222,27 @@ namespace Web.Controllers
             }
         }
 
-       
+        public SelectList listaPropiedades(int? id = 0)
+        {
+            IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+            IEnumerable<Propiedad> lista = _ServicePropiedad.GetAll();
+            return new SelectList(lista, "Id", "NumPropiedad", id);
+        }
+
+        public SelectList listaPlanCobro(int? id = 0)
+        {
+            IServicePlanCobro _ServicePlanCobro = new ServicePlanCobro();
+            IEnumerable<PlanCobro> lista = _ServicePlanCobro.GetAll();
+            return new SelectList(lista, "Id", "Descripcion", id);
+        }
+
+        public ActionResult GetPlanById(int id)
+        {
+            IServicePlanCobro _ServicePlan = new ServicePlanCobro();
+             PlanCobro plan = _ServicePlan.GetById(id);
+            return Json(new { data = plan.Total }, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

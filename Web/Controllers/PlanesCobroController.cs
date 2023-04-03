@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Services;
 using Infraestructure.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,25 +58,6 @@ namespace Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult GetPrecioRubro(int rubroId)
-        {
-            try
-            {
-
-            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
-            var rubro = _ServiceRubro.GetRubroById(rubroId);
-            return Json(new { precio = rubro.Costo }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-
-                // Redireccion a la captura del Error
-                return RedirectToAction("Default", "Error");
-            }
-        }
 
         private MultiSelectList listaRubro(ICollection<RubroCobro> rubros = null)
         {

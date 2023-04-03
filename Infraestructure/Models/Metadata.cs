@@ -46,6 +46,13 @@ namespace Infraestructure.Models
         [Required(ErrorMessage = "{0} es un dato requerido")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public Nullable<decimal> Total { get; set; }
+
+        [Display(Name = "Plan de Cobro")]
+        [Required(ErrorMessage = "{0} es un dato requerido")]
+        public Nullable<int> FK_PlanCobro { get; set; }
+        [Display(Name = "Propiedad")]
+        [Required(ErrorMessage = "{0} es un dato requerido")]
+        public Nullable<int> FK_Propiedad { get; set; }
     }
 
     internal partial class PropiedadMetadata

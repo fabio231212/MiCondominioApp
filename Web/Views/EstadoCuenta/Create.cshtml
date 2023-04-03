@@ -1,0 +1,193 @@
+﻿@model Infraestructure.Models.Factura
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "EstadoCuenta", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Factura</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-row">
+
+            <div class="form-group col-12 col-sm-6 col-lg-4">
+                @Html.LabelFor(model => model.FK_PlanCobro, htmlAttributes: new { @class = "control-label" })
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-notes-medical"></i></span>
+                    </div>
+                    @Html.DropDownListFor(model => model.FK_PlanCobro,
+         (SelectList)ViewBag.idPlanCobro,
+         "Seleccione un Plan de Cobro",
+         htmlAttributes: new { @class = "form-control", @id = "cboPlan" })
+                </div>
+                @Html.ValidationMessageFor(model => model.FK_PlanCobro, "", new { @class = "text-danger " })
+            </div>
+
+            <div class="form-group col-12 col-sm-6 col-lg-4">
+                @Html.LabelFor(model => model.FK_Propiedad, htmlAttributes: new { @class = "control-label" })
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-notes-medical"></i></span>
+                    </div>
+                    @Html.DropDownListFor(model => model.FK_Propiedad,
+         (SelectList)ViewBag.idPropiedad,
+         "Seleccione una Propiedad",
+         htmlAttributes: new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.FK_Propiedad, "", new { @class = "text-danger " })
+            </div>
+
+            <div class="form-group col-12 col-sm-6 col-lg-4">
+                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label" })
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-house"></i></span>
+                    </div>
+                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @id = "total", @readonly = "readonly" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+
+    <button type="submit" class="btn bg-siteColor text-white" id="crear-factura"> <i class="fa-solid fa-plus text-white"></i> Crear Factura</button>
+
+
+
+    <a href="@Url.Action("Index")" class="btn bg-danger text-white"><i class="fa-solid fa-x text-white"></i>  Cancelar</a>
+
+
+
+}
+
+@{
+    IEnumerable<Infraestructure.Models.Factura> facturas = ViewBag.listaFacturasXMes;
+}
+
+<div class="data-tables datatable-dark table-responsive">
+    <table id="dataTableFact" class="text-center">
+        <thead class="text-capitalize text-center">
+            <tr>
+                <th scope="col" class="text-center">@Html.DisplayNameFor(model => model.Propiedad.NumPropiedad)</th>
+                <th scope="col" class="text-center">@Html.DisplayNameFor(model => model.Propiedad.Usuario.Nombre)</th>
+                <th scope="col" class="text-center">@Html.DisplayNameFor(model => model.Total)</th>
+                <th scope="col" class="text-center">@Html.DisplayNameFor(model => model.FechaFacturacion)</th>
+                <th scope="col" class="text-center">@Html.DisplayNameFor(model => model.Activo)</th>
+                <th scope="col" class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in facturas)
+            {
+                <tr class="selected-row">
+                    <td> @item.Propiedad.NumPropiedad</td>
+                    <td> @item.Propiedad.Usuario.Nombre</td>
+                    <td> @item.Total</td>
+                    <td> @item.FechaFacturacion</td>
+                    @if (item.Activo == true)
+                    {
+                        <td>Pendiente</td>
+                    }
+                    else
+                    {
+                        <td>Pagada</td>
+                    }
+
+
+                    <td>
+                        <a title="Detalles" href="@Url.Action("DetalleEstadoCuenta", "EstadoCuenta", new { idEstadoCuenta = item.Id })" class="btn bg-primary btn-sm px-3">
+                            <i class="fas fa-eye text-white"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<script>
+
+    //Este metodo se encarga de que cada vez que cambia el objeto seleccionado del combo de planes, ejecuta un metodo por
+    //ajax que trae el valor de dicho plan
+
+    $(document).ready(function () {
+        $('#cboPlan').change(function () {
+            var id = document.getElementById("cboPlan").value;
+            $.ajax({
+                url: '@Url.Action("GetPlanById", "EstadoCuenta")',
+                type: "GET",
+                data: { id: id },
+                dataType: "json",
+                contentType: "application/json; charset=utf8",
+                success: function (result) {
+                    console.log(result.data);
+                    $('#total').val(result.data); // asigna el valor al EditorFor
+                },
+                error: function (result) {
+                    alert("Error");
+                    console.log(result);
+                }
+            });
+        });
+    });
+
+
+
+//Se encarga de mostrar la alerta en caso de que exista una factura para esa propiedad en ese mes
+$(document).ready(function () {
+    var existeTempData = '@TempData["existe"]';
+    if (existeTempData == 'True') {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'error',
+            title: '¡Ya existe una factura!',
+            text: 'La factura no se puede crear debido a que ya existe una para este mes',
+            showConfirmButton: true,
+        })
+    }
+});
+
+
+//Se encarga de mostrar la alerta en caso de que la factura se halla creado correctamente
+    $(document).ready(function () {
+    var creada = '@TempData["creada"]';
+    if (creada == 'True') {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: '¡Factura Creada!',
+            text: 'La factura se creo correctamente',
+            showConfirmButton: true,
+        })
+    }
+});
+
+
+
+    $(document).ready(function () {
+        $('#dataTableFact').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+            },
+            "lengthChange": false,
+            "paging": false,
+            responsive: true
+        });
+    });
+
+
+</script>

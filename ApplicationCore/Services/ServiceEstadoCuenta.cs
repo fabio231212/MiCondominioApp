@@ -38,5 +38,17 @@ namespace ApplicationCore.Services
             IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
             return repository.GetEstadoCuentaPendiente();
         }
+
+        public void Create(Factura factura)
+        {
+            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
+             repository.Create(factura);
+        }
+
+        public IEnumerable<Factura> GetFacturasByFecha()
+        {
+            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
+            return repository.GetFacturasByFecha();
+        }
     }
 }

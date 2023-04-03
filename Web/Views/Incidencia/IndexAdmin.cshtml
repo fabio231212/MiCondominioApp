@@ -3,6 +3,7 @@
 
 @using (Html.BeginForm("IndexAdmin", "Incidencia", FormMethod.Get))
 {
+    @Html.AntiForgeryToken()
     <div class="form-group">
         <label class="col-form-label">Estado</label>
         @Html.DropDownList("EstadoIncidencia",
@@ -12,6 +13,8 @@
     </div>
 
 }
+
+
 
 <div class="data-tables datatable-dark table-responsive" id="listaIncidencias">
     <table id="dataTableIncidencias" class="text-center">
@@ -31,13 +34,10 @@
             {
 
                 <tr class="selected-row">
-                    <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
-                    <td> @Html.DisplayFor(modelItem => item.Fecha)</td>
-                    <td> @Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EstadoIncidencia.Nombre)
-                      
-                    </td>
+                    <td> @item.Descripcion</td>
+                    <td> @item.Usuario.Nombre</td>
+                    <td> @item.Fecha</td>
+                    <td> @item.EstadoIncidencia.Nombre</td>
                     <td>
                         <button data-id="@item.Id" title="Cambiar Estado" class="btn bg-info btn-sm px-3 btnCambiarEstado">
                             <i class="ti-pencil text-white"></i>
@@ -100,28 +100,7 @@
                             estado: result.value
                         },
                         success: function (response) {
-
-                            Swal.fire({
-                                position: 'top-center',
-                                icon: 'success',
-                                title: '¡Estado de Incidencia Modificado!',
-                                text: 'La incidencia se ha modificacado exitosamente',
-                                showConfirmButton: false,
-                                timer: 2500
-                            })
-
-                            $('#listaIncidencias').html('');
-                            $('#listaIncidencias').html(response);
-
-                            $('#dataTableIncidencias').DataTable({
-                                responsive: true,
-                                "language": {
-                                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                                },
-                                "lengthChange": false,
-                                "paging": false,
-
-                            });
+                            window.location.href = '@Url.Action("IndexAdmin", "Incidencia")';
                         },
                         error: function () {
                             Swal.fire('¡Error!', 'Ha ocurrido un error al cambiar el estado de la incidencia.', 'error');
@@ -131,6 +110,19 @@
             });
         });
 
+        $(document).ready(function () {
+            var creada = '@TempData["modificado"]';
+            if (creada == 'True') {
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: '¡Estado de Incidencia Modificado!',
+                    text: 'La incidencia se ha modificacado exitosamente',
+                    showConfirmButton: true,
+                    timer: 2500
+                })
+            }
+        });
 
     </script>
 
