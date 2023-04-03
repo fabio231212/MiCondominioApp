@@ -24,8 +24,8 @@ namespace Web.Controllers
         }
         public ActionResult IndexUsuario()
         {
-            IServiceInformacion _Service = new ServiceInformacion();
-            ViewBag.listaInformacion = _Service.GetAll();
+            IServiceInformacion _ServiceInfo = new ServiceInformacion();
+            ViewBag.listaInformacion = _ServiceInfo.GetAll();
             IServiceArchivo _ServiceArchivo = new ServiceArchivo();
             ViewBag.listaArchivos =  _ServiceArchivo.GetAll();
 

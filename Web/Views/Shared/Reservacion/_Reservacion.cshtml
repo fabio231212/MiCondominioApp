@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<Infraestructure.Models.Reservacion>
+<table id="dataTableReservacion" class="text-center">
+    <thead class="text-capitalize">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Usuario.Nombre)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.FechaEntrada)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.FechaSalida)</th>
+            <th scope="col"> @Html.DisplayNameFor(model => model.AreaComunal.Nombre)</th>
+            <th scope="col"> @Html.DisplayNameFor(model => model.EstadoReservacion.Nombre)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Nota)</th>
+            <th scope="col">Acción</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr class="selected-row">
+                <td>@item.Usuario.Nombre</td>
+                <td>@item.FechaEntrada</td>
+                <td> @item.FechaSalida</td>
+                <td> @item.AreaComunal.Nombre</td>
+                <td> @item.EstadoReservacion.Nombre</td>
+                <td>
+                    @if (item.FK_Estado != 1)
+                    {
+                        @item.Nota
+
+                    }
+                </td>
+                <td>
+                    @if (item.FK_Estado == 1)
+                    {
+
+                        <button data-id="@item.Id" title="Estado Reservación Reservación" class="btn bg-warning btn-sm px-3 btnCambiarEstado btnCancelar">
+                            <i class="ti-trash text-white"></i>
+                        </button>
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

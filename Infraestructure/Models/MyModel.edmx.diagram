@@ -4,25 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a39d7071e8e8451da42651bbe281a76e" Name="Diagram1">
-        <EntityTypeShape EntityType="MiCondominioDBModel.AreaComunal" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.EstadoIncidencia" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.EstadoPropiedad" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Factura" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Incidencias" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+      <Diagram DiagramId="09d236f0bd3f4923bea5bf640b7c8622" Name="Diagram1">
+        <EntityTypeShape EntityType="MiCondominioDBModel.Archivo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.AreaComunal" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.EstadoIncidencia" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.EstadoPropiedad" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.EstadoReservacion" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Factura" Width="1.5" PointX="10.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Incidencias" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MiCondominioDBModel.Informacion" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Notificacion" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.NotificacionUsuario" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.PlanCobro" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Propiedad" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Reservacion" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Rol" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.RubroCobro" Width="1.5" PointX="10.5" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Tarjeta" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Usuario" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Notificacion" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.NotificacionUsuario" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.PlanCobro" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Propiedad" Width="1.5" PointX="8.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Reservacion" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Rol" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.RubroCobro" Width="1.5" PointX="10.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Tarjeta" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiCondominioDBModel.Usuario" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Reservacion_AreaComunal" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Incidencias_EstadoIncidencia" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Propiedad_EstadoPropiedad" ManuallyRouted="false" />
+        <AssociationConnector Association="MiCondominioDBModel.FK_Reservacion_EstadoReservacion" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Factura_PlanCobro" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Factura_Propiedad" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Factura_Tarjeta" ManuallyRouted="false" />
@@ -33,7 +36,6 @@
         <AssociationConnector Association="MiCondominioDBModel.FK_Reservacion_Usuario1" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.FK_Usuario_Rol" ManuallyRouted="false" />
         <AssociationConnector Association="MiCondominioDBModel.PlanxRubro" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MiCondominioDBModel.Archivo" Width="1.5" PointX="7.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

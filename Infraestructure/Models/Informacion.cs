@@ -11,13 +11,12 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(InformacionMetadata))]
+    
     public partial class Informacion
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
         public string Titulo { get; set; }
+        public Nullable<System.DateTime> FechaVencimiento { get; set; }
     }
 }

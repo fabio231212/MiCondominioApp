@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public interface IServiceEstadoPropiedad
+    public interface IServiceAreaComunal
     {
-        IEnumerable<EstadoPropiedad> GetAll();
+        IEnumerable<AreaComunal> GetAll();
+        AreaComunal GetAreaComunalById(int id);
     }
 }

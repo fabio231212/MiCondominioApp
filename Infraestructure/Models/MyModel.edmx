@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MiCondominioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Archivo">
           <Key>
             <PropertyRef Name="Id" />
@@ -30,6 +30,13 @@
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="EstadoPropiedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EstadoReservacion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -66,6 +73,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="text" />
           <Property Name="Titulo" Type="varchar" MaxLength="50" />
+          <Property Name="FechaVencimiento" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="Notificacion">
           <Key>
@@ -122,9 +130,12 @@
           </Key>
           <Property Name="FK_Usuario" Type="int" Nullable="false" />
           <Property Name="FK_AreaComunal" Type="int" Nullable="false" />
-          <Property Name="Aprobada" Type="bit" />
-          <Property Name="Fecha" Type="smalldatetime" />
+          <Property Name="FechaEntrada" Type="smalldatetime" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Estado" Type="int" />
+          <Property Name="FechaSalida" Type="smalldatetime" Nullable="false" />
+          <Property Name="Cancelada" Type="bit" Nullable="false" />
+          <Property Name="Nota" Type="text" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -306,6 +317,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reservacion_EstadoReservacion">
+          <End Role="EstadoReservacion" Type="Self.EstadoReservacion" Multiplicity="0..1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoReservacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="FK_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reservacion_Usuario1">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
@@ -335,6 +358,7 @@
           <EntitySet Name="AreaComunal" EntityType="Self.AreaComunal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoIncidencia" EntityType="Self.EstadoIncidencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoReservacion" EntityType="Self.EstadoReservacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Informacion" EntityType="Self.Informacion" Schema="dbo" store:Type="Tables" />
@@ -396,6 +420,10 @@
             <End Role="AreaComunal" EntitySet="AreaComunal" />
             <End Role="Reservacion" EntitySet="Reservacion" />
           </AssociationSet>
+          <AssociationSet Name="FK_Reservacion_EstadoReservacion" Association="Self.FK_Reservacion_EstadoReservacion">
+            <End Role="EstadoReservacion" EntitySet="EstadoReservacion" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
           <AssociationSet Name="FK_Reservacion_Usuario1" Association="Self.FK_Reservacion_Usuario1">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Reservacion" EntitySet="Reservacion" />
@@ -405,10 +433,19 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MiCondominioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Archivo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contenido" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="AreaComunal">
           <Key>
             <PropertyRef Name="Id" />
@@ -434,6 +471,14 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_EstadoPropiedad" FromRole="EstadoPropiedad" ToRole="Propiedad" />
+        </EntityType>
+        <EntityType Name="EstadoReservacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.FK_Reservacion_EstadoReservacion" FromRole="EstadoReservacion" ToRole="Reservacion" />
         </EntityType>
         <EntityType Name="Factura">
           <Key>
@@ -470,6 +515,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Notificacion">
           <Key>
@@ -526,10 +572,14 @@
           </Key>
           <Property Name="FK_Usuario" Type="Int32" Nullable="false" />
           <Property Name="FK_AreaComunal" Type="Int32" Nullable="false" />
-          <Property Name="Aprobada" Type="Boolean" />
-          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="FechaEntrada" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Estado" Type="Int32" />
+          <Property Name="FechaSalida" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Cancelada" Type="Boolean" Nullable="false" />
+          <Property Name="Nota" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AreaComunal" Relationship="Self.FK_Reservacion_AreaComunal" FromRole="Reservacion" ToRole="AreaComunal" />
+          <NavigationProperty Name="EstadoReservacion" Relationship="Self.FK_Reservacion_EstadoReservacion" FromRole="Reservacion" ToRole="EstadoReservacion" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Reservacion_Usuario1" FromRole="Reservacion" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Rol">
@@ -609,6 +659,18 @@
             </Principal>
             <Dependent Role="Propiedad">
               <PropertyRef Name="FK_EstadoPropiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservacion_EstadoReservacion">
+          <End Role="EstadoReservacion" Type="Self.EstadoReservacion" Multiplicity="0..1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoReservacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="FK_Estado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -725,9 +787,11 @@
           <End Role="RubroCobro" Type="Self.RubroCobro" Multiplicity="*" />
         </Association>
         <EntityContainer Name="MiCondominioDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Archivo" EntityType="Self.Archivo" />
           <EntitySet Name="AreaComunal" EntityType="Self.AreaComunal" />
           <EntitySet Name="EstadoIncidencia" EntityType="Self.EstadoIncidencia" />
           <EntitySet Name="EstadoPropiedad" EntityType="Self.EstadoPropiedad" />
+          <EntitySet Name="EstadoReservacion" EntityType="Self.EstadoReservacion" />
           <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" />
           <EntitySet Name="Informacion" EntityType="Self.Informacion" />
@@ -751,6 +815,10 @@
           <AssociationSet Name="FK_Propiedad_EstadoPropiedad" Association="Self.FK_Propiedad_EstadoPropiedad">
             <End Role="EstadoPropiedad" EntitySet="EstadoPropiedad" />
             <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservacion_EstadoReservacion" Association="Self.FK_Reservacion_EstadoReservacion">
+            <End Role="EstadoReservacion" EntitySet="EstadoReservacion" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
           </AssociationSet>
           <AssociationSet Name="FK_Factura_PlanCobro" Association="Self.FK_Factura_PlanCobro">
             <End Role="PlanCobro" EntitySet="PlanCobro" />
@@ -792,22 +860,22 @@
             <End Role="PlanCobro" EntitySet="PlanCobro" />
             <End Role="RubroCobro" EntitySet="RubroCobro" />
           </AssociationSet>
-          <EntitySet Name="Archivo" EntityType="MiCondominioDBModel.Archivo" />
         </EntityContainer>
-        <EntityType Name="Archivo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contenido" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MiCondominioDBModelStoreContainer" CdmEntityContainer="MiCondominioDBEntities">
+          <EntitySetMapping Name="Archivo">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.Archivo">
+              <MappingFragment StoreEntitySet="Archivo">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AreaComunal">
             <EntityTypeMapping TypeName="MiCondominioDBModel.AreaComunal">
               <MappingFragment StoreEntitySet="AreaComunal">
@@ -829,6 +897,14 @@
           <EntitySetMapping Name="EstadoPropiedad">
             <EntityTypeMapping TypeName="MiCondominioDBModel.EstadoPropiedad">
               <MappingFragment StoreEntitySet="EstadoPropiedad">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoReservacion">
+            <EntityTypeMapping TypeName="MiCondominioDBModel.EstadoReservacion">
+              <MappingFragment StoreEntitySet="EstadoReservacion">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
@@ -865,6 +941,7 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -914,9 +991,12 @@
               <MappingFragment StoreEntitySet="Reservacion">
                 <ScalarProperty Name="FK_Usuario" ColumnName="FK_Usuario" />
                 <ScalarProperty Name="FK_AreaComunal" ColumnName="FK_AreaComunal" />
-                <ScalarProperty Name="Aprobada" ColumnName="Aprobada" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="FechaEntrada" ColumnName="FechaEntrada" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FK_Estado" ColumnName="FK_Estado" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+                <ScalarProperty Name="Cancelada" ColumnName="Cancelada" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -968,15 +1048,6 @@
               <ScalarProperty Name="Id" ColumnName="FK_Rubro" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Archivo">
-            <EntityTypeMapping TypeName="MiCondominioDBModel.Archivo">
-              <MappingFragment StoreEntitySet="Archivo">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

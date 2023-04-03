@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public class ServiceEstadoIncidencia : IServiceEstados<EstadoIncidencia>
+    public class ServiceEstadoReservacion : IServiceEstados<EstadoReservacion>
     {
-        public IEnumerable<EstadoIncidencia> GetAll()
+        public IEnumerable<EstadoReservacion> GetAll()
         {
-            IRepositoryEstados<EstadoIncidencia> repository = new RepositoryEstadoIncidencia();
+            IRepositoryEstados<EstadoReservacion> repository = new RepositoryEstadoReservacion();
             return repository.GetAll();
         }
     }

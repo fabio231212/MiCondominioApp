@@ -217,7 +217,7 @@ namespace Web.Controllers
 
         public SelectList listaEstadoPropiedad(int? id = 0)
         {
-            IServiceEstadoPropiedad _ServiceEstadoPropiedad = new ServiceEstadoPropiedad();
+            IServiceEstados<EstadoPropiedad> _ServiceEstadoPropiedad = new ServiceEstadoPropiedad();
             IEnumerable<EstadoPropiedad> lista = _ServiceEstadoPropiedad.GetAll();
             return new SelectList(lista, "Id", "Nombre", id);
         }
