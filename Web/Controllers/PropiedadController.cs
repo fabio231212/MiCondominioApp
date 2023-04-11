@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Web.Permisos;
 using Web.Utils;
 
 namespace Web.Controllers
@@ -20,6 +21,7 @@ namespace Web.Controllers
     public class PropiedadController : Controller
     {
         // GET: Propiedad
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Index()
         {
             IEnumerable<Propiedad> lista = null;
@@ -41,7 +43,7 @@ namespace Web.Controllers
 }
 
         // GET: Propiedad/Details/5
-
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Details(string id)
         {
             Propiedad oPropiedad = null;
@@ -65,6 +67,7 @@ namespace Web.Controllers
         }
 
         // GET: Propiedad/Create
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Create()
         {
             ViewBag.idUsuario = listaUsuarios();
@@ -91,6 +94,7 @@ namespace Web.Controllers
 
 
         // GET: Propiedad/Edit/5
+           [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
             IServicePropiedad _ServicePropiedad = new ServicePropiedad();

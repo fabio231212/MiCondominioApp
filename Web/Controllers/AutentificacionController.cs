@@ -88,5 +88,16 @@ namespace Web.Controllers
 
         }
 
+        public ActionResult UnAuthorized()
+        {
+            ViewBag.Message = "No autorizado";
+            if (Session["User"] != null)
+            {
+                Usuario usuario = Session["User"] as Usuario;
+                Log.Warn($"No autorizado {usuario.Email}");
+            }
+            return View();
+        }
+
     }
 }

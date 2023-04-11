@@ -8,12 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
 using Infraestructure.Utils;
+using Web.Permisos;
 
 namespace Web.Controllers
 {
     public class UsuarioController : Controller
     {
         // GET: Usuario
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Index()
         {
             IEnumerable<Usuario> lista = null;
@@ -35,6 +37,7 @@ namespace Web.Controllers
         }
 
         // GET: Usuario/Details/5
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Details(int id)
         {
             Usuario oUsuario= null;
@@ -58,7 +61,8 @@ namespace Web.Controllers
             }
         }
 
-         // GET: Usuario/Create
+        // GET: Usuario/Create
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Create()
         {
 
@@ -68,7 +72,8 @@ namespace Web.Controllers
         }
 
 
-         // GET: Usuario/Edit/5
+        // GET: Usuario/Edit/5
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? cedula)
         {
             IServiceUsuario _ServiceUsuario = new ServiceUsuario();

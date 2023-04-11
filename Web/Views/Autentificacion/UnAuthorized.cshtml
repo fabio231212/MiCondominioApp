@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>No Autorizado</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+
+    @Styles.Render("~/Content/jqueryUI")
+</head>
+<body>
+    <input type="button" value="Regresar" class="btn bg-siteColor text-white" onclick="goBack()" />
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/jqueryUI")
+</body>
+
+</html>
+
+
+
+

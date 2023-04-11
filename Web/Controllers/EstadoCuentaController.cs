@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using Web.Permisos;
 using Web.Utils;
 
 namespace Web.Controllers
@@ -17,6 +18,8 @@ namespace Web.Controllers
     //[Authorize]
     public class EstadoCuentaController : Controller
     {
+
+        [CustomAuthorize((int)Roles.Admin)]
 
         // GET: EstadoCuenta/Details/5
         public ActionResult Index(int? id, bool? active)
@@ -50,7 +53,7 @@ namespace Web.Controllers
         
     }
 
-
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult EstadosCuentaPendientes()
         {
             IEnumerable<Factura> lista = null;
@@ -69,7 +72,7 @@ namespace Web.Controllers
 
 
         }
-
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult DetalleEstadoCuenta(int idEstadoCuenta)
         {
             Factura oFactura = null;
@@ -86,7 +89,7 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
-
+        [CustomAuthorize((int)Roles.Admin)]
         // GET: EstadoCuenta/Create
         public ActionResult Create()
         {

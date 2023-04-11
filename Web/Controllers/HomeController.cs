@@ -15,13 +15,19 @@ using Web.Permisos;
 namespace Web.Controllers
 {
     [Authorize]
-    [ValidarSesion]
+
     public class HomeController : Controller
+
+
     {
+
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult IndexAdmin()
         {
             return View();
         }
+
+        [CustomAuthorize((int)Roles.Residente)]
         public ActionResult IndexUsuario()
         {
             IServiceInformacion _ServiceInfo = new ServiceInformacion();

@@ -8,12 +8,15 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Web.Permisos;
 using Web.Utils;
 
 namespace Web.Controllers
 {
     public class IncidenciaController : Controller
     {
+
+        [CustomAuthorize((int)Roles.Admin)]
         // GET: Incidencia
         public ActionResult IndexAdmin(int? EstadoIncidencia)
         {
@@ -45,6 +48,7 @@ namespace Web.Controllers
             }
 
         }
+        [CustomAuthorize((int)Roles.Residente)]
         public ActionResult IndexUsuario()
         {
             try

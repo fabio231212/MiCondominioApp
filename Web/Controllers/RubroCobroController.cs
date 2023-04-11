@@ -6,12 +6,14 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Web.Permisos;
 using Web.Utils;
 
 namespace Web.Controllers
 {
     public class RubroCobroController : Controller
     {
+        [CustomAuthorize((int)Roles.Admin)]
         // GET: RubroCobro
         public ActionResult Index()
         {
@@ -40,6 +42,7 @@ namespace Web.Controllers
         }
 
         // GET: RubroCobro/Create
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Create()
         {
             return View();
@@ -62,6 +65,7 @@ namespace Web.Controllers
         }
 
         // GET: RubroCobro/Edit/5
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
             IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();

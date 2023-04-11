@@ -9,20 +9,20 @@
         <div class="row align-items-center">
             <div class="col-md-3">
                 <div class="logo">
-                    @if (oUsuario.FK_Rol == 1)
+                    @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
                     {
                         <a href="@Url.Action("IndexAdmin","Home")">
                             <img class="p-2" src="~/Content/Images/logo.png" width="100" alt="logo" />
                         </a>
                     }
                     else
-                    {   
-                <a href="@Url.Action("IndexUsuario","Home")">
-                    <img class="p-2" src="~/Content/Images/logo.png" width="100" alt="logo" />
-                </a>
-    
+                    {
+                        <a href="@Url.Action("IndexUsuario","Home")">
+                            <img class="p-2" src="~/Content/Images/logo.png" width="100" alt="logo" />
+                        </a>
+
                     }
-                   
+
                 </div>
             </div>
             <!-- profile info & task notification -->
@@ -114,7 +114,7 @@
                     <nav>
                         <ul id="nav_menu">
                             <li>
-                                @if (oUsuario.FK_Rol == 1)
+                                @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
                                 {
                                     <a href="@Url.Action("IndexAdmin","Home")"><i class="ti-home"></i><span>Home</span></a>
                                 }
@@ -125,7 +125,7 @@
                                 }
 
                             </li>
-                            @if (oUsuario.FK_Rol == 1)
+                            @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
                             {
                                 <li class="">
                                     <a href="javascript:void(0)">
@@ -150,7 +150,7 @@
                                 </li>
                             }
                             <li>
-                                @if (oUsuario.FK_Rol == 1)
+                                @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
                                 {
                                     <a href="@Url.Action("IndexAdmin", "Incidencia")"><i class="ti-alert"></i><span>Incidencias</span></a>
                                 }
@@ -160,7 +160,7 @@
                                 }
 
                             </li>
-                            @if (oUsuario.FK_Rol == 1)
+                            @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
                             {
                                 <li class="">
                                     <a href="javascript:void(0)">
@@ -179,17 +179,17 @@
                                     </ul>
                                 </li>
                             }
-                            <li>
-                                @if (oUsuario.FK_Rol == 1)
-                                {
-                                    <a href="@Url.Action("IndexAdmin", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("IndexUsuario", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
-                                }
+                        <li>
+                            @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
+                            {
+                                <a href="@Url.Action("IndexAdmin", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("IndexUsuario", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
+                            }
 
-                            </li>
+                        </li>
                             <li>
                                 <a href="javascript:void(0)"><i class="ti-slice"></i><span>icons</span></a>
                                 <ul class="submenu">

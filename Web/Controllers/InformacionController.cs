@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Web.Permisos;
 using Web.Utils;
 
 namespace Web.Controllers
@@ -18,7 +19,7 @@ namespace Web.Controllers
         {
             return View();
         }
-
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Create()
         {
             return View();
@@ -61,7 +62,7 @@ namespace Web.Controllers
                     return RedirectToAction("Default", "Error");
                 }
            }
-
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
             IServiceInformacion _Service = new ServiceInformacion();
