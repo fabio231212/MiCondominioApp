@@ -179,17 +179,23 @@
                                     </ul>
                                 </li>
                             }
-                        <li>
-                            @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
-                            {
-                                <a href="@Url.Action("IndexAdmin", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("IndexUsuario", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
-                            }
+                            <li>
+                                @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
+                                {
+                                    <a href="@Url.Action("IndexAdmin", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("IndexUsuario", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
+                                }
 
-                        </li>
+                            </li>
+                            <li>
+                                @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
+                                {
+                                    <a href="@Url.Action("Create", "EstadoCuenta")"><i class="ti-map"></i><span>Facturación</span></a>
+                                }
+                            </li>
                             <li>
                                 <a href="javascript:void(0)"><i class="ti-slice"></i><span>icons</span></a>
                                 <ul class="submenu">

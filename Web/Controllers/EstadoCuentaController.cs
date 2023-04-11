@@ -130,6 +130,8 @@ namespace Web.Controllers
                 IServiceEstadoCuenta _ServiceEstadoCuenta = new ServiceEstadoCuenta();
                 try
                 {
+                    IServiceNotificacionUsuario _ServiceNotificaion = new ServiceNotificacionUsuario();
+                    IServicePropiedad _ServicePropiedad = new ServicePropiedad();
                     ModelState.Remove("FechaFacturacion");
                     ModelState.Remove("Tarjeta");
                     ModelState.Remove("Activo");
@@ -155,7 +157,7 @@ namespace Web.Controllers
                         }
 
                         _ServiceEstadoCuenta.Create(factura);
-
+                        _ServiceNotificaion.SaveNotificacionUsuario(new NotificacionUsuario { IdNotificacion = 5, IdUsuario = (int)_ServicePropiedad.GetPropiedadById((int)factura.FK_Propiedad).FK_Usuario, Leida = false });
                         ViewBag.idPropiedad = listaPropiedades();
                         ViewBag.idPlanCobro = listaPlanCobro();
                         TempData["creada"] = true;
