@@ -16,5 +16,6 @@ namespace Infraestructure.Repository
         IEnumerable<Factura> GetEstadoCuentaPendiente();
         void Create(Factura factura);
         IEnumerable<Factura> GetFacturasByFecha();
+        Factura GetOldestFactura(int idUsuario);
     }
 }

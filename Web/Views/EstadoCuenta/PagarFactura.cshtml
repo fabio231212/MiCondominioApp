@@ -1,0 +1,199 @@
+﻿@model Infraestructure.Models.Factura
+
+@{
+    ViewBag.Title = "PagarFactura";
+}
+@section Styles {
+    <link href="~/Content/payment.css" rel="stylesheet" />
+}
+
+
+
+
+
+
+<div class="container">
+ 
+    <div class="mb-5 p-4 bg-white shadow-sm">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>¡Aviso!</strong> El proceso de pago asigna automáticamente la factura más antigua.
+        </div>
+        <div id="stepper3" class="bs-stepper">
+            <div class="bs-stepper-header" role="tablist">
+                <div class="step" data-target="#test-nlf-1">
+                    <button type="button" class="step-trigger" role="tab" id="stepper3trigger1" aria-controls="test-nlf-1" aria-selected="false">
+                        <span class="bs-stepper-circle bg-siteColor">
+                            <span class="fa-solid fa-cart-arrow-down" aria-hidden="true"></span>
+                        </span>
+                        <span class="bs-stepper-label">Facturación</span>
+                    </button>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step active" data-target="#test-nlf-2">
+                    <button type="button" class="step-trigger" role="tab" id="stepper3trigger2" aria-controls="test-nlf-2" aria-selected="true">
+                        <span class="bs-stepper-circle bg-siteColor">
+                            <span class="fa-regular fa-credit-card" aria-hidden="true"></span>
+                        </span>
+                        <span class="bs-stepper-label">Forma de Pago</span>
+                    </button>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-nlf-3">
+                    <button type="button" class="step-trigger" role="tab" id="stepper3trigger3" aria-controls="test-nlf-3" aria-selected="false">
+                        <span class="bs-stepper-circle bg-siteColor">
+                            <span class="fa-solid fa-circle-check" aria-hidden="true"></span>
+                        </span>
+                        <span class="bs-stepper-label">Confirmar Pago</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bs-stepper-content">
+                <form onsubmit="return false">
+                    <div id="test-nlf-1" role="tabpanel" class="bs-stepper-pane fade dstepper-block dstepper-none" aria-labelledby="stepper3trigger1">
+
+                        <div class="row">
+                            <div class="col-lg-12 mt-5">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="invoice-area">
+                                            <div class="invoice-head">
+                                                <div class="row">
+                                                    <div class="iv-left col-6">
+                                                        <span>Factura</span>
+                                                    </div>
+                                                    <div class="iv-right col-6 text-md-right">
+                                                        <span>@Model.Id</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6">
+                                                    <div class="invoice-address">
+                                                        <h3>Perteneciente a</h3>
+                                                        <h5>@Model.Propiedad.Usuario.Nombre</h5>
+                                                        <p>Número de Propiedad: @Model.Propiedad.NumPropiedad</p>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-md-right">
+                                                    <ul class="invoice-date">
+                                                        <li>Fecha Facturación : @Model.FechaFacturacion</li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="invoice-table table-responsive mt-5">
+                                                <table class="table table-bordered table-hover text-right">
+                                                    <thead>
+                                                        <tr class="text-capitalize">
+                                                            <th class="text-center" style="width: 5%;">Id</th>
+                                                            <th class="text-left" style="width: 45%; min-width: 130px;">Descripción</th>
+                                                            <th>Propiedad Asig</th>
+                                                            <th style="min-width: 100px">Fecha</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">@Model.PlanCobro.Id</td>
+                                                            <td class="text-left">@Model.PlanCobro.Descripcion</td>
+                                                            <td>@Model.Propiedad.NumPropiedad</td>
+                                                            <td>@Model.FechaFacturacion</td>
+                                                            <td>@Model.PlanCobro.Total</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="4">total balance :</td>
+                                                            <td>@Model.Total</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="invoice-buttons text-right">
+                                            <button class="btn bg-siteColor text-white" onclick="stepper3.next()">Siguiente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="test-nlf-2" role="tabpanel" class="bs-stepper-pane fade dstepper-block active" aria-labelledby="stepper3trigger2">
+                        <div class="contenedor">
+                            <div class="col1 d-flex justify-content-center align-items-center">
+                                <div class="card">
+                                    <div class="front">
+                                        <div class="type">
+                                            <img class="bankid" />
+                                        </div>
+                                        <span class="chip"></span>
+                                        <span class="card_number">&#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; &#x25CF;&#x25CF;&#x25CF;&#x25CF; </span>
+                                        <div class="date"><span class="date_value">MM / YYYY</span></div>
+                                        <span class="fullname">FULL NAME</span>
+                                    </div>
+                                    <div class="back">
+                                        <div class="magnetic"></div>
+                                        <div class="bar"></div>
+                                        <span class="seccode">&#x25CF;&#x25CF;&#x25CF;</span>
+                                        <span class="chip"></span><span class="disclaimer">This card is property of Random Bank of Random corporation. <br> If found please return to Random Bank of Random corporation - 21968 Paris, Verdi Street, 34 </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                    <label>Card Number</label>
+                                    <div class="input-group mb-3">
+                                        <input class="number" type="text" ng-model="ncard" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                    <label>Cardholder name</label>
+                                    <div class="input-group mb-3">
+                                        <input class="inputname" type="text" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                    <label>Expiry date</label>
+                                    <div class="input-group mb-3">
+                                        <input class="expire" type="text" placeholder="MM / YYYY" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                    <label>Security Number</label>
+                                    <div class="input-group mb-3">
+                                        <input class="ccv" type="text" placeholder="CVC" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="stepper3.next()">Next</button>
+                    </div>
+                    <div id="test-nlf-3" role="tabpanel" class="bs-stepper-pane fade text-center dstepper-block dstepper-none" aria-labelledby="stepper3trigger3">
+                        <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/js/payment.js"></script>
+
+    <script>
+        var stepper3;
+        $(document).ready(function () {
+                stepper3 = new Stepper(document.querySelector('#stepper3'), {
+                    linear: false,
+                    animation: true
+                })
+
+        });
+    </script>
+}

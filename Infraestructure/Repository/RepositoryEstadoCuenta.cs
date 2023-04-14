@@ -216,5 +216,32 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+        public Factura GetOldestFactura(int idUsuario)
+        {
+            try
+            {
+                Factura oFactura = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    oFactura = ctx.Factura.Include("Propiedad").Include("Propiedad.Usuario").Include("PlanCobro").Include("PlanCobro.RubroCobro").Where(f=>f.Propiedad.FK_Usuario == idUsuario && (bool)f.Activo).OrderBy(f => f.FechaFacturacion).FirstOrDefault();
+                }
+
+                return oFactura;
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
     }
 }

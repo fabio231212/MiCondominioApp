@@ -50,5 +50,11 @@ namespace ApplicationCore.Services
             IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
             return repository.GetFacturasByFecha();
         }
+
+        public Factura GetOldestFactura(int idUsuario)
+        {
+            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
+            return repository.GetOldestFactura(idUsuario);
+        }
     }
 }

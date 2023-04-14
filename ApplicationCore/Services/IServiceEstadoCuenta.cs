@@ -18,5 +18,6 @@ namespace ApplicationCore.Services
         void Create(Factura factura);
         IEnumerable<Factura> GetEstadoCuentaPendiente();
         IEnumerable<Factura> GetFacturasByFecha();
+        Factura GetOldestFactura(int idUsuario);
     }
 }

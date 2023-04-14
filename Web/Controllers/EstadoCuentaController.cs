@@ -205,6 +205,25 @@ namespace Web.Controllers
             }
         }
 
+        public ActionResult PagarFactura()
+        {
+            Factura oFactura = null;
+            Usuario oUsuario = null;
+            try
+            {
+                oUsuario = Session["usuario"] as Usuario;
+                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+                oFactura = _Service.GetOldestFactura(oUsuario.Id);
+                return View(oFactura);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
         // GET: EstadoCuenta/Delete/5
         public ActionResult Delete(int id)
         {
