@@ -10,10 +10,12 @@ namespace ApplicationCore.Services
 {
     public class ServiceEstadoReservacion : IServiceEstados<EstadoReservacion>
     {
-        public IEnumerable<EstadoReservacion> GetAll()
+        private IRepositoryEstados<EstadoReservacion> repository;
+        public ServiceEstadoReservacion()
         {
-            IRepositoryEstados<EstadoReservacion> repository = new RepositoryEstadoReservacion();
-            return repository.GetAll();
+            repository = new RepositoryEstadoReservacion();
         }
+
+        public IEnumerable<EstadoReservacion> GetAll() => repository.GetAll();
     }
 }

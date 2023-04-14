@@ -76,21 +76,6 @@ namespace Web.Controllers
             return View();
         }
 
-        // POST: Propiedad/Create
-        [HttpPost]
-        public ActionResult Create (FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
 
         // GET: Propiedad/Edit/5
@@ -191,27 +176,8 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Propiedad/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: Propiedad/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
         public SelectList listaUsuarios(int? id = 0)
         {
             IServiceUsuario _ServiceUsuario = new ServiceUsuario();

@@ -22,10 +22,8 @@ namespace Web.Controllers
     {
 
         [CustomAuthorize((int)Roles.Admin)]
-        public ActionResult IndexAdmin()
-        {
-            return View();
-        }
+        public ActionResult IndexAdmin() => View();
+        
 
         [CustomAuthorize((int)Roles.Residente)]
         public ActionResult IndexUsuario()
@@ -38,19 +36,10 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        public ActionResult About() => View();
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        public ActionResult Contact() => View();
+        
 
         public ActionResult Logout()
         {

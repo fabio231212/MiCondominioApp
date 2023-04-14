@@ -10,35 +10,21 @@ namespace ApplicationCore.Services
 {
     public class ServiceIncidencias : IServiceIncidencias
     {
-
-        public int ActualizarEstadoIncidencia(int id, int estado)
+        private IRepositoryIncidencias repository;
+        public ServiceIncidencias()
         {
-            IRepositoryIncidencias repository = new RepositoryIncidencias();
-            return repository.ActualizarEstadoIncidencia(id, estado);
+            repository = new RepositoryIncidencias();
         }
 
-        public IEnumerable<Incidencias> GetAll()
-        {
-            IRepositoryIncidencias repository = new RepositoryIncidencias();
-            return repository.GetAll();
-        }
+        public int ActualizarEstadoIncidencia(int id, int estado) => repository.ActualizarEstadoIncidencia(id, estado);
+        
 
-        public IEnumerable<Incidencias> GetByIdEstado(int idEstado)
-        {
-            IRepositoryIncidencias repository = new RepositoryIncidencias();
-            return repository.GetByIdEstado(idEstado);
-        }
+        public IEnumerable<Incidencias> GetAll() => repository.GetAll();
 
-        public IEnumerable<Incidencias> GetByIdUser(int idUser)
-        {
-            IRepositoryIncidencias repository = new RepositoryIncidencias();
-            return repository.GetByIdUser(idUser);
-        }
+        public IEnumerable<Incidencias> GetByIdEstado(int idEstado) => repository.GetByIdEstado(idEstado);
 
-        public int RegistrarIncidencia(Incidencias oIncidencia)
-        {
-            IRepositoryIncidencias repository = new RepositoryIncidencias();
-            return repository.RegistrarIncidencia(oIncidencia);
-        }
+        public IEnumerable<Incidencias> GetByIdUser(int idUser) => repository.GetByIdUser(idUser);
+
+        public int RegistrarIncidencia(Incidencias oIncidencia) => repository.RegistrarIncidencia(oIncidencia);
     }
 }

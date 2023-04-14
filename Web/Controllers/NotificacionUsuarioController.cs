@@ -14,10 +14,8 @@ namespace Web.Controllers
     public class NotificacionUsuarioController : Controller
     {
         // GET: NotificacionUsuario
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
+        
         public PartialViewResult marcarLeido(int idNotificacion, int idUsuario)
         {
   

@@ -11,9 +11,14 @@ namespace ApplicationCore.Services
 {
     public class ServiceAutentificacion : IServiceAutentificacion
     {
+        private IRepositoryAutentificacion repository;
+        public ServiceAutentificacion()
+        {
+            repository = new RepositoryAutentificacion();
+        }
+
         public Usuario Login(string email, string clave)
         {
-            IRepositoryAutentificacion repository = new RepositoryAutentificacion();
             clave = Utilitarios.ConvertirSha256(clave);
             return repository.Login(email, clave);
         }

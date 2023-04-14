@@ -36,33 +36,13 @@ namespace Web.Controllers
         }
 
         // GET: RubroCobro/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        public ActionResult Details(int id) => View();
+        
 
         // GET: RubroCobro/Create
         [CustomAuthorize((int)Roles.Admin)]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: RubroCobro/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        public ActionResult Create() => View();
+        
 
         // GET: RubroCobro/Edit/5
         [CustomAuthorize((int)Roles.Admin)]
@@ -149,20 +129,5 @@ namespace Web.Controllers
             return View();
         }
 
-        // POST: RubroCobro/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

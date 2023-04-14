@@ -11,22 +11,18 @@ namespace ApplicationCore.Services
 {
     public class ServiceHomeInfo : IServiceHomeInfo
     {
-        public int cantidadIncidencias()
+        private IRepositoryHomeInfo repository;
+        public ServiceHomeInfo()
         {
-            IRepositoryHomeInfo repository = new RepositoryHomeInfo();
-            return repository.cantidadIncidencias();
+            repository = new RepositoryHomeInfo();
         }
 
-        public IEnumerable<DeudasVigentesDTO> GetCantFacPendientes(IEnumerable<Factura> facturas)
-        {
-            IRepositoryHomeInfo repository = new RepositoryHomeInfo();
-            return repository.GetCantFacPendientes(facturas);
-        }
+        public int cantidadIncidencias() => repository.cantidadIncidencias();
+        
 
-        public IEnumerable<TotalesPorMesDTO> GetTotalFacturaPorMes(IEnumerable<Factura> facturas)
-        {
-            IRepositoryHomeInfo repository = new RepositoryHomeInfo();
-            return  repository.GetTotalFacturaPorMes(facturas);
-        }
+        public IEnumerable<DeudasVigentesDTO> GetCantFacPendientes(IEnumerable<Factura> facturas) => repository.GetCantFacPendientes(facturas);
+        
+
+        public IEnumerable<TotalesPorMesDTO> GetTotalFacturaPorMes(IEnumerable<Factura> facturas) => repository.GetTotalFacturaPorMes(facturas);
     }
 }

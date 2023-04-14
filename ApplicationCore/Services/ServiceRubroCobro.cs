@@ -11,35 +11,27 @@ namespace ApplicationCore.Services
 {
     public class ServiceRubroCobro : IServiceRubroCobro
     {
-
-        public void Delete(int cedula)
+        private IRepositoryRubroCobro repository;
+        public ServiceRubroCobro()
         {
-            IRepositoryRubroCobro _RepositoryRubroCobro = new RepositoryRubroCobro();
-            _RepositoryRubroCobro.Delete(cedula);
+            repository = new RepositoryRubroCobro();
         }
+        public void Delete(int cedula) => repository.Delete(cedula);
+        
 
-        public IEnumerable<RubroCobro> GetAll()
-        {
-            IRepositoryRubroCobro _RepositoryRubroCobro = new RepositoryRubroCobro();
-            return _RepositoryRubroCobro.GetAll();
-        }
+        public IEnumerable<RubroCobro> GetAll() => repository.GetAll();
 
-        public RubroCobro GetRubroById(int id)
-        {
-            IRepositoryRubroCobro _RepositoryRubroCobro = new RepositoryRubroCobro();
-            return _RepositoryRubroCobro.GetRubroById(id);
-        }
+        public RubroCobro GetRubroById(int id) => repository.GetRubroById(id);
 
         public void SaveOrUpdate(RubroCobro rubro)
-        {
-            IRepositoryRubroCobro _RepositoryRubroCobro = new RepositoryRubroCobro();
+        { 
             if (GetRubroById(rubro.Id) == null)
             {
-                _RepositoryRubroCobro.Save(rubro);
+                repository.Save(rubro);
             }
             else
             {
-                _RepositoryRubroCobro.Update(rubro);
+                repository.Update(rubro);
             }
         }
     }

@@ -15,15 +15,12 @@ namespace Web.Controllers
     public class InformacionController : Controller
     {
         // GET: Informacion
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
+
+
         [CustomAuthorize((int)Roles.Admin)]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() =>  View();
+        
         [HttpPost]
         public ActionResult Save(Informacion oInformacion)
         {

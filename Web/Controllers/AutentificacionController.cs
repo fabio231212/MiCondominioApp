@@ -14,10 +14,8 @@ namespace Web.Controllers
     public class AutentificacionController : Controller
     {
         // GET: Autentificacion
-        public ActionResult Login()
-        {
-            return View();
-        }
+        public ActionResult Login() => View();
+        
 
         [HttpPost]
         public ActionResult Login(Usuario oUsuario)

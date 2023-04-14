@@ -10,22 +10,18 @@ namespace ApplicationCore.Services
 {
     public class ServiceArchivo : IServiceArchivo
     {
-        public Archivo Get(int id)
+        private IRepositoryArchivo repository;
+        public ServiceArchivo()
         {
-            IRepositoryArchivo repository = new RepositoryArchivo();
-            return repository.Get(id);
+            repository = new RepositoryArchivo();
         }
 
-        public IEnumerable<Archivo> GetAll()
-        {
-            IRepositoryArchivo repository = new RepositoryArchivo();
-            return repository.GetAll();
-        }
+        public Archivo Get(int id) => repository.Get(id);
+        
 
-        public void Save(Archivo archivo)
-        {
-            IRepositoryArchivo repository = new RepositoryArchivo();
-            repository.Save(archivo);
-        }
+        public IEnumerable<Archivo> GetAll() => repository.GetAll();
+
+        public void Save(Archivo archivo) => repository.Save(archivo);
+        
     }
 }

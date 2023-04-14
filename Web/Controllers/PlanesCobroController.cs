@@ -129,8 +129,6 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Save(PlanCobro plan, string[] rubrosSeleccionados)
         {
-
-            //Servicio Libro
             IServicePlanCobro _ServicePlan = new ServicePlanCobro();
             try
             {
@@ -168,26 +166,6 @@ namespace Web.Controllers
             }
         }
 
-        // GET: PlanesCobro/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: PlanesCobro/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
