@@ -10,18 +10,20 @@ namespace Web.Controllers
 {
     public class ArchivoController : Controller
     {
+        private readonly IServiceArchivo _Service;
+
+        public ArchivoController() => _Service = new ServiceArchivo();
+
         // GET: Archivo
         public ActionResult Index()
         {
-            IServiceArchivo _Service = new ServiceArchivo();
             IEnumerable<Archivo> lista = _Service.GetAll();
             return View(lista);
         }
 
         [HttpPost]
         public ActionResult CargarPDF(HttpPostedFileBase archivo)
-        {
-            IServiceArchivo _Service = new ServiceArchivo();
+        { 
             if (archivo != null && archivo.ContentLength > 0)
             {
                 //Leer archivo PDF desde el stream y guardarlo en una variable
@@ -40,7 +42,6 @@ namespace Web.Controllers
         public ActionResult DescargarPDF(int id)
         {
             //Seleccionar la entidad ArchivoPDF correspondiente al ID de la solicitud
-            IServiceArchivo _Service = new ServiceArchivo();
             Archivo oArchivo = _Service.Get(id);
 
             if (oArchivo == null)

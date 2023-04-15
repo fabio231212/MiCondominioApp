@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Permisos;
 using Web.Utils;
 
@@ -13,6 +14,10 @@ namespace Web.Controllers
 {
     public class RubroCobroController : Controller
     {
+        private readonly IServiceRubroCobro _Service;
+
+        public RubroCobroController() => _Service = new ServiceRubroCobro();
+
         [CustomAuthorize((int)Roles.Admin)]
         // GET: RubroCobro
         public ActionResult Index()
@@ -20,8 +25,7 @@ namespace Web.Controllers
             IEnumerable<RubroCobro> lista = null;
             try
             {
-                IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
-                lista = _ServiceRubro.GetAll();
+                lista = _Service.GetAll();
                 ViewBag.Title = "Lista Rubros";
                 return View(lista);
             }
@@ -48,7 +52,6 @@ namespace Web.Controllers
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
-            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             RubroCobro oRubro = null;
 
             try
@@ -59,7 +62,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
 
-                oRubro = _ServiceRubro.GetRubroById(Convert.ToInt32(id));
+                oRubro = _Service.GetRubroById(Convert.ToInt32(id));
 
                 if (oRubro == null)
                 {
@@ -87,14 +90,14 @@ namespace Web.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(RubroCobro rubro)
         {
-            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _ServiceRubro.SaveOrUpdate(rubro);
+                    _Service.SaveOrUpdate(rubro);
 
                 }
                 else
@@ -123,11 +126,6 @@ namespace Web.Controllers
             }
         }
 
-        // GET: RubroCobro/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
     }
 }

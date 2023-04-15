@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Permisos;
 using Web.Utils;
 
@@ -16,6 +17,10 @@ namespace Web.Controllers
     [Authorize]
     public class PlanesCobroController : Controller
     {
+        private readonly IServicePlanCobro _Service;
+
+        public PlanesCobroController() => _Service = new ServicePlanCobro();
+
         // GET: PlanesCobro
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Index()
@@ -23,7 +28,6 @@ namespace Web.Controllers
             IEnumerable<PlanCobro> lista = null;
             try
             {
-                IServicePlanCobro _Service = new ServicePlanCobro();
                 lista = _Service.GetAll();
             }
             catch (Exception ex)
@@ -43,7 +47,6 @@ namespace Web.Controllers
             PlanCobro oPlan = null;
             try
             {
-                IServicePlanCobro _Service = new ServicePlanCobro();
                 oPlan = _Service.GetById(id);
             }
             catch (Exception ex)
@@ -89,7 +92,6 @@ namespace Web.Controllers
         // GET: PlanesCobro/Edit/5
         public ActionResult Edit(int? id)
         {
-            IServicePlanCobro _ServicePlan = new ServicePlanCobro();
             PlanCobro plan = null;
 
             try
@@ -100,7 +102,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
 
-                plan = _ServicePlan.GetById(Convert.ToInt32(id));
+                plan = _Service.GetById(Convert.ToInt32(id));
                 if (plan == null)
                 {
                     TempData["Message"] = "No existe el plan solicitado";
@@ -127,15 +129,15 @@ namespace Web.Controllers
 
         // POST: PlanesCobro/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(PlanCobro plan, string[] rubrosSeleccionados)
         {
-            IServicePlanCobro _ServicePlan = new ServicePlanCobro();
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                 _ServicePlan.SaveOrUpdate(plan, rubrosSeleccionados);
+                 _Service.SaveOrUpdate(plan, rubrosSeleccionados);
                 }
                 else
                 {

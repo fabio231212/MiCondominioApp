@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Permisos;
 using Web.Utils;
 
@@ -14,6 +15,10 @@ namespace Web.Controllers
 {
     public class ReservacionController : Controller
     {
+        private readonly IServiceReservacion _Service;
+
+        public ReservacionController() => _Service = new ServiceReservacion();
+
         // GET: Reservacion
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult IndexAdmin(int? estado)
@@ -21,7 +26,6 @@ namespace Web.Controllers
             try
             {
 
-                IServiceReservacion _Service = new ServiceReservacion();
                 IEnumerable<Reservacion> lista = null;
                 if (estado != null)
                 {
@@ -54,7 +58,6 @@ namespace Web.Controllers
             {
 
                 Usuario usuario = (Usuario)Session["Usuario"];
-                IServiceReservacion _Service = new ServiceReservacion();
                 ViewBag.listaAreas = listaAreas();
                 ViewBag.listaReservacion = _Service.GetAllByIdUsuario(usuario.Id);
                 return View();
@@ -70,9 +73,9 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Reservacion oReservacion)
         {
-            IServiceReservacion _Service = new ServiceReservacion();
             try
             {
                 Usuario usuario = (Usuario)Session["Usuario"];
@@ -83,10 +86,8 @@ namespace Web.Controllers
                     if (_Service.Save(oReservacion) > 0)
                     {
                         ViewBag.listaReservacion = _Service.GetAllByIdUsuario(usuario.Id);
+                        TempData["creada"] = true;
                         return RedirectToAction("IndexUsuario");
-                    }
-                    else
-                    {
                     }
 
                 }
@@ -124,9 +125,6 @@ namespace Web.Controllers
         {
             try
             {
-
-
-                IServiceReservacion _Service = new ServiceReservacion();
                 bool existeHorario = _Service.ValidarHorario(fechaEntrada, fechaSalida,idAreaComunal);
                 return Json(new { existeHorario = existeHorario }, JsonRequestBehavior.AllowGet);
             }
@@ -169,7 +167,6 @@ namespace Web.Controllers
             try
             {
                 Usuario usuario = (Usuario)Session["Usuario"];
-                IServiceReservacion _Service = new ServiceReservacion();
                 IServiceNotificacionUsuario _ServiceNotificaion = new ServiceNotificacionUsuario();
                 IEnumerable<Reservacion> lista = null;
                 _Service.CambiarEstado(id, nota,idEstado);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Permisos;
 using Web.Utils;
 
@@ -14,6 +15,10 @@ namespace Web.Controllers
 {
     public class InformacionController : Controller
     {
+        private readonly IServiceInformacion _Service;
+
+        public InformacionController() => _Service = new ServiceInformacion();
+
         // GET: Informacion
         public ActionResult Index() => View();
 
@@ -22,10 +27,9 @@ namespace Web.Controllers
         public ActionResult Create() =>  View();
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Informacion oInformacion)
-        {
-          
-                IServiceInformacion _Service = new ServiceInformacion();
+        {         
                 try
                 {
                     if (ModelState.IsValid)
@@ -62,7 +66,6 @@ namespace Web.Controllers
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
-            IServiceInformacion _Service = new ServiceInformacion();
             Informacion oInformacion = null;
 
             try

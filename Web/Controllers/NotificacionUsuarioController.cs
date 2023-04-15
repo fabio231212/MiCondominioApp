@@ -7,23 +7,24 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Utils;
 
 namespace Web.Controllers
 {
     public class NotificacionUsuarioController : Controller
     {
+        private readonly IServiceNotificacionUsuario _Service;
+
+        public NotificacionUsuarioController() => _Service = new ServiceNotificacionUsuario();
+
         // GET: NotificacionUsuario
         public ActionResult Index() => View();
         
         public PartialViewResult marcarLeido(int idNotificacion, int idUsuario)
-        {
-  
-
-            
-            IServiceNotificacionUsuario serviceNotificacionUsuario = new ServiceNotificacionUsuario();
-            NotificacionUsuario oNotificacion = serviceNotificacionUsuario.MarcarLeido(idNotificacion);
-            IEnumerable<NotificacionUsuario> listaNotificaciones = serviceNotificacionUsuario.GetNotificacionByIdUser(idUsuario);
+        {    
+            NotificacionUsuario oNotificacion = _Service.MarcarLeido(idNotificacion);
+            IEnumerable<NotificacionUsuario> listaNotificaciones = _Service.GetNotificacionByIdUser(idUsuario);
             Session["Notificaciones"] = listaNotificaciones;
             return PartialView("_Notificaciones", listaNotificaciones);
         }
@@ -35,11 +36,10 @@ namespace Web.Controllers
             {
 
             NotificacionUsuario oNotificacionUsuario = new NotificacionUsuario { IdNotificacion= (int)idNotificacion,IdUsuario=idUsuario,Leida=false }; 
-            IServiceNotificacionUsuario serviceNotificacionUsuario = new ServiceNotificacionUsuario();
 
             if (ModelState.IsValid)
             {
-                serviceNotificacionUsuario.SaveNotificacionUsuario(oNotificacionUsuario);
+                _Service.SaveNotificacionUsuario(oNotificacionUsuario);
             }
             }
             catch (Exception ex)

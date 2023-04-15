@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using System.Web.UI.WebControls;
 using Web.Permisos;
 using Web.Utils;
@@ -20,6 +21,10 @@ namespace Web.Controllers
     [Authorize]
     public class PropiedadController : Controller
     {
+        private readonly IServicePropiedad _Service;
+
+        public PropiedadController()=> _Service = new ServicePropiedad();
+
         // GET: Propiedad
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Index()
@@ -27,8 +32,7 @@ namespace Web.Controllers
             IEnumerable<Propiedad> lista = null;
             try
             {
-                IServicePropiedad _ServicePropiedad = new ServicePropiedad();
-                lista = _ServicePropiedad.GetAll();
+                lista = _Service.GetAll();
                 ViewBag.Title = "Lista Propiedad";
                 return View(lista);
             }
@@ -49,8 +53,7 @@ namespace Web.Controllers
             Propiedad oPropiedad = null;
             try
             {
-                IServicePropiedad _ServicePropiedad = new ServicePropiedad();
-                oPropiedad = _ServicePropiedad.GetPropiedadByNumProp(id.Trim());
+                oPropiedad = _Service.GetPropiedadByNumProp(id.Trim());
                 return View(oPropiedad);
 
             }
@@ -82,7 +85,6 @@ namespace Web.Controllers
            [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
-            IServicePropiedad _ServicePropiedad = new ServicePropiedad();
             Propiedad oPropiedad = null;
 
             try
@@ -93,7 +95,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
 
-                oPropiedad = _ServicePropiedad.GetPropiedadById(Convert.ToInt32(id));
+                oPropiedad = _Service.GetPropiedadById(Convert.ToInt32(id));
 
                 if (oPropiedad == null)
                 {
@@ -125,16 +127,16 @@ namespace Web.Controllers
 
         // POST: Propiedad/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Propiedad propiedad)
         {
             try
             {
-                IServicePropiedad _ServicePropiedad = new ServicePropiedad();
                 try
                 {
                     if (ModelState.IsValid)
                     {
-                       _ServicePropiedad.SaveOrUpdate(propiedad);
+                       _Service.SaveOrUpdate(propiedad);
 
                     }
                     else

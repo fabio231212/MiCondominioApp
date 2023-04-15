@@ -18,6 +18,9 @@ namespace Web.Controllers
     //[Authorize]
     public class EstadoCuentaController : Controller
     {
+        private readonly IServiceEstadoCuenta _Service;
+
+        public EstadoCuentaController() => _Service = new ServiceEstadoCuenta();
 
         [CustomAuthorize((int)Roles.Admin)]
 
@@ -27,8 +30,6 @@ namespace Web.Controllers
 
             try
             {
-
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 IEnumerable<Factura> lista = null;
 
                 if (active.HasValue)
@@ -59,7 +60,6 @@ namespace Web.Controllers
             IEnumerable<Factura> lista = null;
             try
             {
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 lista = _Service.GetEstadoCuentaPendiente();
                 return View(lista);
             }
@@ -78,7 +78,6 @@ namespace Web.Controllers
             Factura oFactura = null;
             try
             {
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 oFactura = _Service.GetDetalleEstadoCuenta(idEstadoCuenta);
                 return View(oFactura);
             }
@@ -95,7 +94,7 @@ namespace Web.Controllers
         {
             ViewBag.idPropiedad = listaPropiedades();
             ViewBag.idPlanCobro = listaPlanCobro();
-            ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
+            ViewBag.listaFacturasXMes = _Service.GetFacturasByFecha();
             return View();
     }
 
@@ -105,6 +104,7 @@ namespace Web.Controllers
 
         // POST: EstadoCuenta/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Factura factura)
         {
             try
