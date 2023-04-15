@@ -58,6 +58,7 @@ namespace Infraestructure.Models
     internal partial class PropiedadMetadata
     {
 
+        [UIHint("Fecha")]
         [Required(ErrorMessage = "Dato requerido")]
         [Display(Name = "Fecha de Inicio")]
         public Nullable<System.DateTime> FechaInicio { get; set; }
