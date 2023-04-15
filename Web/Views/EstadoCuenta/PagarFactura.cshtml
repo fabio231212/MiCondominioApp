@@ -140,38 +140,43 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="form-row justify-content-center align-items-center">
 
-                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                <div class="form-group col-12 col-sm-4">
                                     <label>Card Number</label>
                                     <div class="input-group mb-3">
-                                        <input class="number" type="text" ng-model="ncard" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+
+                                        <input id="cardNumber" class="number form-control" type="text" ng-model="ncard" maxlength="19" />
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                <div class="form-group col-12 col-sm-4">
                                     <label>Cardholder name</label>
                                     <div class="input-group mb-3">
-                                        <input class="inputname" type="text" placeholder="" />
+                                        <input class="inputname form-control" type="text" placeholder="" />
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                            </div>
+                            <div class="form-row justify-content-center align-items-center">
+                                <div class="form-group col-12 col-sm-4">
                                     <label>Expiry date</label>
                                     <div class="input-group mb-3">
-                                        <input class="expire" type="text" placeholder="MM / YYYY" />
+                                        <input class="expire form-control" type="text" placeholder="MM / YYYY" />
                                     </div>
                                 </div>
 
-                                <div class="form-group col-12 col-sm-6 col-lg-4">
+                                <div class="form-group col-12 col-sm-4">
                                     <label>Security Number</label>
                                     <div class="input-group mb-3">
-                                        <input class="ccv" type="text" placeholder="CVC" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                        <input class="ccv form-control" type="text" placeholder="CVC" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                                     </div>
                                 </div>
 
 
                             </div>
                         </div>
-                        <button class="btn btn-primary" onclick="stepper3.next()">Next</button>
+                        <div class="invoice-buttons text-right">
+                            <button id="btnSigCard" class="btn bg-siteColor text-white">Siguiente</button>
+                        </div>
                     </div>
                     <div id="test-nlf-3" role="tabpanel" class="bs-stepper-pane fade text-center dstepper-block dstepper-none" aria-labelledby="stepper3trigger3">
                         <button type="submit" class="btn btn-primary mt-5">Submit</button>
@@ -194,6 +199,52 @@
                     animation: true
                 })
 
+
+
+            $('#btnSigCard').on('click', function () {
+                var numTarjetaParsed = $("#cardNumber").val().trim();
+
+                $.ajax({
+                url: '@Url.Action("UpdateFactura","EstadoCuenta")',
+                    data: {
+                        idFactura: @Model.Id,
+                        numTarjeta: numTarjetaParsed.toString(),
+                    },
+                    type: 'POST',
+                    success: function (response) {
+                        if (response) {
+                            $.LoadingOverlay("hide");
+                            stepper3.next();
+                        }
+
+
+                },
+                //Lo que se hace mientras se esté enviando
+                beforeSend: function () {
+                    //Muestra el loading
+                    $.LoadingOverlay("show", {
+                        image: "",
+                        fontawesome: "fa fa-cog fa-spin",
+                    });
+                },
+            });
+
+
+            });
+
         });
+
+
+
+
+        $(document).ready(function () {
+            $('#cardNumber').on('keypress', function () {
+                return event.charCode >= 48 && event.charCode <= 57;
+            });
+
+            $('#cardNumber').mask('0000 0000 0000 0000');
+        });
+
+
     </script>
 }

@@ -27,7 +27,7 @@ namespace Web
 
             bundles.Add(new Bundle("~/bundles/complementos").Include("~/Scripts/js/vendor/modernizr-2.8.3.min.js", "~/Scripts/js/bar-chart.js", "~/Scripts/js/jquery.slicknav.min.js",
                 "~/Scripts/js/jquery.slimscroll.min.js", "~/Scripts/js/line-chart.js", "~/Scripts/js/metisMenu.min.js", "~/Scripts/js/owl.carousel.min.js", "~/Scripts/js/pie-chart.js", "~/Scripts/js/plugins.js",
-                "~/Scripts/js/scripts.js", "~/Scripts/dataTable/responsive.dataTables.min.js", "~/Scripts/dataTable/jquery.dataTables.min.js", "~/Scripts/moment.min.js", "~/Scripts/jquery.datetimepicker.full.js", "~/Scripts/bs-stepper.min.js"));
+                "~/Scripts/js/scripts.js", "~/Scripts/dataTable/responsive.dataTables.min.js", "~/Scripts/dataTable/jquery.dataTables.min.js", "~/Scripts/moment.min.js", "~/Scripts/jquery.datetimepicker.full.js", "~/Scripts/bs-stepper.min.js", "~/Scripts/jquery.mask.min.js", "~/Scripts/loadingoverlay.js"));
 
             bundles.Add(new Bundle("~/bundles/jqueryUI").Include("~/Scripts/jqueryUI/jquery-ui.min.js"));
 

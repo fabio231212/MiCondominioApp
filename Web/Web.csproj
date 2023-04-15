@@ -232,7 +232,7 @@
     <Content Include="Scripts\jquery-3.6.3.slim.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.min.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.js" />
-    <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jqueryUI\jquery-ui.min.js" />
     <Content Include="Scripts\js\bar-chart.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
@@ -248,6 +248,7 @@
     <Content Include="Scripts\js\scripts.js" />
     <Content Include="Scripts\js\vendor\jquery-2.2.4.min.js" />
     <Content Include="Scripts\js\vendor\modernizr-2.8.3.min.js" />
+    <Content Include="Scripts\loadingoverlay.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
