@@ -13,7 +13,7 @@ namespace Infraestructure.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(Propiedad))]
+    [MetadataType(typeof(PropiedadMetadata))]
     public partial class Propiedad
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -30,7 +30,6 @@ namespace Infraestructure.Models
         public Nullable<int> FK_EstadoPropiedad { get; set; }
         public Nullable<int> FK_PlanCobro { get; set; }
 
-        [UIHint("Fecha")]
         public Nullable<System.DateTime> FechaInicio { get; set; }
     
         public virtual EstadoPropiedad EstadoPropiedad { get; set; }
