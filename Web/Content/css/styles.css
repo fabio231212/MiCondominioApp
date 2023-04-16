@@ -2726,7 +2726,7 @@ table.dataTable thead td {
     padding-bottom: 15px;
 }
 .bg-siteColor {
-    background-color: #5eb548;
+    background-color: #5eb548 !important;
 }
 
 .offset-menu-tab li a.active {

@@ -27,9 +27,15 @@ namespace ApplicationCore.Services
 
         public IEnumerable<Factura> GetEstadoCuentaPendiente() => repository.GetEstadoCuentaPendiente();
 
+
+
+        public Factura GetOldestFactura(int idUsuario)
+        {
+            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
+            return repository.GetOldestFactura(idUsuario);
+        }
         public void Create(Factura factura) =>repository.Create(factura);
         
-
         public IEnumerable<Factura> GetFacturasByFecha() => repository.GetFacturasByFecha();
     }
 }

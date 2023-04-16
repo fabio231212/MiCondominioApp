@@ -153,6 +153,7 @@
     <Compile Include="Utils\SweetAlertHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bs-stepper.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\default-css.css" />
     <Content Include="Content\css\metisMenu.css" />
@@ -216,6 +217,7 @@
     <Content Include="Content\jqueryUI\jquery-ui.min.css" />
     <Content Include="Content\jqueryUI\jquery-ui.structure.min.css" />
     <Content Include="Content\jqueryUI\jquery-ui.theme.min.css" />
+    <Content Include="Content\payment.css" />
     <Content Include="Content\Select\sumoselect.css" />
     <Content Include="Content\tableData.css" />
     <Content Include="favicon.ico" />
@@ -223,12 +225,14 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\dataTable\jquery.dataTables.min.js" />
     <Content Include="Scripts\dataTable\responsive.dataTables.min.js" />
+    <Content Include="Scripts\bs-stepper.min.js" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.min.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jqueryUI\jquery-ui.min.js" />
     <Content Include="Scripts\js\bar-chart.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
@@ -237,12 +241,14 @@
     <Content Include="Scripts\js\line-chart.js" />
     <Content Include="Scripts\js\metisMenu.min.js" />
     <Content Include="Scripts\js\owl.carousel.min.js" />
+    <Content Include="Scripts\js\payment.js" />
     <Content Include="Scripts\js\pie-chart.js" />
     <Content Include="Scripts\js\plugins.js" />
     <Content Include="Scripts\js\popper.min.js" />
     <Content Include="Scripts\js\scripts.js" />
     <Content Include="Scripts\js\vendor\jquery-2.2.4.min.js" />
     <Content Include="Scripts\js\vendor\modernizr-2.8.3.min.js" />
+    <Content Include="Scripts\loadingoverlay.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -284,6 +290,7 @@
     <Content Include="Views\Autentificacion\Login.cshtml" />
     <Content Include="Views\Autentificacion\UnAuthorized.cshtml" />
     <Content Include="Views\EstadoCuenta\Create.cshtml" />
+    <Content Include="Views\EstadoCuenta\PagarFactura.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Fecha.cshtml" />
   </ItemGroup>
   <ItemGroup>

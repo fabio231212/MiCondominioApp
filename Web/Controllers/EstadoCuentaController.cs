@@ -186,6 +186,42 @@ namespace Web.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public ActionResult UpdateFactura(int idFactura,string numTarjeta)
+        {
+            Factura oFactura = null;
+            Usuario oUsuario = null;
+            try
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+
+        public ActionResult PagarFactura()
+        {
+            Factura oFactura = null;
+            Usuario oUsuario = null;
+            try
+            {
+                oUsuario = Session["usuario"] as Usuario;
+                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
+                oFactura = _Service.GetOldestFactura(oUsuario.Id);
+                return View(oFactura);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+        }
 
 
 
