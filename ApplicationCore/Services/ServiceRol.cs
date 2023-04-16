@@ -10,10 +10,12 @@ namespace ApplicationCore.Services
 {
     public class ServiceRol : IServiceRol
     {
-        public IEnumerable<Rol> GetAll()
+        private IRepositoryRol repository;
+        public ServiceRol()
         {
-            IRepositoryRol _RepositoryRol = new RepositoryRol();
-            return _RepositoryRol.GetAll();
+            repository = new RepositoryRol();
         }
+        public IEnumerable<Rol> GetAll() => repository.GetAll();
+        
     }
 }

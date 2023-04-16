@@ -10,22 +10,17 @@ namespace ApplicationCore.Services
 {
     public class ServiceInformacion : IServiceInformacion
     {
-        public void Create(Informacion oInformacion)
+        private IRepositoryInformacion repository;
+        public ServiceInformacion()
         {
-            IRepositoryInformacion repository = new RepositoryInformacion();
-            repository.Create(oInformacion);
+            repository = new RepositoryInformacion();
         }
+        public void Create(Informacion oInformacion) => repository.Create(oInformacion);
+        
 
-        public IEnumerable<Informacion> GetAll()
-        {
-            IRepositoryInformacion repository = new RepositoryInformacion();
-            return repository.GetAll();
-        }
+        public IEnumerable<Informacion> GetAll() => repository.GetAll();
+        
 
-        public Informacion GetById(int id)
-        {
-            IRepositoryInformacion repository = new RepositoryInformacion();
-            return repository.GetById(id);
-        }
+        public Informacion GetById(int id) => repository.GetById(id);
     }
 }

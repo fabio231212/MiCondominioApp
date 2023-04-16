@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Permisos;
 using Web.Utils;
 
@@ -15,6 +16,10 @@ namespace Web.Controllers
 {
     public class IncidenciaController : Controller
     {
+        private readonly IServiceIncidencias _Service;
+
+        public IncidenciaController() => _Service = new ServiceIncidencias();
+
 
         [CustomAuthorize((int)Roles.Admin)]
         // GET: Incidencia
@@ -22,8 +27,6 @@ namespace Web.Controllers
         {
             try
             {
-
-                IServiceIncidencias _Service = new ServiceIncidencias();
                 IEnumerable<Incidencias> lista = null;
                 if (EstadoIncidencia != null)
                 {
@@ -55,7 +58,6 @@ namespace Web.Controllers
             {
 
                 Usuario usuario = (Usuario)Session["Usuario"];
-                IServiceIncidencias _Service = new ServiceIncidencias();
                 IEnumerable<Incidencias> lista = _Service.GetByIdUser(usuario.Id);
                 ViewBag.listaIncidencias = lista;
                 return View();
@@ -76,7 +78,6 @@ namespace Web.Controllers
         {
             try
             {
-                IServiceIncidencias _Service = new ServiceIncidencias();
                 IEnumerable<Incidencias> lista = null;
                 if (_Service.ActualizarEstadoIncidencia(id, int.Parse(estado)) >= 0)
                 {
@@ -97,10 +98,9 @@ namespace Web.Controllers
         }
 
 
-
+        [ValidateAntiForgeryToken]
         public ActionResult CrearIncidencia(Incidencias oIncidencias)
         {
-            IServiceIncidencias _Service = new ServiceIncidencias();
             Usuario usuario = (Usuario)Session["Usuario"];
             try
             {

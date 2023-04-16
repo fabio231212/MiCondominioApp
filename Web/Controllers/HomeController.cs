@@ -17,40 +17,39 @@ namespace Web.Controllers
     [Authorize]
 
     public class HomeController : Controller
-
-
     {
 
-        [CustomAuthorize((int)Roles.Admin)]
-        public ActionResult IndexAdmin()
+        private readonly IServiceInformacion _ServiceInfo;
+        private readonly IServiceArchivo _ServiceArchivo;
+        private readonly IServiceEstadoCuenta _ServiceEstadoCuenta;
+        private readonly IServiceHomeInfo _ServiceHomeInfo;
+
+        public HomeController()
         {
-            return View();
+            _ServiceArchivo= new ServiceArchivo();
+            _ServiceEstadoCuenta= new ServiceEstadoCuenta();
+            _ServiceInfo = new ServiceInformacion();
+            _ServiceHomeInfo = new ServiceHomeInfo();
         }
+
+
+        [CustomAuthorize((int)Roles.Admin)]
+        public ActionResult IndexAdmin() => View();
+        
 
         [CustomAuthorize((int)Roles.Residente)]
         public ActionResult IndexUsuario()
         {
-            IServiceInformacion _ServiceInfo = new ServiceInformacion();
             ViewBag.listaInformacion = _ServiceInfo.GetAll();
-            IServiceArchivo _ServiceArchivo = new ServiceArchivo();
             ViewBag.listaArchivos =  _ServiceArchivo.GetAll();
 
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        public ActionResult About() => View();
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        public ActionResult Contact() => View();
+        
 
         public ActionResult Logout()
         {
@@ -64,11 +63,9 @@ namespace Web.Controllers
             double totalGanancias = 0;
             int cantDeudas = 0;
             int cantIncidencias = 0;
-            IServiceHomeInfo serviceHomeInfo = new ServiceHomeInfo();
-            IServiceEstadoCuenta serviceEstadoCuenta = new ServiceEstadoCuenta();
-            IEnumerable<TotalesPorMesDTO> listaTotalesFactura = serviceHomeInfo.GetTotalFacturaPorMes(serviceEstadoCuenta.GetAll());
-            IEnumerable<DeudasVigentesDTO> listaDeudas = serviceHomeInfo.GetCantFacPendientes(serviceEstadoCuenta.GetAll());
-            cantIncidencias = serviceHomeInfo.cantidadIncidencias();
+            IEnumerable<TotalesPorMesDTO> listaTotalesFactura = _ServiceHomeInfo.GetTotalFacturaPorMes(_ServiceEstadoCuenta.GetAll());
+            IEnumerable<DeudasVigentesDTO> listaDeudas = _ServiceHomeInfo.GetCantFacPendientes(_ServiceEstadoCuenta.GetAll());
+            cantIncidencias = _ServiceHomeInfo.cantidadIncidencias();
             totalGanancias = (double)listaTotalesFactura.Sum(f => f.Total);
             cantDeudas = listaDeudas.Sum(d => d.Cantidad);
 

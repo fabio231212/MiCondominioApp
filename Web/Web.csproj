@@ -291,6 +291,7 @@
     <Content Include="Views\Autentificacion\UnAuthorized.cshtml" />
     <Content Include="Views\EstadoCuenta\Create.cshtml" />
     <Content Include="Views\EstadoCuenta\PagarFactura.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Fecha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -121,18 +121,16 @@
         })
 
 
-        @*$(document).ready(function () {
-            var isSaved = @ViewBag.isSaved
-            if (isSaved) {
-                Swal.fire({
-                    position: 'center',
+       $(document).ready(function () {
+         var creada = '@TempData["creada"]';
+            if (creada == 'True') {
+                Toast.fire({
                     icon: 'success',
-                    title: 'Guardado Correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: 'Reservación creada correctamente'
                 })
             }
-        }*@
+        });
+
 
 
         //cada vez que cambia de area comunal
@@ -182,7 +180,7 @@
                             if (forecast.valid_date === fecha) {
                                 fechaData = forecast;
                                 return;
-                                
+
                             }
                         });
                         if (fechaData === null) {
@@ -204,7 +202,7 @@
                             cancelButtonColor: '#d33',
                             confirmButtonText: 'Continuar',
                             cancelButtonText: 'Cancelar',
-                            
+
                         }).then((result) => {
                             if (!result.isConfirmed) {
                                 $('#FechaEntrada').val("");
@@ -324,7 +322,7 @@
                     idAreaComunal : $("#lista").val()
                 },
                 success: function (response) {
-                    //Si existe horario que choque, muestra mensaje 
+                    //Si existe horario que choque, muestra mensaje
                     if (response.existeHorario) {
                         $('#FechaEntrada').val("");
                         $('#FechaSalida').val("");
@@ -339,6 +337,7 @@
                 }
 
             });
+
         })
 
 

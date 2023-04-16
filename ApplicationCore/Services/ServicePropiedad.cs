@@ -10,27 +10,22 @@ namespace ApplicationCore.Services
 {
     public class ServicePropiedad : IServicePropiedad
     {
-        public IEnumerable<Propiedad> GetAll()
+        private IRepositoryPropiedad repository;
+        public ServicePropiedad()
         {
-            IRepositoryPropiedad repository = new RepositoryPropiedad();
-            return repository.GetAll();
+            repository = new RepositoryPropiedad();
         }
+        public IEnumerable<Propiedad> GetAll() => repository.GetAll();
+        
 
-        public Propiedad GetPropiedadById(int id)
-        {
-            IRepositoryPropiedad repository = new RepositoryPropiedad();
-            return repository.GetPropiedadById(id);
-        }
+        public Propiedad GetPropiedadById(int id) => repository.GetPropiedadById(id);
+        
 
-        public Propiedad GetPropiedadByNumProp(string numPropiedad)
-        {
-            IRepositoryPropiedad repository = new RepositoryPropiedad();
-            return repository.GetPropiedadByNumProp(numPropiedad);
-        }
+        public Propiedad GetPropiedadByNumProp(string numPropiedad) => repository.GetPropiedadByNumProp(numPropiedad);
+        
 
         public void  SaveOrUpdate(Propiedad propiedad)
         {
-            IRepositoryPropiedad repository = new RepositoryPropiedad();
             if (repository.GetPropiedadById(propiedad.Id) == null)
             {
                 repository.Save(propiedad);

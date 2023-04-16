@@ -13,41 +13,33 @@ namespace ApplicationCore.Services
 {
     public class ServiceUsuario : IServiceUsuario
     {
-        public void Delete(int cedula)
+        private IRepositoryUsuario repository;
+        public ServiceUsuario()
         {
-            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            repositoryUsuario.Delete(cedula);
+            repository = new RepositoryUsuario();
         }
 
-        public IEnumerable<Usuario> GetAll()
-        {
-            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            return repositoryUsuario.GetAll();
-        }
+        public void Delete(int cedula) => repository.Delete(cedula);
+        
 
-        public Usuario GetUsuario(string email, string password)
-        {
-            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            return repositoryUsuario.GetUsuario(email, password);
-        }
+        public IEnumerable<Usuario> GetAll() => repository.GetAll();
+        
 
-        public Usuario GetUsuarioById(int cedula)
-        {
-            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
-            return repositoryUsuario.GetUsuarioById(cedula);
-        }
+        public Usuario GetUsuario(string email, string password) => repository.GetUsuario(email, password);
+        
+
+        public Usuario GetUsuarioById(int cedula) => repository.GetUsuarioById(cedula);
 
         public void SaveOrUpdate(Usuario usuario)
         {
             usuario.Clave = Utilitarios.ConvertirSha256(usuario.Clave);
-            IRepositoryUsuario repositoryUsuario = new RepositoryUsuario();
             if (GetUsuarioById(usuario.Cedula) == null)
             {
-                repositoryUsuario.Save(usuario);
+                repository.Save(usuario);
             }
             else
             {
-                repositoryUsuario.Update(usuario);
+                repository.Update(usuario);
             }
         }
 

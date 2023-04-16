@@ -7,17 +7,25 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Services.Description;
 using Web.Utils;
 
 namespace Web.Controllers
 {
     public class AutentificacionController : Controller
     {
-        // GET: Autentificacion
-        public ActionResult Login()
-        {
-            return View();
+        private readonly IServiceAutentificacion _ServiceAutentificacion;
+        private readonly IServiceNotificacionUsuario _ServiceNotificacion;
+
+        public AutentificacionController() {
+            _ServiceAutentificacion = new ServiceAutentificacion();
+            _ServiceNotificacion = new ServiceNotificacionUsuario();
         }
+
+
+        // GET: Autentificacion
+        public ActionResult Login() => View();
+        
 
         [HttpPost]
         public ActionResult Login(Usuario oUsuario)
@@ -26,8 +34,6 @@ namespace Web.Controllers
             try
             {
 
-                IServiceAutentificacion service = new ServiceAutentificacion();
-                IServiceNotificacionUsuario _ServiceNotificacionUsuario = new ServiceNotificacionUsuario();
 
                 ModelState.Remove("Nombre");
                 ModelState.Remove("Apellido1");
@@ -37,7 +43,7 @@ namespace Web.Controllers
                 ModelState.Remove("Activo");
                 if (ModelState.IsValid)
                 {
-                    oUsuario = service.Login(oUsuario.Email, oUsuario.Clave);
+                    oUsuario = _ServiceAutentificacion.Login(oUsuario.Email, oUsuario.Clave);
 
                     if (oUsuario != null)
                     {
@@ -46,7 +52,7 @@ namespace Web.Controllers
                             ViewData["Mensaje"] = "El usuario se encuentra inactivo";
                             return View();
                         }
-                        IEnumerable<NotificacionUsuario> listaNotificaciones = _ServiceNotificacionUsuario.GetNotificacionByIdUser(oUsuario.Id);
+                        IEnumerable<NotificacionUsuario> listaNotificaciones = _ServiceNotificacion.GetNotificacionByIdUser(oUsuario.Id);
                         if (listaNotificaciones != null)
                         {
                             Session["Notificaciones"] = listaNotificaciones;

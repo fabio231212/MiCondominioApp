@@ -16,39 +16,20 @@ namespace ApplicationCore.Services
             repository = new RepositoryReservacion();
         }
 
-        public void CambiarEstado(int id, string nota, int idEstado)
-        {
-            repository.CambiarEstado(id,nota,idEstado);
-        }
+        public void CambiarEstado(int id, string nota, int idEstado) => repository.CambiarEstado(id,nota,idEstado);
+        
 
-        public IEnumerable<Reservacion> GetAll()
-        {
-            return repository.GetAll();
-        }
+        public IEnumerable<Reservacion> GetAll() => repository.GetAll();
+        
 
-        public IEnumerable<Reservacion> GetByEstado(int estado)
-        {
-            return repository.GetByEstado(estado);
-        }
+        public IEnumerable<Reservacion> GetByEstado(int estado) => repository.GetByEstado(estado);
 
-        public IEnumerable<Reservacion> GetAllByIdUsuario(int id)
-        {
-            return repository.GetAllByIdUsuario(id);
-        }
+        public IEnumerable<Reservacion> GetAllByIdUsuario(int id) => repository.GetAllByIdUsuario(id);
 
-        public int Save(Reservacion reservacion)
-        {
-            return repository.Save(reservacion);
-        }
+        public int Save(Reservacion reservacion) => repository.Save(reservacion);
 
-        public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal)
-        {
-            return repository.ValidarHorario(fechaEntrada, fechaSalida,areaComunal);
-        }
+        public bool ValidarHorario(DateTime fechaEntrada, DateTime fechaSalida, int areaComunal) => repository.ValidarHorario(fechaEntrada, fechaSalida, areaComunal);
 
-        public Reservacion GetByIdReservacion(int id)
-        {
-            return repository.GetByIdReservacion(id);
-        }
+        public Reservacion GetByIdReservacion(int id) => repository.GetByIdReservacion(id);
     }
 }

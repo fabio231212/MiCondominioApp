@@ -10,10 +10,13 @@ namespace ApplicationCore.Services
 {
     public class ServiceEstadoPropiedad : IServiceEstados<EstadoPropiedad>
     {
-        public IEnumerable<EstadoPropiedad> GetAll()
+        private IRepositoryEstados<EstadoPropiedad> repository;
+        public ServiceEstadoPropiedad()
         {
-            IRepositoryEstados<EstadoPropiedad> repository = new RepositoryEstadoPropiedad();
-            return repository.GetAll();
-        }
+            repository = new RepositoryEstadoPropiedad();
+       }
+
+        public IEnumerable<EstadoPropiedad> GetAll() => repository.GetAll();
+        
     }
 }

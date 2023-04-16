@@ -10,22 +10,18 @@ namespace ApplicationCore.Services
 {
     public class ServiceNotificacionUsuario : IServiceNotificacionUsuario
     {
-        public IEnumerable<NotificacionUsuario> GetNotificacionByIdUser(int id)
+        private IRepositoryNotificacionUsuario repository;
+        public ServiceNotificacionUsuario()
         {
-            IRepositoryNotificacionUsuario repository = new RepositoryNotificacionUsuario();
-            return repository.GetNotificacionByIdUser(id);
+            repository = new RepositoryNotificacionUsuario();
         }
 
-        public NotificacionUsuario MarcarLeido(int id)
-        {
-            IRepositoryNotificacionUsuario repository = new RepositoryNotificacionUsuario();
-            return repository.MarcarLeido(id);
-        }
+        public IEnumerable<NotificacionUsuario> GetNotificacionByIdUser(int id) => repository.GetNotificacionByIdUser(id);
+        
 
-        public void SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario)
-        {
-            IRepositoryNotificacionUsuario repository = new RepositoryNotificacionUsuario();
-            repository.SaveNotificacionUsuario(notificacionUsuario);
-        }
+        public NotificacionUsuario MarcarLeido(int id) => repository.MarcarLeido(id);
+
+        public void SaveNotificacionUsuario(NotificacionUsuario notificacionUsuario) => repository.SaveNotificacionUsuario(notificacionUsuario);
+        
     }
 }

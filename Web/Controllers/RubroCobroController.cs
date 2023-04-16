@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Web.Permisos;
 using Web.Utils;
 
@@ -13,6 +14,10 @@ namespace Web.Controllers
 {
     public class RubroCobroController : Controller
     {
+        private readonly IServiceRubroCobro _Service;
+
+        public RubroCobroController() => _Service = new ServiceRubroCobro();
+
         [CustomAuthorize((int)Roles.Admin)]
         // GET: RubroCobro
         public ActionResult Index()
@@ -20,8 +25,7 @@ namespace Web.Controllers
             IEnumerable<RubroCobro> lista = null;
             try
             {
-                IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
-                lista = _ServiceRubro.GetAll();
+                lista = _Service.GetAll();
                 ViewBag.Title = "Lista Rubros";
                 return View(lista);
             }
@@ -36,39 +40,18 @@ namespace Web.Controllers
         }
 
         // GET: RubroCobro/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        public ActionResult Details(int id) => View();
+        
 
         // GET: RubroCobro/Create
         [CustomAuthorize((int)Roles.Admin)]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: RubroCobro/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        public ActionResult Create() => View();
+        
 
         // GET: RubroCobro/Edit/5
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? id)
         {
-            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             RubroCobro oRubro = null;
 
             try
@@ -79,7 +62,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
 
-                oRubro = _ServiceRubro.GetRubroById(Convert.ToInt32(id));
+                oRubro = _Service.GetRubroById(Convert.ToInt32(id));
 
                 if (oRubro == null)
                 {
@@ -107,14 +90,14 @@ namespace Web.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(RubroCobro rubro)
         {
-            IServiceRubroCobro _ServiceRubro = new ServiceRubroCobro();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _ServiceRubro.SaveOrUpdate(rubro);
+                    _Service.SaveOrUpdate(rubro);
 
                 }
                 else
@@ -143,26 +126,6 @@ namespace Web.Controllers
             }
         }
 
-        // GET: RubroCobro/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: RubroCobro/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

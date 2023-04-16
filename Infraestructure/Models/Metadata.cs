@@ -58,6 +58,7 @@ namespace Infraestructure.Models
     internal partial class PropiedadMetadata
     {
 
+        [UIHint("Fecha")]
         [Required(ErrorMessage = "Dato requerido")]
         [Display(Name = "Fecha de Inicio")]
         public Nullable<System.DateTime> FechaInicio { get; set; }
@@ -83,14 +84,12 @@ namespace Infraestructure.Models
         [Display(Name = "Propietario")]
         public Nullable<int> FK_Usuario { get; set; }
 
-        [Required(ErrorMessage = "Dato requerido")]
         public virtual Usuario Usuario { get; set; }
 
         [Required(ErrorMessage = "Dato requerido")]
         [Display(Name = "Estado de la propiedad")]
         public Nullable<int> FK_EstadoPropiedad { get; set; }
 
-        [Required(ErrorMessage = "Dato requerido")]
         public virtual EstadoPropiedad EstadoPropiedad { get; set; }
 
         [Required(ErrorMessage = "Dato requerido")]

@@ -10,6 +10,7 @@ namespace ApplicationCore.Services
 {
     public class ServiceAreaComunal : IServiceAreaComunal
     {
+
         private IRepositoryAreaComunal repository;
         public ServiceAreaComunal()
         {
@@ -17,14 +18,10 @@ namespace ApplicationCore.Services
         }
             
         
-        public IEnumerable<AreaComunal> GetAll()
-        {
-            return repository.GetAll();
-        }
+        public IEnumerable<AreaComunal> GetAll() => repository.GetAll();
+        
 
-        public AreaComunal GetAreaComunalById(int id)
-        {
-            return repository.GetAreaComunalById(id);
-        }
+        public AreaComunal GetAreaComunalById(int id) => repository.GetAreaComunalById(id);
+        
     }
 }

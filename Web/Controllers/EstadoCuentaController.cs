@@ -18,6 +18,9 @@ namespace Web.Controllers
     //[Authorize]
     public class EstadoCuentaController : Controller
     {
+        private readonly IServiceEstadoCuenta _Service;
+
+        public EstadoCuentaController() => _Service = new ServiceEstadoCuenta();
 
         [CustomAuthorize((int)Roles.Admin)]
 
@@ -27,8 +30,6 @@ namespace Web.Controllers
 
             try
             {
-
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 IEnumerable<Factura> lista = null;
 
                 if (active.HasValue)
@@ -59,7 +60,6 @@ namespace Web.Controllers
             IEnumerable<Factura> lista = null;
             try
             {
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 lista = _Service.GetEstadoCuentaPendiente();
                 return View(lista);
             }
@@ -78,7 +78,6 @@ namespace Web.Controllers
             Factura oFactura = null;
             try
             {
-                IServiceEstadoCuenta _Service = new ServiceEstadoCuenta();
                 oFactura = _Service.GetDetalleEstadoCuenta(idEstadoCuenta);
                 return View(oFactura);
             }
@@ -95,34 +94,17 @@ namespace Web.Controllers
         {
             ViewBag.idPropiedad = listaPropiedades();
             ViewBag.idPlanCobro = listaPlanCobro();
-            ViewBag.listaFacturasXMes = new ServiceEstadoCuenta().GetFacturasByFecha();
+            ViewBag.listaFacturasXMes = _Service.GetFacturasByFecha();
             return View();
     }
 
-        // POST: EstadoCuenta/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: EstadoCuenta/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        public ActionResult Edit(int id) => View();
 
         // POST: EstadoCuenta/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Factura factura)
         {
             try
@@ -241,27 +223,7 @@ namespace Web.Controllers
             }
         }
 
-        // GET: EstadoCuenta/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: EstadoCuenta/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         public SelectList listaPropiedades(int? id = 0)
         {

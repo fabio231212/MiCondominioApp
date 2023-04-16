@@ -8,53 +8,34 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
+
     public class ServiceEstadoCuenta : IServiceEstadoCuenta
     {
-        public IEnumerable<Factura> GetAll()
+        private IRepositoryEstadoCuenta repository;
+        public ServiceEstadoCuenta()
         {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetAll();
+            repository = new RepositoryEstadoCuenta();
         }
 
-        public IEnumerable<Factura> GetByIdProp(int id)
-        {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetByIdProp(id);
-        }
-        public IEnumerable<Factura> GetEstadoCuentaByFilter(bool active, int id)
-        {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetEstadoCuentaByFilter(active, id);
-        }
+        public IEnumerable<Factura> GetAll() => repository.GetAll();
+        
 
-        public Factura GetDetalleEstadoCuenta(int idEstadoCuenta)
-        {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetDetalleEstadoCuenta(idEstadoCuenta);
-        }
+        public IEnumerable<Factura> GetByIdProp(int id)=> repository.GetByIdProp(id);
+        public IEnumerable<Factura> GetEstadoCuentaByFilter(bool active, int id)=> repository.GetEstadoCuentaByFilter(active, id);
 
-        public IEnumerable<Factura> GetEstadoCuentaPendiente()
-        {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetEstadoCuentaPendiente();
-        }
+        public Factura GetDetalleEstadoCuenta(int idEstadoCuenta) => repository.GetDetalleEstadoCuenta(idEstadoCuenta);
 
-        public void Create(Factura factura)
-        {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-             repository.Create(factura);
-        }
+        public IEnumerable<Factura> GetEstadoCuentaPendiente() => repository.GetEstadoCuentaPendiente();
 
-        public IEnumerable<Factura> GetFacturasByFecha()
-        {
-            IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
-            return repository.GetFacturasByFecha();
-        }
+
 
         public Factura GetOldestFactura(int idUsuario)
         {
             IRepositoryEstadoCuenta repository = new RepositoryEstadoCuenta();
             return repository.GetOldestFactura(idUsuario);
         }
+        public void Create(Factura factura) =>repository.Create(factura);
+        
+        public IEnumerable<Factura> GetFacturasByFecha() => repository.GetFacturasByFecha();
     }
 }

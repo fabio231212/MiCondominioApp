@@ -9,11 +9,16 @@ using System.Web.Mvc;
 using System.Reflection;
 using Infraestructure.Utils;
 using Web.Permisos;
+using System.Web.Services.Description;
 
 namespace Web.Controllers
 {
     public class UsuarioController : Controller
     {
+        private readonly IServiceUsuario _Service;
+
+        public UsuarioController() => _Service = new ServiceUsuario();
+
         // GET: Usuario
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Index()
@@ -21,8 +26,7 @@ namespace Web.Controllers
             IEnumerable<Usuario> lista = null;
             try
             {
-                IServiceUsuario _ServiceUsuario = new ServiceUsuario();
-                lista = _ServiceUsuario.GetAll();
+                lista = _Service.GetAll();
                 ViewBag.Title = "Lista Usuarios";
                 return View(lista);
             }
@@ -43,8 +47,7 @@ namespace Web.Controllers
             Usuario oUsuario= null;
             try
             {
-                IServiceUsuario _ServiceUsuario = new ServiceUsuario();
-                oUsuario = _ServiceUsuario.GetUsuarioById(id);
+                oUsuario = _Service.GetUsuarioById(id);
                 ViewBag.IdActivo = listaActivo(oUsuario.Activo);
                 return View(oUsuario);
 
@@ -76,7 +79,6 @@ namespace Web.Controllers
         [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Edit(int? cedula)
         {
-            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
             Usuario oUsuario = null;
 
             try
@@ -87,7 +89,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
 
-                oUsuario = _ServiceUsuario.GetUsuarioById(Convert.ToInt32(cedula));
+                oUsuario = _Service.GetUsuarioById(Convert.ToInt32(cedula));
 
                 if (oUsuario == null)
                 {
@@ -118,14 +120,14 @@ namespace Web.Controllers
 
          // POST: Usuario/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Usuario usuario)
         {
-            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _ServiceUsuario.SaveOrUpdate(usuario);
+                    _Service.SaveOrUpdate(usuario);
 
                 }
                 else
@@ -156,27 +158,6 @@ namespace Web.Controllers
             }
         }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Usuario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
      
 
         private SelectList listaRoles(int? idRol = 0)
