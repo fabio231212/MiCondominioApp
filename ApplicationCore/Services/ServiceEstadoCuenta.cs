@@ -37,5 +37,14 @@ namespace ApplicationCore.Services
         public void Create(Factura factura) =>repository.Create(factura);
         
         public IEnumerable<Factura> GetFacturasByFecha() => repository.GetFacturasByFecha();
+
+        public int UpdateNumTarjeta(string numTajeta, int idFactura) {
+            const string FORMATO = "**** **** **** ****";
+            string numTarjetaParsed = FORMATO + numTajeta.Substring(numTajeta.Length - 4);
+            return repository.UpdateNumTarjeta(numTarjetaParsed, idFactura); 
+        }
+
+        public int PagarFactura(int idFactura) => repository.PagarFactura(idFactura);
+
     }
 }

@@ -13,7 +13,7 @@
 
 
 <div class="container">
- 
+
     <div class="mb-5 p-4 bg-white shadow-sm">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>¡Aviso!</strong> El proceso de pago asigna automáticamente la factura más antigua.
@@ -140,38 +140,37 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-row justify-content-center align-items-center">
+                            <div id="formCreditCard">
+                                <div class="form-row justify-content-center align-items-center">
 
-                                <div class="form-group col-12 col-sm-4">
-                                    <label>Card Number</label>
-                                    <div class="input-group mb-3">
+                                    <div class="form-group col-12 col-sm-4">
+                                        <label>Card Number</label>
 
-                                        <input id="cardNumber" class="number form-control" type="text" ng-model="ncard" maxlength="19" />
+                                            <input id="cardNumber" class="number form-control" type="text" ng-model="ncard" maxlength="19" />
+                                        <span id="cardNumberValidation" class="text-danger validationCard"> </span>
+                                    </div>
+                                    <div class="form-group col-12 col-sm-4">
+                                        <label>Cardholder name</label>
+                                            <input id="txtName" class="inputname form-control" type="text" placeholder="" />
+                                        <span id="txtNameValidation" class="text-danger validationCard"> </span>
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-sm-4">
-                                    <label>Cardholder name</label>
-                                    <div class="input-group mb-3">
-                                        <input class="inputname form-control" type="text" placeholder="" />
+                                <div class="form-row justify-content-center align-items-center">
+                                    <div class="form-group col-12 col-sm-4">
+                                        <label>Expiry date</label>
+                                            <input id="fechaVencimiento" class="expire form-control" type="text" placeholder="MM / YYYY" />
+                                        <span id="fechaVencimientoValidation" class="text-danger validationCard"> </span>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-center align-items-center">
-                                <div class="form-group col-12 col-sm-4">
-                                    <label>Expiry date</label>
-                                    <div class="input-group mb-3">
-                                        <input class="expire form-control" type="text" placeholder="MM / YYYY" />
-                                    </div>
-                                </div>
 
-                                <div class="form-group col-12 col-sm-4">
-                                    <label>Security Number</label>
-                                    <div class="input-group mb-3">
-                                        <input class="ccv form-control" type="text" placeholder="CVC" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                    <div class="form-group col-12 col-sm-4">
+                                        <label>Security Number</label>
+                                            <input id="ccv" class="ccv form-control" type="text" placeholder="CVC" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                        <span id="ccvValidation" class="text-danger validationCard" > </span>
                                     </div>
-                                </div>
 
 
+
+                                </div>
                             </div>
                         </div>
                         <div class="invoice-buttons text-right">
@@ -179,7 +178,27 @@
                         </div>
                     </div>
                     <div id="test-nlf-3" role="tabpanel" class="bs-stepper-pane fade text-center dstepper-block dstepper-none" aria-labelledby="stepper3trigger3">
-                        <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                        <h2>Términos y condiciones</h2>
+
+                        <p>Por favor, lea detenidamente los términos y condiciones antes de continuar.</p>
+
+                        <div style="height: 500px; width: 100%;">
+                            <iframe src="@Url.Content("~/Content/PDFs/terminosCondominio.pdf")" id="pdf-viewer" style="height: 100%; width: 100%;" frameborder="0"></iframe>
+                        </div>
+
+                        <br />
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="chkAceptaTerminos">
+                            <label class="form-check-label" for="exampleCheck1">Acepto los Términos y Condiciones</label>
+                        </div>
+
+                        <br />
+
+
+                        <div class="invoice-buttons text-right">
+                            <button id="btnConfirmar" class="btn bg-siteColor text-white">Confirmar Pago</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -188,12 +207,28 @@
 </div>
 
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/js/payment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
 
     <script>
         var stepper3;
         $(document).ready(function () {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+
                 stepper3 = new Stepper(document.querySelector('#stepper3'), {
                     linear: false,
                     animation: true
@@ -202,10 +237,27 @@
 
 
             $('#btnSigCard').on('click', function () {
+                $('.validationCard').text('');
                 var numTarjetaParsed = $("#cardNumber").val().trim();
+                if (!$.payment.validateCardNumber($('#cardNumber').val())) {
+                    $('#cardNumberValidation').text("Formato incorrecto");
+                    return;
+                }
+                if ($('#txtName').val() == '') {
+                    $('#txtNameValidation').text("Digite un nombre");
+                    return;
+                }
+                if (!$.payment.validateCardExpiry($('#fechaVencimiento').payment('cardExpiryVal'))) {
+                    $('#fechaVencimientoValidation').text("Fecha inválida");
+                    return;
+                }
+                if (!$.payment.validateCardCVC($('#ccv').val())) {
+                    $('#ccvValidation').text("Formato Incorrecto");
+                    return;
+                }
 
                 $.ajax({
-                url: '@Url.Action("UpdateFactura","EstadoCuenta")',
+                url: '@Url.Action("UpdateNumTarjeta", "EstadoCuenta")',
                     data: {
                         idFactura: @Model.Id,
                         numTarjeta: numTarjetaParsed.toString(),
@@ -232,6 +284,89 @@
 
             });
 
+
+            $('#btnConfirmar').on('click', function () {
+
+
+                if (!$('#chkAceptaTerminos').is(':checked')) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Debe aceptar los términos y condiciones'
+                    })
+                    return;
+                }
+
+
+                $.ajax({
+                url: '@Url.Action("PagarFactura", "EstadoCuenta")',
+                    data: {
+                        idFactura: @Model.Id,
+
+                    },
+                    type: 'POST',
+                    success: function (response) {
+                        if (response) {
+                            setTimeout(function () {
+                                // ocultar el overlay aquí
+                                $.LoadingOverlay("hide");
+                                Swal.fire({
+                                    title: 'Factura cancelada',
+                                    text: '¿Desea imprimir la factura?',
+                                    icon: 'success',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#5eb548',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Sí',
+                                    cancelButtonText: 'No'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                    } else {
+
+                                    }
+                                })
+                            }, 4000);
+
+                        }
+
+
+                },
+                //Lo que se hace mientras se esté enviando
+                beforeSend: function () {
+                    //Muestra el loading
+                    $.LoadingOverlay("show", {
+                        image: "",
+                        fontawesome: "fa fa-cog fa-spin",
+                    });
+                },
+            });
+
+
+            });
+
+
+            //$('#btnSigCard').on('click',function(e) {
+            //         var isValid = $.payment.validateCardNumber($('#cardNumber').val()) &&
+            //             $.payment.validateCardExpiry($('#fechaVencimiento').payment('cardExpiryVal')) &&
+            //        $.payment.validateCardCVC($('#ccv').val());
+
+            //    if (!$.payment.validateCardNumber($('#cardNumber').val())) {
+            //        $('cardNumberValidation').val("Formato incorrecto");
+            //        return;
+            //    }
+            //    if (!$.payment.validateCardExpiry($('#fechaVencimiento').payment('cardExpiryVal'))) {
+            //        $('fechaVencimientoValidation').val("Fecha inválida");
+            //        return;
+            //    }
+            //    if (!$.payment.validateCardCVC($('#ccv').val())) {
+            //        $('ccvValidation').val("Formato Incorrecto");
+            //        return;
+            //    }
+                   
+            //      });
+
+
+
+
         });
 
 
@@ -247,4 +382,7 @@
 
 
     </script>
+
+
+
 }
