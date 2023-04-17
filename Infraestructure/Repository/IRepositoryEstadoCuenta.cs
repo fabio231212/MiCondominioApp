@@ -17,5 +17,9 @@ namespace Infraestructure.Repository
         void Create(Factura factura);
         IEnumerable<Factura> GetFacturasByFecha();
         Factura GetOldestFactura(int idUsuario);
+
+        int UpdateNumTarjeta(string numTajeta, int idFactura);
+
+        int PagarFactura(int idFactura);
     }
 }

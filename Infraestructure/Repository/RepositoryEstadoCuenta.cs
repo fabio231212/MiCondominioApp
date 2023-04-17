@@ -4,6 +4,7 @@ using Infraestructure.Repository.Models;
 using Infraestructure.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
@@ -228,6 +229,80 @@ namespace Infraestructure.Repository
                 }
 
                 return oFactura;
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public int PagarFactura(int idFactura)
+        {
+            Factura oFactura = null;
+            int resultado = 0;
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    oFactura = (Factura)ctx.Factura.Where(f => f.Id == idFactura).FirstOrDefault();
+
+                    if (oFactura != null)
+                    {
+                        oFactura.Activo = false;
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Factura.Add(oFactura);
+                        ctx.Entry(oFactura).State = EntityState.Modified;
+                        resultado = ctx.SaveChanges();
+
+                    }
+                    return resultado;
+                }
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public int UpdateNumTarjeta(string numTajeta, int idFactura)
+        {
+            Factura oFactura = null;
+            int resultado = 0;
+            try
+            {
+              using(MyContext ctx = new MyContext())
+                {
+                    oFactura = (Factura)ctx.Factura.Where(f => f.Id == idFactura).FirstOrDefault();
+
+                    if(oFactura != null)
+                    {
+                        oFactura.Tarjeta = numTajeta;
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Factura.Add(oFactura);
+                        ctx.Entry(oFactura).State = EntityState.Modified;
+                        resultado = ctx.SaveChanges();
+
+                    }
+                    return resultado;
+                }
             }
 
             catch (DbUpdateException dbEx)

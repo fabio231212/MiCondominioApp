@@ -32,7 +32,7 @@ namespace Infraestructure.Models
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public Nullable<System.DateTime> FechaFacturacion { get; set; }
 
-        [RegularExpression(@"^\d+$", ErrorMessage = "{0} solo acepta números")]
+       // [RegularExpression(@"^\d+$", ErrorMessage = "{0} solo acepta números")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         [Display(Name = "Número de Tarjeta")]
         public string Tarjeta { get; set; }

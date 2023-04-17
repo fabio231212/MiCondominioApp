@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "bs-stepper": "^1.7.0"
+    "bs-stepper": "^1.7.0",
+    "creditcard.js": "^3.0.30"
   }
 }
