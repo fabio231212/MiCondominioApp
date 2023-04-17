@@ -3,6 +3,7 @@ using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
@@ -47,7 +48,7 @@ namespace Web.Controllers
 
                     if (oUsuario != null)
                     {
-                        if (oUsuario.Activo == false)
+                        if ((bool)!oUsuario.Activo)
                         {
                             ViewData["Mensaje"] = "El usuario se encuentra inactivo";
                             return View();
@@ -58,6 +59,11 @@ namespace Web.Controllers
                             Session["Notificaciones"] = listaNotificaciones;
                         }
                         FormsAuthentication.SetAuthCookie(oUsuario.Email, true);
+
+
+                        Session["root"] = Utilitarios.GetRoot();
+
+
 
                         Session["Usuario"] = oUsuario;
                         if (oUsuario.FK_Rol == 1)

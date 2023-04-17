@@ -22,5 +22,9 @@ namespace ApplicationCore.Services
         int UpdateNumTarjeta(string numTajeta, int idFactura);
 
         int PagarFactura(int idFactura);
+
+        byte[] GenerarPDF(Factura oFactura);
+
+        Task EnviarPorCorreo(Factura factura, byte[] pdf);
     }
 }

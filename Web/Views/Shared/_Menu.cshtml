@@ -64,33 +64,10 @@
                                         </div>
                         </li>
 
-                        <li class="dropdown">
-                            <i class="fa fa-envelope dropdown-toggle" data-toggle="dropdown"><span class="bg-siteColor">3</span></i>
-                            <div class="dropdown-menu notify-box nt-enveloper-box">
-                                <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
-                                <div class="nofity-list">
-                                    <a href="#" class="notify-item">
-                                        <div class="notify-thumb">
-                                            <img src="~/Content/Images/author/author-img1.jpg" />
-                                        </div>
-                                        <div class="notify-text">
-                                            <p>Aglae Mayer</p>
-                                            <span class="msg">Hey I am waiting for you...</span>
-                                            <span>3:15 PM</span>
-                                        </div>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </li>
-                        <li class="settings-btn">
-                            <i class="fa-solid fa-gear"></i>
-                        </li>
                     </ul>
                 </div>
                 <div class="clearfix d-md-inline-block d-block">
                     <div class="user-profile m-0">
-                        @* <img src="~/Content/Images/shevas.png" width="40" height="40" />*@
                         <img src="~/Content/Images/avatar.png" />
                         <h4 class="user-name dropdown-toggle" data-toggle="dropdown">@oUsuario.Nombre<i class="fa fa-angle-down"></i></h4>
                         <div class="dropdown-menu">
@@ -196,36 +173,17 @@
                                     <a href="@Url.Action("Create", "EstadoCuenta")"><i class="ti-map"></i><span>Facturación</span></a>
                                 }
                             </li>
-                            <li>
-                                <a href="javascript:void(0)"><i class="ti-slice"></i><span>icons</span></a>
-                                <ul class="submenu">
-                                    <li><a href="fontawesome.html">fontawesome icons</a></li>
-                                    <li><a href="themify.html">themify icons</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="fa fa-table"></i>
-                                    <span>Tables</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li><a href="table-basic.html">basic table</a></li>
-                                    <li><a href="table-layout.html">table layout</a></li>
-                                    <li><a href="datatable.html">datatable</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="maps.html"><i class="ti-map-alt"></i> <span>maps</span></a></li>
+
+
+                            @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Residente" }))
+                            {
+                                <li>
+                                    <a href="@Url.Action("PagarFactura", "EstadoCuenta")"><i class="ti-receipt"></i><span>Facturación</span></a>
+                                </li>
+                            }
+
                         </ul>
                     </nav>
-                </div>
-            </div>
-            <!-- nav and search button -->
-            <div class="col-lg-3 clearfix">
-                <div class="search-box">
-                    <form action="#">
-                        <input type="text" name="search" placeholder="Search..." required>
-                        <i class="ti-search"></i>
-                    </form>
                 </div>
             </div>
             <!-- mobile_menu -->
@@ -235,31 +193,3 @@
         </div>
     </div>
 </div>
-<!-- header area end -->
-<!-- page title area end -->
-@*@section Scripts{
-    <script type="text/javascript">
-
-            // Agregar evento click a los botones de notificación
-            $('.notification-btn').click(function () {
-                // Obtener el valor del botón
-                var idNotificacion = $(this).val();
-                var idUsuario = @oUsuario.Id;
-                // Hacer una solicitud AJAX al servidor
-                $.ajax({
-                    url: '/NotificacionUsuario/MarcarLeido',
-                    type: 'POST', // o 'GET' según lo que necesites
-                    data: { idNotificacion: idNotificacion, idUsuario: idUsuario }, // pasar el valor del botón como parámetro
-                    success: function (response) {
-                        $('#listaNotificaciones').html('');
-                        $('#listaNotificaciones').html(response);
-                        // Manejar la respuesta del servidor aquí
-                    },
-                    error: function (error) {
-                        // Manejar el error aquí
-                    }
-                });
-            });
-
-    </script>
-}*@

@@ -2,12 +2,15 @@
 using ApplicationCore.Services;
 using Infraestructure.Models;
 using Infraestructure.Repository;
+using IronPdf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
@@ -211,13 +214,26 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        public ActionResult PagarFactura(int idFactura)
+        public async Task<ActionResult> PagarFactura(int idFactura)
         {
+            Factura oFactura = null;
             try
             {
 
                 if (_Service.PagarFactura(idFactura) > 0)
                 {
+                    oFactura = _Service.GetDetalleEstadoCuenta(idFactura);
+                    byte[] pdf = null;
+                    if(oFactura != null)
+                    {
+                        pdf = _Service.GenerarPDF(oFactura);
+                        if (pdf != null)
+                        {
+                            await _Service.EnviarPorCorreo(oFactura,pdf);
+                            Session["factura"] = pdf;
+
+                        }
+                    }
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
                 return Json(false, JsonRequestBehavior.AllowGet);
@@ -231,8 +247,28 @@ namespace Web.Controllers
         }
 
 
+        public ActionResult DescargarFactura()
+        {
+
+            try
+            {
+                return File(Session["factura"] as byte[], "application/pdf", "Factura.pdf");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+           
+        }
 
 
+
+
+
+
+        [CustomAuthorize((int) Roles.Residente)]
         public ActionResult PagarFactura()
         {
             Factura oFactura = null;
