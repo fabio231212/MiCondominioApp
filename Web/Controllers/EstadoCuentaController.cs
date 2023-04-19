@@ -2,7 +2,6 @@
 using ApplicationCore.Services;
 using Infraestructure.Models;
 using Infraestructure.Repository;
-using IronPdf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
