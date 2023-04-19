@@ -50,7 +50,7 @@
 
                                         <div class="notify-item mb-3">
                                             <div class="notify-thumb p-2"><i class="ti-info btn-danger"></i></div>
-                                            <div class="notify-text">
+                                            <div class="notify-text pr-1">
                                                 <p>@item.Notificacion.Descripcion</p>
                                                 <button class="notification-btn btn btn-sm btn-outline-secondary" value="@item.Id"><i class="fa-regular fa-eye"></i>  Marcar como leída</button>
                                             </div>
@@ -166,12 +166,6 @@
                                     <a href="@Url.Action("IndexUsuario", "Reservacion")"><i class="ti-map"></i><span>Reservaciones</span></a>
                                 }
 
-                            </li>
-                            <li>
-                                @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
-                                {
-                                    <a href="@Url.Action("Create", "EstadoCuenta")"><i class="ti-map"></i><span>Facturación</span></a>
-                                }
                             </li>
 
 

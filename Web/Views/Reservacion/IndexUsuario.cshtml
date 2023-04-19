@@ -7,7 +7,7 @@
 @using (Html.BeginForm("Save", "Reservacion", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4 class="header-title">Registro de incidencias</h4>
+    <h4 class="header-title">Reservaciones</h4>
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -162,7 +162,6 @@
 
         //Muestre el pronóstico del tiempo
         function showWeather() {
-            $('#FechaSalida').off('change');
             var allowedValues = [2]; // Valores permitidos, los que sean al aire libre
 
             var fecha = moment($('#FechaEntrada').val(), 'DD-MM-YYYY HH:mm:ss').format('YYYY-MM-DD');
@@ -191,14 +190,14 @@
                         Swal.fire({
                             position: 'center',
                             title: 'Pronóstico',
-                            text: 'Parece que el área comunal que seleccionaste está al aire libre. El pronóstico es el siguiente: ' + fechaData.weather.description + ". La probabilida de lluvia es del: " + fechaData.pop + "%",
+                            text: 'Parece que el área comunal que seleccionaste está al aire libre. El pronóstico es el siguiente: ' + fechaData.weather.description + ". La probabilidad de lluvia es del: " + fechaData.pop + "%",
                             // text: 'holaaaaaaaaaaaaa',
                             imageUrl: 'https://www.weatherbit.io/static/img/icons/' + fechaData.weather.icon + '.png',
                             imageWidth: 100,
                             imageHeight: 100,
                             imageAlt: 'Custom image',
                             showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
+                            confirmButtonColor: '#5eb548',
                             cancelButtonColor: '#d33',
                             confirmButtonText: 'Continuar',
                             cancelButtonText: 'Cancelar',
@@ -262,12 +261,9 @@
         //Verifica si la fecha de salida es mayor
         function isFechaSalidaMayor(fechaEntrada,fechaSalida) {
             if (fechaEntrada >= fechaSalida) {
-                Swal.fire({
-                    position: 'center',
+                Toast.fire({
                     icon: 'error',
-                    title: 'La hora de salida debe de ser mayor',
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: 'La hora de salida debe de ser mayor'
                 });
                 $('#FechaEntrada').val("");
                 $('#FechaSalida').val("");

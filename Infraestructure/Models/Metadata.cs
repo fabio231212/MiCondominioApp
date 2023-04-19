@@ -9,6 +9,8 @@ using System.Xml.Linq;
 namespace Infraestructure.Models
 {
 
+
+
     internal partial class ReservacionMetadata
     {
 
@@ -167,6 +169,10 @@ namespace Infraestructure.Models
         [Required(ErrorMessage = "{0} es un dato requerido")]
         [Display(Name = "Título")]
         public string Titulo { get; set; }
+
+        [Required(ErrorMessage = "Dato requerido")]
+        [Display(Name = "Fecha de Vencimiento")]
+        public DateTime FechaVencimiento { get; set; }
     }
 
     internal partial class ArchivoMetadata
