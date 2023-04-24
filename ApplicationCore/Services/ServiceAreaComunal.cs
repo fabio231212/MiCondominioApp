@@ -16,8 +16,9 @@ namespace ApplicationCore.Services
         {
             repository = new RepositoryAreaComunal();
         }
-            
-        
+
+
+
         public IEnumerable<AreaComunal> GetAll() => repository.GetAll();
         
 

@@ -12,9 +12,9 @@ namespace Web.Controllers
         public ActionResult Index(Exception exception)
         {
             //Controlador
-            String redirect = "Home";
+            String redirect = "Autentificacion";
             //Acción de controlador
-            String redirectAction = "Index";
+            String redirectAction = "Login";
 
             HttpException httpException = exception as HttpException;
             //Obtener el código de estado HTTP

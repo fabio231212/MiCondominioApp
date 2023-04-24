@@ -1,0 +1,290 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqueryUI")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width" />
+    <title>RecuperarContrasenna</title>
+</head>
+<body>
+
+
+    <div class="error-area ptb--100 text-center">
+        <div class="container">
+            <div class="error-content">
+
+                <div class="mb-5 p-4 bg-white shadow-sm">
+                    <div id="stepper3" class="bs-stepper">
+                        <div class="bs-stepper-header" role="tablist">
+                            <div class="step" data-target="#test-nlf-1">
+                                <button type="button" class="step-trigger" role="tab" id="stepper3trigger1" aria-controls="test-nlf-1" aria-selected="false">
+                                    <span class="bs-stepper-circle bg-siteColor">
+                                        <span class="fa-solid fa-envelope" aria-hidden="true"></span>
+                                    </span>
+                                    <span class="bs-stepper-label">Email</span>
+                                </button>
+                            </div>
+                            <div class="bs-stepper-line"></div>
+                            <div class="step active" data-target="#test-nlf-2">
+                                <button type="button" class="step-trigger" role="tab" id="stepper3trigger2" aria-controls="test-nlf-2" aria-selected="true">
+                                    <span class="bs-stepper-circle bg-siteColor">
+                                        <span class="fa-solid fa-key" aria-hidden="true"></span>
+                                    </span>
+                                    <span class="bs-stepper-label">Código único</span>
+                                </button>
+                            </div>
+                            <div class="bs-stepper-line"></div>
+                            <div class="step" data-target="#test-nlf-3">
+                                <button type="button" class="step-trigger" role="tab" id="stepper3trigger3" aria-controls="test-nlf-3" aria-selected="false">
+                                    <span class="bs-stepper-circle bg-siteColor">
+                                        <span class="fa-solid fa-lock" aria-hidden="true"></span>
+                                    </span>
+                                    <span class="bs-stepper-label">Restablecer</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bs-stepper-content">
+                            <form onsubmit="return false">
+                                <div id="test-nlf-1" role="tabpanel" class="bs-stepper-pane fade dstepper-block dstepper-none" aria-labelledby="stepper3trigger1">
+
+                                    <p class="lead">
+                                        Digite el correo asociado a su cuenta
+                                    </p>
+                                    <div class="form-group">
+
+                                        <input id="txtEmail" name="txtEmail" class="inputname form-control" type="email" />
+                                        <span id="txtEmailValidation" class="text-danger validation"> </span>
+                                    </div>
+                                    <div class="invoice-buttons text-right">
+                                        <button class="btn bg-siteColor text-white" id="btnEnviarEmail">Siguiente</button>
+                                    </div>
+                                </div>
+
+                                <div id="test-nlf-2" role="tabpanel" class="bs-stepper-pane fade dstepper-block active" aria-labelledby="stepper3trigger2">
+                                    <p class="lead">
+                                        Digite el código de verificación enviado a su email.
+                                    </p>
+                                    <div class="form-group">
+                                        <input id="txtCodigo" class="inputname form-control" type="text" placeholder="" />
+                                        <span id="txtCodigoValidation" class="text-danger validation"> </span>
+                                    </div>
+
+                                    <div class="invoice-buttons text-right">
+                                        <button id="btnVerificarCodigo" class="btn bg-siteColor text-white">Siguiente</button>
+                                    </div>
+                                </div>
+                                <div id="test-nlf-3" role="tabpanel" class="bs-stepper-pane fade text-center dstepper-block dstepper-none" aria-labelledby="stepper3trigger3">
+
+                                    <p class="lead">
+                                        Digite su nueva contraseña.
+                                    </p>
+                                    <div class="form-group">
+                                        <input id="txtClave" class="inputname form-control" type="text" placeholder="" />
+                                        <span id="txtClaveValidation" class="text-danger validation"> </span>
+                                    </div>
+
+                                    <div class="invoice-buttons text-right">
+                                        <button id="btnCambiarContra" class="btn bg-siteColor text-white">Confirmar Cambio</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/jqueryUI")
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var stepper3;
+        $(document).ready(function () {
+            $('.validation').text('');
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+
+            stepper3 = new Stepper(document.querySelector('#stepper3'), {
+                linear: true,
+                animation: true
+            });
+
+
+
+            $('#btnSigCard').on('click', function () {
+
+                            stepper3.next();
+
+            });
+
+
+            $('#btnConfirmar').on('click', function () {
+
+
+               window.location.href = "@Url.Action("IndexUsuario", "Home")";
+
+
+
+            });
+
+            $("#btnEnviarEmail").on("click", function () {
+                $('.validation').text('');
+                var email = $("#txtEmail").val();
+
+                if (!validarCorreo(email)) {
+                    $('#txtEmailValidation').text("Formato Incorrecto");
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("RestablecerContrasenna", "Autentificacion")',
+                    data: {
+                        email:email,
+                    },
+                    type: "POST",
+                    success: function (response) {
+                        $.LoadingOverlay("hide");
+                        if (response) {
+                            stepper3.next();
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Error al consultar'
+                            })
+                        }
+                    },
+                    beforeSend: function () {
+                        //Muestra el loading
+                        $.LoadingOverlay("show", {
+                            image: "",
+                            fontawesome: "fa fa-cog fa-spin",
+                        });
+                    },
+                });
+
+
+            });
+
+
+            $("#btnVerificarCodigo").on("click", function () {
+                var codigo = $("#txtCodigo").val();
+
+                $.ajax({
+                    url: '@Url.Action("VerificarCodRestablecer", "Autentificacion")',
+                    data: {
+                        codigo : codigo,
+                    },
+                    type: "POST",
+                    success: function (response)
+                    {
+                        $.LoadingOverlay("hide");
+                        if (response) {
+                            stepper3.next();
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'El código no coincide'
+                            })
+                        }
+                    },
+                    beforeSend: function () {
+                        //Muestra el loading
+                        $.LoadingOverlay("show", {
+                            image: "",
+                            fontawesome: "fa fa-cog fa-spin",
+                        });
+                    },
+                });
+
+
+            });
+
+            $("#btnCambiarContra").on("click", function () {
+                var clave = $("#txtClave").val();
+
+                $.ajax({
+                    url: '@Url.Action("CambiarClave", "Autentificacion")',
+                    data: {
+                        clave : clave,
+                    },
+                    type: "POST",
+                    success: function (response)
+                    {
+                        $.LoadingOverlay("hide");
+                        if (response) {
+                                Swal.fire({
+                                    title: 'Contraseña restablecida ',
+                                    text: 'Se restableció su contraseña',
+                                    icon: 'success',
+                                    confirmButtonColor: '#5eb548',
+                                    confirmButtonText: 'Iniciar Sesión',
+
+                                }).then((result) => {
+                                    window.location.href = "@Url.Action("Login", "Autentificacion")";
+                                })
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Error al cambiar la contraseña'
+                            })
+                        }
+                    },
+                    beforeSend: function () {
+                        //Muestra el loading
+                        $.LoadingOverlay("show", {
+                            image: "",
+                            fontawesome: "fa fa-cog fa-spin",
+                        });
+                    },
+                });
+
+
+            });
+
+
+     function validarCorreo(correo) {
+      var expresionRegular = @Html.Raw("/\\S+@\\S+\\.\\S+/");
+      return expresionRegular.test(correo);
+     }
+
+        });
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
