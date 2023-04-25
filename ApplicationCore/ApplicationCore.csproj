@@ -69,6 +69,7 @@
     <Compile Include="Services\IServiceHomeInfo.cs" />
     <Compile Include="Services\IServiceIncidencias.cs" />
     <Compile Include="Services\IServiceInformacion.cs" />
+    <Compile Include="Services\IServiceReporte.cs" />
     <Compile Include="Services\IServiceReservacion.cs" />
     <Compile Include="Services\IServiceRubroCobro.cs" />
     <Compile Include="Services\IServiceNotificacionUsuario.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Services\ServiceNotificacionUsuario.cs" />
     <Compile Include="Services\ServicePlanCobro.cs" />
     <Compile Include="Services\ServicePropiedad.cs" />
+    <Compile Include="Services\ServiceReporte.cs" />
     <Compile Include="Services\ServiceReservacion.cs" />
     <Compile Include="Services\ServiceRol.cs" />
     <Compile Include="Services\ServiceRubroCobro.cs" />

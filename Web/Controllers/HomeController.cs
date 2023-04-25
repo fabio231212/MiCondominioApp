@@ -6,11 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.Services.Description;
 using Web.Permisos;
+using Web.Utils;
 
 namespace Web.Controllers
 {
@@ -23,6 +26,7 @@ namespace Web.Controllers
         private readonly IServiceArchivo _ServiceArchivo;
         private readonly IServiceEstadoCuenta _ServiceEstadoCuenta;
         private readonly IServiceHomeInfo _ServiceHomeInfo;
+        private readonly IServiceReporte _ServiceReporte;
 
         public HomeController()
         {
@@ -30,11 +34,16 @@ namespace Web.Controllers
             _ServiceEstadoCuenta= new ServiceEstadoCuenta();
             _ServiceInfo = new ServiceInformacion();
             _ServiceHomeInfo = new ServiceHomeInfo();
+            _ServiceReporte = new ServiceReporte();
         }
 
 
         [CustomAuthorize((int)Roles.Admin)]
-        public ActionResult IndexAdmin() => View();
+        public ActionResult IndexAdmin()
+        {
+            ViewBag.idPropiedad = listaPropiedades();
+            return View();
+        }
         
 
         [CustomAuthorize((int)Roles.Residente)]
@@ -72,5 +81,54 @@ namespace Web.Controllers
 
             return Json(new { lista = listaTotalesFactura,listaDeudas=listaDeudas, totalGanancias = totalGanancias,cantIncidencias = cantIncidencias, cantDeudas= cantDeudas }, JsonRequestBehavior.AllowGet);
         }
+
+        public SelectList listaPropiedades()
+        {
+            IServicePropiedad _ServicePropiedad = new ServicePropiedad();
+            IEnumerable<Propiedad> lista = _ServicePropiedad.GetAll();
+            return new SelectList(lista, "Id", "NumPropiedad");
+        }
+
+        [HttpPost]
+        public void reporteDeudas(DateTime fechaInicio, DateTime fechaFin, string numPropiedad)
+        {
+            try
+            {
+                byte[] pdf = _ServiceReporte.reporteDeudas(fechaInicio, fechaFin, numPropiedad);
+
+                if (pdf != null)
+                {
+                    Session["reporteDeudas"] = pdf;
+                }
+                else
+                {
+                     Json(false, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                 RedirectToAction("Default", "Error");
+            }
+        }
+
+        public ActionResult DescargarReporteDeudas()
+        {
+
+            try
+            {
+                return File(Session["reporteDeudas"] as byte[], "application/pdf", "Reporte de Deudas.pdf");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+
+        }
+
     }
 }
+

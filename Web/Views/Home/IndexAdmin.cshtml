@@ -1,4 +1,7 @@
-﻿
+﻿@{ 
+    var root = Session["root"];
+}
+
 <div class="col-lg-8">
     <div class="row">
         <div class="col-md-6 mt-5 mb-3">
@@ -40,9 +43,140 @@
                 </div>
             </a>
         </div>
+        <div class="col-md-6 mb-3 mb-lg-0" data-toggle="modal" data-target="#modalReport">
+            <a title="Mostrar Reportes">
+                <div class="card cardDashboard">
+                    <div class="seo-fact sbg3">
+                        <div class="p-4 d-flex justify-content-between align-items-center">
+                            <div class="seofct-icon"><i class="fa-solid fa-warning"></i>Reportes</div>
+                            <h2 id="cantIncidencias"></h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
-@section Scripts{ 
+
+
+<div class="modal fade" id="modalReport">
+    <div style="overflow-y: initial !important"
+         class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #000000; font-weight: bold;">Reportes</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                               href="#nav-contabilidad" role="tab" aria-controls="nav-contabilidad"
+                               aria-selected="true">Contabilidad</a>
+                            <!--                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-librosbancarios" role="tab" aria-controls="nav-librosbancarios" aria-selected="false">Libros Bancarios</a>-->
+                            <a class="nav-item nav-link" id="nav-facturacion-tab" data-toggle="tab"
+                               href="#nav-facturacion" role="tab" aria-controls="nav-facturacion"
+                               aria-selected="false">Facturación</a>
+                            <!-- <a class="nav-item nav-link" id="nav-activos-tab" data-toggle="tab" href="#nav-activos" role="tab" aria-controls="nav-activos" aria-selected="false">Activos</a>-->
+                        </div>
+                    </nav>
+                    <div class="tab-content mt-3" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-contabilidad" role="tabpanel"
+                             aria-labelledby="nav-contabilidad-tab">
+
+                            <div class="row">
+                                <!-- Buttons Items start -->
+                                <div class="col-md-6 mt-5">
+                                    <div class="list-group">
+                                        <button type="button" class="btn btn-flat mb-3 mr-4 bg-dark text-white"
+                                                id="btnReporteBalanceComprobacion" data-toggle="modal"
+                                                data-target="#modalBalanceComprobaciónConSaldoMes">
+                                            <img src="~/Content/Images/author/avatar.png" /> Balance de
+                                            Comprobación con Saldo de Mes
+                                        </button>
+
+                                        <button type="button" class="btn btn-flat mb-3 mr-4 bg-dark text-white"
+                                                id="btnReporteDeudas" data-toggle="modal"
+                                                data-target="#modalDeudasP">
+                                            <img src="~/Content/Images/author/avatar.png" /> Deudas Pendientes
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-librosbancarios" role="tabpanel"
+                             aria-labelledby="nav-librosbancarios-tab">
+                            <button type="button" style="background-color: #444444; color: white;"
+                                    class="btn btn-flat mb-3 mr-4" id="btnMSJReporteAsiento" data-toggle="modal"
+                                    data-target="#modalMSJReporteAsiento">
+                                <i style="font-size: 16px;" class="fa fa-print"></i> Reporte
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalDeudasP">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Deudas Pendientes</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-1">
+                    <div class="col-6">
+                        <label for="FechaInicio">Fecha Inicio</label>
+                        <input type="datetime" name="FechaInicio" id="FechaInicio" class="form-control" readonly="readonly" value="" data-histracont--histracont-target="dpFechaInicio">
+                        <label class="control-label text-danger" id="validateFechaInicio" hidden="hidden"></label>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="FechaFin">Fecha Fin</label>
+                        <input type="datetime" name="FechaFin" id="FechaFin" class="form-control" readonly="readonly" data-histracont--histracont-target="dpFechaFin">
+                        <label class="control-label text-danger" id="validateFechaFin" hidden="hidden"></label>
+                    </div>
+                    <label for="selectPropiedad mt-4" class="control-label">Número de propiedad</label>
+                    <select class="form-control" aria-label="Default select example" id="selectPropiedad" name="selectPropiedad">
+                        <option selected value="0">Seleccione una propiedad</option>
+                        @foreach (var item in ViewBag.idPropiedad)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="progressHISTRACONT" class="progress d-none mr-4 w-75">
+                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                </div>
+                <button id="generarReporte" class="btn btn-success" type="button" >Generar Reporte</button>
+                <button class="btn btn-flat bg-danger text-white" type="button" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             $.ajax({
@@ -54,7 +188,7 @@
                     $("#totalGanancias").text("₡ " + response.totalGanancias);
                     $("#cantDeudas").text(response.cantDeudas);
                     $("#cantIncidencias").text(response.cantIncidencias);
-                    
+
                 },
                 error: function (error) {
                     // Manejar el error aquí
@@ -62,5 +196,99 @@
 
             });
         });
+
+        //Detecta cuanso abre el modal y le da el formato a los pickers
+        $('#modalDeudasP').on('show.bs.modal', function () {
+            setPicker();
+        });
+
+
+        //Setea el picker, si no viene nada pone la hora desde las 00:00 hasta las 23:59
+        function setPicker() {
+
+            $('#FechaInicio, #FechaFin').datetimepicker({
+                format: 'd-m-Y H:i:s'
+            });
+            $.datetimepicker.setLocale('es'); //idioma español
+        }
+
+        //Verifica si la fecha de salida es mayor
+        function isFechaFinMayor(fechaInicio, fechaFin) {
+            if (fechaInicio >= fechaFin) {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'La hora de salida debe de ser mayor'
+                });
+                $('#FechaInicio').val("");
+                $('#FechaFin').val("");
+                return false;
+            }
+            return true;
+        }
+
+        $('#generarReporte').on("click", function () {
+            event.preventDefault();
+            $("#validateFechaEntrada").addClass("d-none");
+            $("#validateFechaSalida").addClass("d-none");
+            $("#validateFechaSalida").text("");
+            $("#validateFechaEntrada").text("");
+
+            var fechaInicio = moment($('#FechaInicio').val(), 'DD-MM-YYYY HH:mm:ss').toDate(); //Transforma la fecha a date
+            var fechaFin = moment($('#FechaFin').val(), 'DD-MM-YYYY HH:mm:ss').toDate();
+
+            if (!moment($('#FechaInicio').val(), 'DD-MM-YYYY HH:mm:ss').isValid() || !$('#FechaInicio').val() ) {
+                fechaInicio = moment().endOf('month');
+                fechaInicio = fechaInicio.toDate(); //Transforma la fecha a date
+            }
+            if (!moment($('#FechaFin').val(), 'DD-MM-YYYY HH:mm:ss').isValid() || !$('#FechaFin').val()) {
+                fechaFin = null; // asigna null si la fecha es inválida o está vacía
+                fechaFin = fechaFin.toDate(); //Transforma la fecha a date
+            }
+
+            // Obtener la referencia al elemento select
+            var selectElement = document.getElementById("selectPropiedad");
+            // Obtener la opción seleccionada
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var numPropiedad = selectedOption.text;
+            if (selectedOption.text == "Seleccione una propiedad") {
+                numPropiedad = null;
+            }
+            if (!isFechaFinMayor(fechaInicio, fechaFin)) {
+                return;
+            }
+
+            console.log("hola")
+            $.ajax({
+                url:"/Home/reporteDeudas",
+                method: "POST",
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                data: {
+                    fechaFin: fechaFin.toISOString(),
+                    fechaInicio: fechaInicio.toISOString(),
+                    numPropiedad: numPropiedad,
+                },
+                success: function (response) {
+                    if (response == false) {
+                        console.log("nO HAY FACTURAS PENDIENTES EN LAS FECHAS INDICADAS")
+                    } else {
+                        var action = '@Url.Action("DescargarReporteDeudas", "Home")';
+                        var root = '@root';
+                        window.open(root + action);
+                        window.location.href = "@Url.Action("IndexAdmin", "Home")";
+                    }
+
+                },
+                error: function () {
+                    console.log("ERROR")
+                }
+            })
+        });
+
     </script>
+
+
+
+
 }
