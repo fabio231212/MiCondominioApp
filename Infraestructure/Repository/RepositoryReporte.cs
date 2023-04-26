@@ -21,47 +21,10 @@ namespace Infraestructure.Repository
             MyContext ctx = new MyContext();
             try
             {
-                if (fechaInicio == null && fechaFin == null && String.IsNullOrEmpty(numPropiedad))
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    listaFact = ctx.Factura.Include("PlanCobro").Include("PlanCobro.RubroCobro").Include("Propiedad").ToList().Where(f => f.Activo == true);
-
-                    return listaFact;
-                }
-
-                else if (fechaInicio == null || fechaFin == null && !String.IsNullOrEmpty(numPropiedad))
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    listaFact = ctx.Factura.Include("PlanCobro").Include("PlanCobro.RubroCobro").Include("Propiedad").ToList().Where(f => f.Activo == true && f.Propiedad.NumPropiedad == numPropiedad);
-
-                    return listaFact;
-
-                }
-
-                else if (fechaInicio != null && fechaFin != null && String.IsNullOrEmpty(numPropiedad))
+                if (fechaInicio != null && fechaFin != null && String.IsNullOrEmpty(numPropiedad))
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     listaFact = ctx.Factura.Include("PlanCobro").Include("PlanCobro.RubroCobro").Include("Propiedad").ToList().Where(f => f.Activo == true && f.FechaFacturacion >= fechaInicio && f.FechaFacturacion <= fechaFin);
-
-                    return listaFact;
-
-                }
-
-
-                else if (fechaInicio != null && fechaFin == null && String.IsNullOrEmpty(numPropiedad))
-                {
-
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    listaFact = ctx.Factura.Include("PlanCobro").Include("PlanCobro.RubroCobro").Include("Propiedad").ToList().Where(f => f.Activo == true && f.FechaFacturacion >= fechaInicio);
-
-                    return listaFact;
-
-                }
-
-                else if (fechaInicio != null && fechaFin == null && !String.IsNullOrEmpty(numPropiedad))
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    listaFact = ctx.Factura.Include("PlanCobro").Include("PlanCobro.RubroCobro").Include("Propiedad").ToList().Where(f => f.Activo == true && f.FechaFacturacion >= fechaInicio && f.Propiedad.NumPropiedad == numPropiedad);
 
                     return listaFact;
 

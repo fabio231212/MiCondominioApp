@@ -2,7 +2,7 @@
     var root = Session["root"];
 }
 
-<div class="col-lg-8">
+<div class="col-lg-12">
     <div class="row">
         <div class="col-md-6 mt-5 mb-3">
             <div class="card  cardDashboard">
@@ -46,9 +46,9 @@
         <div class="col-md-6 mb-3 mb-lg-0" data-toggle="modal" data-target="#modalReport">
             <a title="Mostrar Reportes">
                 <div class="card cardDashboard">
-                    <div class="seo-fact sbg3">
+                    <div class="seo-fact sbg4">
                         <div class="p-4 d-flex justify-content-between align-items-center">
-                            <div class="seofct-icon"><i class="fa-solid fa-warning"></i>Reportes</div>
+                            <div class="seofct-icon"><i class="fa-solid fa-file"></i>Reportes</div>
                             <h2 id="cantIncidencias"></h2>
                         </div>
                     </div>
@@ -72,14 +72,9 @@
                 <div class="card-body">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
-                               href="#nav-contabilidad" role="tab" aria-controls="nav-contabilidad"
-                               aria-selected="true">Contabilidad</a>
-                            <!--                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-librosbancarios" role="tab" aria-controls="nav-librosbancarios" aria-selected="false">Libros Bancarios</a>-->
-                            <a class="nav-item nav-link" id="nav-facturacion-tab" data-toggle="tab"
+                            <a class="nav-item nav-link active" id="nav-facturacion-tab" data-toggle="tab"
                                href="#nav-facturacion" role="tab" aria-controls="nav-facturacion"
                                aria-selected="false">Facturación</a>
-                            <!-- <a class="nav-item nav-link" id="nav-activos-tab" data-toggle="tab" href="#nav-activos" role="tab" aria-controls="nav-activos" aria-selected="false">Activos</a>-->
                         </div>
                     </nav>
                     <div class="tab-content mt-3" id="nav-tabContent">
@@ -90,17 +85,11 @@
                                 <!-- Buttons Items start -->
                                 <div class="col-md-6 mt-5">
                                     <div class="list-group">
-                                        <button type="button" class="btn btn-flat mb-3 mr-4 bg-dark text-white"
-                                                id="btnReporteBalanceComprobacion" data-toggle="modal"
-                                                data-target="#modalBalanceComprobaciónConSaldoMes">
-                                            <img src="~/Content/Images/author/avatar.png" /> Balance de
-                                            Comprobación con Saldo de Mes
-                                        </button>
 
                                         <button type="button" class="btn btn-flat mb-3 mr-4 bg-dark text-white"
                                                 id="btnReporteDeudas" data-toggle="modal"
                                                 data-target="#modalDeudasP">
-                                            <img src="~/Content/Images/author/avatar.png" /> Deudas Pendientes
+                                            <img src="~/Content/Images/pdf.png" /> Deudas Pendientes
                                         </button>
 
                                     </div>
@@ -134,6 +123,10 @@
             <div class="modal-header">
                 <h5 class="modal-title">Deudas Pendientes</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+
+            </div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>¡Aviso!</strong> Los campos que no digite, se omitirán en la consulta.
             </div>
             <div class="modal-body">
                 <div class="row mb-1">
@@ -148,8 +141,8 @@
                         <input type="datetime" name="FechaFin" id="FechaFin" class="form-control" readonly="readonly" data-histracont--histracont-target="dpFechaFin">
                         <label class="control-label text-danger" id="validateFechaFin" hidden="hidden"></label>
                     </div>
-                    <label for="selectPropiedad mt-4" class="control-label">Número de propiedad</label>
-                    <select class="form-control" aria-label="Default select example" id="selectPropiedad" name="selectPropiedad">
+                    <label for="selectPropiedad" class="control-label mx-5 mt-3">Número de propiedad</label>
+                    <select class="form-control mx-5" aria-label="Default select example" id="selectPropiedad" name="selectPropiedad">
                         <option selected value="0">Seleccione una propiedad</option>
                         @foreach (var item in ViewBag.idPropiedad)
                         {
@@ -164,7 +157,7 @@
                 <div id="progressHISTRACONT" class="progress d-none mr-4 w-75">
                     <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
                 </div>
-                <button id="generarReporte" class="btn btn-success" type="button" >Generar Reporte</button>
+                <button id="generarReporte" class="btn btn-success" type="button">Generar Reporte</button>
                 <button class="btn btn-flat bg-danger text-white" type="button" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -197,6 +190,19 @@
             });
         });
 
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+
         //Detecta cuanso abre el modal y le da el formato a los pickers
         $('#modalDeudasP').on('show.bs.modal', function () {
             setPicker();
@@ -210,6 +216,12 @@
                 format: 'd-m-Y H:i:s'
             });
             $.datetimepicker.setLocale('es'); //idioma español
+        }
+
+        function destroyPicker() {
+            //$('#FechaInicio, #FechaFin').datetimepicker("destroy");  //destruir el picker
+            $('#FechaInicio').val("");
+            $('#FechaFin').val("");
         }
 
         //Verifica si la fecha de salida es mayor
@@ -227,7 +239,7 @@
         }
 
         $('#generarReporte').on("click", function () {
-            event.preventDefault();
+            //event.preventDefault();
             $("#validateFechaEntrada").addClass("d-none");
             $("#validateFechaSalida").addClass("d-none");
             $("#validateFechaSalida").text("");
@@ -236,12 +248,17 @@
             var fechaInicio = moment($('#FechaInicio').val(), 'DD-MM-YYYY HH:mm:ss').toDate(); //Transforma la fecha a date
             var fechaFin = moment($('#FechaFin').val(), 'DD-MM-YYYY HH:mm:ss').toDate();
 
-            if (!moment($('#FechaInicio').val(), 'DD-MM-YYYY HH:mm:ss').isValid() || !$('#FechaInicio').val() ) {
-                fechaInicio = moment().endOf('month');
+
+            //Valida si el formato de fecha es valido o si viene vacio, en caso de que si ajusta la fecha al inicio del mes actual
+            if (!moment($('#FechaInicio').val(), 'DD-MM-YYYY HH:mm:ss').isValid() || !$('#FechaInicio').val()) {
+                fechaInicio = moment().startOf('month');
                 fechaInicio = fechaInicio.toDate(); //Transforma la fecha a date
             }
+
+
+            ////Valida si el formato de fecha es valido o si viene vacio, en caso de que si ajusta la fecha final del mes actual
             if (!moment($('#FechaFin').val(), 'DD-MM-YYYY HH:mm:ss').isValid() || !$('#FechaFin').val()) {
-                fechaFin = null; // asigna null si la fecha es inválida o está vacía
+                fechaFin = moment().endOf('month');
                 fechaFin = fechaFin.toDate(); //Transforma la fecha a date
             }
 
@@ -257,9 +274,8 @@
                 return;
             }
 
-            console.log("hola")
             $.ajax({
-                url:"/Home/reporteDeudas",
+                url: "/Home/reporteDeudas",
                 method: "POST",
                 xhrFields: {
                     responseType: 'blob'
@@ -270,20 +286,29 @@
                     numPropiedad: numPropiedad,
                 },
                 success: function (response) {
-                    if (response == false) {
-                        console.log("nO HAY FACTURAS PENDIENTES EN LAS FECHAS INDICADAS")
+                    if (response.size == 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'No hay facturas pendientes'
+                        })
+                        return;
                     } else {
-                        var action = '@Url.Action("DescargarReporteDeudas", "Home")';
-                        var root = '@root';
-                        window.open(root + action);
-                        window.location.href = "@Url.Action("IndexAdmin", "Home")";
+                        var blob = new Blob([response], { type: 'application/pdf' });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = 'Reporte de Deudas.pdf';
+                        link.click();
                     }
-
                 },
                 error: function () {
                     console.log("ERROR")
-                }
-            })
+                },
+                complete: function () {
+                    destroyPicker();
+                },
+            });
+
+
         });
 
     </script>

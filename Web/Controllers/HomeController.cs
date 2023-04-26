@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.Services.Description;
@@ -90,26 +91,25 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public void reporteDeudas(DateTime fechaInicio, DateTime fechaFin, string numPropiedad)
+        public FileResult reporteDeudas(DateTime fechaInicio, DateTime fechaFin, string numPropiedad)
         {
-            try
-            {
-                byte[] pdf = _ServiceReporte.reporteDeudas(fechaInicio, fechaFin, numPropiedad);
-
-                if (pdf != null)
+            byte[] pdf = _ServiceReporte.reporteDeudas(fechaInicio, fechaFin, numPropiedad);
+            try { 
+                if (pdf == null)
                 {
-                    Session["reporteDeudas"] = pdf;
+                  return null;
                 }
                 else
                 {
-                     Json(false, JsonRequestBehavior.AllowGet);
+                    return File(pdf, "application/pdf", "Reporte de Deudas.pdf");
                 }
             }
             catch (Exception ex)
             {
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos!" + ex.Message;
-                 RedirectToAction("Default", "Error");
+                RedirectToAction("Default", "Error");
+                return null;
             }
         }
 
@@ -128,6 +128,8 @@ namespace Web.Controllers
             }
 
         }
+
+
 
     }
 }

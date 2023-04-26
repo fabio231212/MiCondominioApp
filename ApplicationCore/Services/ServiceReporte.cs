@@ -26,10 +26,8 @@ namespace ApplicationCore.Services
             double total = 0;
             if (lista.Any())
             {
-                foreach (Factura item in lista)
-                {
-                    total += (double)item.Total;
-                }
+                   
+                
                 PdfDocument document = new PdfDocument();
                 PdfPage page = document.AddPage();
                 XGraphics gfx = XGraphics.FromPdfPage(page);
@@ -69,6 +67,7 @@ namespace ApplicationCore.Services
                     gfx.DrawString(item.PlanCobro.Descripcion, new XFont("Verdana", 12), XBrushes.Black, new XRect(400, y, 100, 20), XStringFormats.TopLeft);
                     gfx.DrawString("₡ " + item.Total.ToString(), new XFont("Verdana", 12), XBrushes.Black, new XRect(page.Width - 70, y, 100, 20), XStringFormats.TopLeft);
                     y += 20;
+                    total += (double)item.Total;
                 }
 
                 // Dibujar el total de la factura
@@ -81,54 +80,7 @@ namespace ApplicationCore.Services
 
                 // Devolver el contenido del MemoryStream como arreglo de bytes
                 return stream.ToArray();
-
-
-
-
-
-
-                // Crear el documento PDF
-                //PdfDocument document = new PdfDocument();
-                //PdfPage page = document.AddPage();
-                //XGraphics gfx = XGraphics.FromPdfPage(page);
-
-                //// Dibujar el encabezado
-                //gfx.DrawString("Deudas Pendientes", new XFont("Verdana", 20), XBrushes.Black, new XRect(0, 0, page.Width, 50), XStringFormats.Center);
-
-                //// Dibujar el detalle de la factura
-                ////gfx.DrawString("Total pendiente: " + total, new XFont("Verdana", 12, XFontStyle.Underline), XBrushes.Black, new XRect(0, 40, page.Width, 20), XStringFormats.TopLeft);
-                //gfx.DrawString("Fecha de Inicio: " + fechaInicio.ToString(), new XFont("Verdana", 12, XFontStyle.Underline), XBrushes.Black, new XRect(0, 60, page.Width, 20), XStringFormats.TopLeft);
-                //gfx.DrawString("Fecha Final: " + fechaFin.ToString(), new XFont("Verdana", 12, XFontStyle.Underline), XBrushes.Black, new XRect(0, 60, page.Width, 20), XStringFormats.TopLeft);
-                //gfx.DrawString("Propiedad: " + numPropiedad != null ? numPropiedad : "Es un reporte de varias propiedades", new XFont("Verdana", 12, XFontStyle.Underline), XBrushes.Black, new XRect(0, 80, page.Width, 20), XStringFormats.TopLeft);
-
-                //// Crear la tabla para el detalle de la factura
-                //// Dibujar la tabla de detalles
-                //gfx.DrawRectangle(XBrushes.Black, new XRect(10, 150, page.Width - 20, 30));
-                //foreach (Factura item in lista)
-                //{
-                //    gfx.DrawString("Id Factura" + item.Id, new XFont("Verdana", 12), XBrushes.White, new XRect(10, 155, 50, 20), XStringFormats.TopLeft);
-                //    gfx.DrawString("Fecha de facturación" + item.FechaFacturacion.ToString(), new XFont("Verdana", 12), XBrushes.White, new XRect(60, 155, 200, 20), XStringFormats.TopLeft);
-                //    if (numPropiedad == null)
-                //    {
-                //        gfx.DrawString("Número de propiedad" + item.Propiedad.NumPropiedad, new XFont("Verdana", 12), XBrushes.White, new XRect(60, 155, 200, 20), XStringFormats.TopLeft);
-
-                //    }
-                //    gfx.DrawString("Plan de Cobro" + item.PlanCobro.Descripcion, new XFont("Verdana", 12), XBrushes.White, new XRect(60, 155, 200, 20), XStringFormats.TopLeft);
-                //    gfx.DrawString("Total" + item.Total.ToString(), new XFont("Verdana", 12), XBrushes.White, new XRect(page.Width - 110, 155, 100, 20), XStringFormats.TopLeft);
-                //}
-
-
-                //// Dibujar el total de la factura
-                //gfx.DrawString("Total pendiente: " + total.ToString(), new XFont("Verdana", 12), XBrushes.Black, new XRect(0, page.Height - 50, page.Width, 20), XStringFormats.BottomRight);
-
-                //// Guardar el documento en un MemoryStream
-                //MemoryStream stream = new MemoryStream();
-                //document.Save(stream);
-                //document.Close();
-
-                // Devolver el contenido del MemoryStream como arreglo de bytes
-                return stream.ToArray();
-            }
+    }
             else
             {
                 return null;
