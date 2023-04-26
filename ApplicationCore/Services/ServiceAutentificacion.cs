@@ -26,7 +26,7 @@ namespace ApplicationCore.Services
             return repository.CambiarClave(email, Utilitarios.ConvertirSha256(clave));
         }
 
-        public async Task EnviarCodPorCorreo(string email, string codigo)
+        public void EnviarCodPorCorreo(string email, string codigo)
         {
             MailMessage message = new MailMessage();
             message.From = new MailAddress("villasdelpoas@outlook.com");
@@ -43,7 +43,7 @@ namespace ApplicationCore.Services
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential("villasdelpoas@outlook.com", "progra1234");
             client.EnableSsl = true;
-            await client.SendMailAsync(message);
+            client.Send(message);
         }
 
         public Usuario Login(string email, string clave)
@@ -52,10 +52,10 @@ namespace ApplicationCore.Services
             return repository.Login(email, clave);
         }
 
-        public async Task<int> RestablecerContrasennaByEmail(string email)
+        public  int RestablecerContrasennaByEmail(string email)
         {
             String codigo = Utilitarios.GenerateRandomCode();
-            await EnviarCodPorCorreo(email, codigo);
+            EnviarCodPorCorreo(email, codigo);
             return repository.RestablecerContrasennaByEmail(email, Utilitarios.ConvertirSha256(codigo));
         }
 

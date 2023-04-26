@@ -31,12 +31,12 @@ namespace Web.Controllers
         public ActionResult RecuperarContrasenna() => View();
 
         [HttpPost]
-        public async Task<ActionResult> RestablecerContrasenna(string email) {
+        public  ActionResult RestablecerContrasenna(string email) {
             try
             {
-                Task<int> task = _ServiceAutentificacion.RestablecerContrasennaByEmail(email);
-                int result = await task;
-                if (result > 0)
+
+
+                if (_ServiceAutentificacion.RestablecerContrasennaByEmail(email) > 0)
                 {
                     Session["correo"] = email;
                     return Json(true, JsonRequestBehavior.AllowGet);

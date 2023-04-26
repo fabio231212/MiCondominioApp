@@ -10,7 +10,7 @@ namespace ApplicationCore.Services
     public interface IServiceAutentificacion
     {
         Usuario Login(string email, string clave);
-        Task<int> RestablecerContrasennaByEmail(string email);
+        int RestablecerContrasennaByEmail(string email);
 
         int CambiarClave(string email, string clave);
 
