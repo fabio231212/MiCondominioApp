@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -26,7 +27,78 @@ namespace Web.Controllers
 
         // GET: Autentificacion
         public ActionResult Login() => View();
-        
+
+        public ActionResult RecuperarContrasenna() => View();
+
+        [HttpPost]
+        public async Task<ActionResult> RestablecerContrasenna(string email) {
+            try
+            {
+                Task<int> task = _ServiceAutentificacion.RestablecerContrasennaByEmail(email);
+                int result = await task;
+                if (result > 0)
+                {
+                    Session["correo"] = email;
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+         
+           
+
+        }
+
+        [HttpPost]
+        public  ActionResult VerificarCodRestablecer(string codigo)
+        {
+            String email = "";
+            try
+            {
+                email = (string)Session["correo"];
+                bool resultado = _ServiceAutentificacion.verificarCodRestablecer(email,codigo);
+                return Json(resultado, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+
+
+
+        }
+
+        [HttpPost]
+        public ActionResult CambiarClave(string clave)
+        {
+            String email = "";
+            try
+            {
+                email = (string)Session["correo"];
+                if (_ServiceAutentificacion.CambiarClave(email, clave) > 0) {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                return Json(false, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
+
+
+
+        }
+
 
         [HttpPost]
         public ActionResult Login(Usuario oUsuario)

@@ -11,5 +11,7 @@ namespace ApplicationCore.Services
     {
         IEnumerable<AreaComunal> GetAll();
         AreaComunal GetAreaComunalById(int id);
+
+
     }
 }

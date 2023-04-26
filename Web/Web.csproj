@@ -302,6 +302,7 @@
     <Content Include="Views\EstadoCuenta\Create.cshtml" />
     <Content Include="Views\EstadoCuenta\PagarFactura.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Fecha.cshtml" />
+    <Content Include="Views\Autentificacion\RecuperarContrasenna.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
