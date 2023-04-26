@@ -209,6 +209,7 @@
     <Content Include="Content\Images\media\media1.jpg" />
     <Content Include="Content\Images\media\media2.jpg" />
     <Content Include="Content\Images\mesh-276.png" />
+    <Content Include="Content\Images\pdf.png" />
     <Content Include="Content\Images\svg.png" />
     <Content Include="Content\Images\team\team-author1.jpg" />
     <Content Include="Content\Images\team\team-author2.jpg" />

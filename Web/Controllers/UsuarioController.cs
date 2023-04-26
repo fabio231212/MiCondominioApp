@@ -121,6 +121,7 @@ namespace Web.Controllers
          // POST: Usuario/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize((int)Roles.Admin)]
         public ActionResult Save(Usuario usuario)
         {
             try
@@ -158,7 +159,25 @@ namespace Web.Controllers
             }
         }
 
-     
+        [CustomAuthorize((int)Roles.Admin)]
+        public ActionResult Delete(int idUsuario)
+        {
+            try
+            {
+                _Service.Delete(idUsuario);              
+                return RedirectToAction("Index", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Home";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
 
         private SelectList listaRoles(int? idRol = 0)
         {

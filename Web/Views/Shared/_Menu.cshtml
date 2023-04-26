@@ -168,7 +168,12 @@
 
                             </li>
 
-
+                            @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Admin" }))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Create", "EstadoCuenta")"><i class="ti-receipt"></i><span>Facturación</span></a>
+                                </li>
+                            }
                             @if (Web.Permisos.AutorizeView.IsUserInRole(new string[] { "Residente" }))
                             {
                                 <li>

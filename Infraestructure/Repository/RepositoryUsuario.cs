@@ -192,7 +192,6 @@ namespace Infraestructure.Repository
                     oUsuario.Email = usuario.Email;
                     oUsuario.FK_Rol = usuario.FK_Rol;
                     oUsuario.Activo = usuario.Activo;
-                    oUsuario.Clave = usuario.Clave;
 
                     ctx.SaveChanges();
 
